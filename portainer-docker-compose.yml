@@ -1,0 +1,29 @@
+version: '3.7'
+ 
+services:
+    portainer:
+        image: portainer/portainer-ce
+        container_name: portainer
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - portainer_data:/data
+            - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
+        restart: unless-stopped
+        ports:
+            - "8000:8000"
+            - "9001:9443"
+        environment:
+            TZ: '${LOCAL_TIMEZONE}'
+        command: '--sslcert /etc/letsencrypt/live/example.com/cert.pem --sslkey /etc/letsencrypt/live/example.com/privkey.pem'
+    
+volumes:
+    portainer_data:
+        name: portainer_data
+    certbot-etc:
+        external: true
+        name: certbot-etc        
+        driver: local
+        driver_opts:
+            type: none
+            device: /certbot
+            o: bind
