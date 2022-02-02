@@ -55,6 +55,9 @@ docker-compose up -d
 docker-compose -f portainer-docker-compose.yml -p portainer up -d 
 ```
  
+You can also visit `http://127.0.0.1:9001` or `http://example.com:9001` to access portainer after starting the containers.
+
+
 The containers are now built and running. You should be able to access the WordPress installation with the configured IP in the browser address. By default it is `http://127.0.0.1` or `http://example.com`.
 
 For convenience you may add a new entry into your hosts file.
