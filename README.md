@@ -36,7 +36,6 @@ Copy the example environment into `.env`
 
 ```
 cp env.example .env
-
 ```
 
 Edit the `.env` file to change MariaDB root password and WordPress database name etc.
@@ -47,7 +46,6 @@ Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved an
 
 ```
 docker-compose up -d
-
 ```
 
 ## Installation Portainer
@@ -55,7 +53,6 @@ docker-compose up -d
 ```
 
 docker-compose -f portainer-docker-compose.yml -p portainer up -d 
- 
 ```
  
 The containers are now built and running. You should be able to access the WordPress installation with the configured IP in the browser address. By default it is `http://127.0.0.1` or `http://example.com`.
@@ -100,7 +97,6 @@ You can now use the `up` command:
 
 ```
 docker-compose up -d
-
 ```
 
 ### phpMyAdmin
