@@ -1,0 +1,247 @@
+version: '3.7'
+
+services:
+
+    wordpress:
+        depends_on:
+            - database
+            - webserver
+        image: 'wordpress:${PHP_IMAGE_NAME}'
+        container_name: 'wp-${PHP_IMAGE_NAME}'
+        networks:
+            - backend            
+        volumes:
+            - 'html:${WEBSERVER_DOC_ROOT}'
+            - type: bind
+              source: ./php-fpm/php/conf.d/security.ini
+              target: '${PHP_FPM_PREFIX}/php/conf.d/security.ini'
+            - type: bind
+              source: ./php-fpm/php-fpm.d/z-www.conf
+              target: '${PHP_FPM_PREFIX}/php-fpm.d/z-www.conf'
+        hostname: web
+        restart: unless-stopped
+        ports:
+            - '9000:80'
+        links:
+            - database
+            - redis
+        stdin_open: true
+        tty: true
+        environment:
+            WORDPRESS_DB_HOST: database
+            WORDPRESS_DB_USER: '${WORDPRESS_DB_USER}'
+            WORDPRESS_DB_PASSWORD: '${WORDPRESS_DB_PASSWORD}'
+            WORDPRESS_DB_NAME: '${WORDPRESS_DB_NAME}'
+            WORDPRESS_TABLE_PREFIX: '${WORDPRESS_TABLE_PREFIX}'
+            HOME: '/var/www/tmp'
+            TZ: '${LOCAL_TIMEZONE}'
+        labels:            
+            - 'docker-volume-backup.stop-during-backup=true'        
+
+    webserver:
+        image: 'httpd:latest'
+        container_name: webserver
+        networks:
+            - backend            
+        volumes:
+            - 'html:${WEBSERVER_DOC_ROOT}'
+            - type: bind
+              source: ./apache2
+              target: '${HTTPD_PREFIX}/conf'            
+        hostname: webserver        
+        restart: unless-stopped
+        ports:
+            - '8080:8080'
+        environment:
+            TZ: '${LOCAL_TIMEZONE}'
+        labels:            
+            - "docker-volume-backup.stop-during-backup=true"
+    
+    certbot:
+        depends_on:
+            - webserver
+        image: certbot/certbot
+        container_name: certbot
+        networks:
+            - backend
+        volumes:
+            - 'html:${WEBSERVER_DOC_ROOT}'
+            - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
+            - 'certbot-var:/var/lib/letsencrypt'
+        restart: unless-stopped        
+        environment:
+            TZ: '${LOCAL_TIMEZONE}'
+        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"        
+
+    proxy:
+        depends_on:
+            - certbot
+        image: nginx:stable
+        container_name: proxy
+        networks:
+            - backend
+            - frontend
+        volumes:
+            - type: bind
+              source: ./proxy/nginx.conf
+              target: '${PROXY_PREFIX}/nginx.conf'
+            - type: bind
+              source: ./proxy/conf.d/proxy.conf
+              target: '${PROXY_PREFIX}/conf.d/default.conf'
+            - type: bind
+              source: ./proxy/ssl-option/options-ssl-nginx.conf
+              target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
+            - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'            
+        hostname: proxy
+        restart: unless-stopped
+        ports:
+            - '80:80'
+            - '443:443' 
+        environment:
+            TZ: '${LOCAL_TIMEZONE}'
+        labels:            
+            - "docker-volume-backup.stop-during-backup=true"        
+    
+    phpmyadmin:
+        depends_on:
+            - database
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        networks:
+            - backend
+            - frontend
+        volumes:
+            - type: bind
+              source: ./phpmyadmin
+              target: '${PMA_CONF_FOLDER}'
+            - type: bind
+              source: ./phpmyadmin/apache2/sites-available/default-ssl.conf
+              target: '/etc/apache2/sites-available/default-ssl.conf'
+            - type: bind
+              source: ./phpmyadmin/ssl-option/options-ssl-apache.conf
+              target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-apache.conf'
+            - type: bind
+              source: ./phpmyadmin/apache2/sites-available/000-default.conf
+              target: '/etc/apache2/sites-available/000-default.conf'
+            - type: bind
+              source: ./phpmyadmin/apache2/ports.conf
+              target: '/etc/apache2/ports.conf'
+            - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
+        hostname: phpmyadmin
+        ipc: private
+        restart: unless-stopped
+        ports:
+            - '9090:443'
+        links:
+            - database
+        environment:
+            PMA_HOST: database
+            PMA_PMADB: phpmyadmin
+            PMA_CONTROLUSER: '${PMA_CONTROLUSER}'
+            PMA_CONTROLPASS: '${PMA_CONTROLPASS}'
+            MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+            MEMORY_LIMIT: '${PMA_MEMORY_LIMIT}'
+            TZ: '${LOCAL_TIMEZONE}'
+        labels:            
+            - "docker-volume-backup.stop-during-backup=true"
+        command: >
+            bash -c "echo ${PMA_HTPASSWD_USERNAME}:phpmyadmin:$$( printf \"%s:%s:%s\" \"${PMA_HTPASSWD_USERNAME}\" \"phpmyadmin\" \"${PMA_HTPASSWD_PASSWORD}\" | md5sum | awk '{print $$1}' ) > /etc/phpmyadmin/.htpasswd 
+            && printf 'AuthType Digest\nAuthName \"phpmyadmin\"\nAuthDigestProvider file\nAuthUserFile /etc/phpmyadmin/.htpasswd\n#Require ssl\nRequire valid-user\n' > /var/www/html/.htaccess 
+            && mkdir -p /var/www/upload && chown www-data:www-data /var/www/upload && chmod a+w /var/www/upload && mkdir -p /var/www/save && a2enmod auth_digest 
+            && chown www-data:www-data /var/www/save && chmod a+w /var/www/save && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
+    
+    database:
+        image: '${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}'
+        container_name: '${DATABASE_CONT_NAME}'
+        networks:
+            - backend
+        volumes:
+            - 'db:/var/lib/mysql'
+            - type: bind
+              source: ./database/conf.d/z-mysql.cnf
+              target: '${MYSQL_CONF_PREFIX}/z-mysql.cnf'
+        hostname: database
+        restart: unless-stopped
+        ports:
+            - '3306:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+            MYSQL_DATABASE: '${WORDPRESS_DB_NAME}'
+            MYSQL_USER: '${WORDPRESS_DB_USER}'
+            MYSQL_PASSWORD: '${WORDPRESS_DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'No'
+            MYSQL_ROOT_HOST: '${MYSQL_ROOT_HOST}'
+            TZ: '${LOCAL_TIMEZONE}'
+        labels:            
+            - "docker-volume-backup.stop-during-backup=true"
+        command: '--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password'    
+    
+    redis:
+        image: 'redis:latest'
+        container_name: redis
+        networks:
+            - backend
+        volumes:
+            - 'dtredis:/data'
+            - type: bind
+              source: ./redis
+              target: '${REDIS_CONF_PREFIX}/redis'
+        hostname: redis
+        sysctls:
+            - net.core.somaxconn=512
+        restart: unless-stopped
+        ports:
+            - '6379:6379'
+        environment:
+            ALLOW_EMPTY_PASSWORD: 'yes'
+            TZ: '${LOCAL_TIMEZONE}'
+        labels:            
+            - "docker-volume-backup.stop-during-backup=true"
+        command: bash -c 'redis-server ${REDIS_CONF_PREFIX}/redis/redis.conf'
+    
+    backup:
+        image: 'futurice/docker-volume-backup'
+        container_name: backup
+        networks:
+            - backend
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock:ro'
+            - 'html:/backup/html:ro'
+            - 'db:/backup/db:ro'
+            - type: bind
+              source: ./backups
+              target: /archive
+        hostname: backup
+        restart: unless-stopped
+        environment:
+            BACKUP_WAIT_SECONDS: 120
+            BACKUP_CRON_EXPRESSION: '20 01 * * *'
+            BACKUP_FILENAME: 'backup-wpdb-%Y-%m-%dT%H-%M-%S.tar.gz'
+            TZ: '${LOCAL_TIMEZONE}'    
+
+networks:
+    backend: null
+    frontend: null
+
+volumes:
+    html:
+        name: wp-html
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/ubuntu/docker/wordpress
+            o: bind
+    db:
+        name: ${DATABASE_CONT_NAME}-data
+    dtredis:
+        name: redis-data
+    certbot-etc:
+        external: true
+        name: certbot-etc        
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/ubuntu/docker/certbot
+            o: bind
+    certbot-var:
+        name: certbot-var
