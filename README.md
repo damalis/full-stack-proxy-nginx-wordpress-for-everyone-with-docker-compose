@@ -32,6 +32,13 @@ Or manage docker with [Portainer](https://www.portainer.io/solutions/docker) is 
 
 ## Configuration
 
+### Exec setup shell script
+
+```
+chmod +x setup.sh
+setup.sh
+```
+
 Copy the example environment into `.env`
 
 ```
