@@ -13,11 +13,11 @@ done
 
 # set parameters in env.example file
 email=""
-read -p 'Enter Email Address for letsencrypt ssl(ex: mail@domain.com): ' email
+read -p 'Enter Email Address for letsencrypt ssl(ex: email@domain.com): ' email
 while [ -z $email ] || [[ $email != *"@"* ]]
 do
 	echo "Try again"
-	read -p 'Enter Email Address for letsencrypt ssl(ex: mail@domain.com): ' email
+	read -p 'Enter Email Address for letsencrypt ssl(ex: email@domain.com): ' email
 	sleep 1
 done
 
