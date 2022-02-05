@@ -104,7 +104,7 @@ docker-compose down -v
 
 ### Project from existing source
 
-Copy the `docker-compose.yml` file into a new directory:
+Copy all files into a new directory:
 
 You can now use the `up` command:
 
