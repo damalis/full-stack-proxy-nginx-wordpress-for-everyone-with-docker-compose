@@ -10,6 +10,7 @@ do
 	read -p 'Enter Domain Name(ex: example.com): ' domain_name
 	sleep 1
 done
+echo ""
 
 # set parameters in env.example file
 email=""
@@ -20,6 +21,7 @@ do
 	read -p 'Enter Email Address for letsencrypt ssl(ex: email@domain.com): ' email
 	sleep 1
 done
+echo ""
 
 db_username=""
 read -p 'Enter Database Username(at least 6 characters): ' db_username
@@ -29,6 +31,7 @@ do
 	read -p 'Enter Database Username(at least 6 characters): ' db_username
 	sleep 1
 done
+echo ""
 
 db_password=""
 read -p 'Enter Database Password(at least 6 characters): ' db_password
@@ -38,6 +41,7 @@ do
 	read -p 'Enter Database Password(at least 6 characters): ' db_password
 	sleep 1
 done
+echo ""
 
 db_name=""
 read -p 'Enter Database Name(at least 6 characters): ' db_name
@@ -47,6 +51,7 @@ do
 	read -p 'Enter Database Name(at least 6 characters): ' db_name
 	sleep 1
 done
+echo ""
 
 mysql_root_password=""
 read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
@@ -56,6 +61,7 @@ do
 	read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
 	sleep 1
 done
+echo ""
 
 pma_username=""
 read -p 'Enter PhpMyAdmin Username(at least 6 characters): ' pma_username
@@ -65,6 +71,7 @@ do
 	read -p 'Enter PhpMyAdmin Username(at least 6 characters): ' pma_username
 	sleep 1
 done
+echo ""
 
 pma_password=""
 read -p 'Enter PhpMyAdmin Password(at least 6 characters): ' pma_password
@@ -74,11 +81,12 @@ do
 	read -p 'Enter PhpMyAdmin Password(at least 6 characters): ' pma_password
 	sleep 1
 done
+echo ""
 
-find ./ -type f \( -iname ".*" ! -iname ".sh" ! -iname ".md" ! -iname ".yml" \) -exec sed -i -e 's/example.com/'$domain_name'/g' {} \;
-pid=$!
+find ./ -type f \( -iname ".*" ! -iname ".sh" ! -iname ".md" ! -iname ".yml" \) -exec sed -i -e 's/example.com/'$domain_name'/g' {} \; & export pid=$!
 echo "processing..."
 wait $pid
+
 sed -i 's/email@domain.com/'$email'/g' env.example
 sed -i 's/db_username/'$db_username'/g' env.example
 sed -i 's/db_password/'$db_password'/g' env.example
@@ -88,7 +96,7 @@ sed -i 's/pma_username/'$pma_username'/g' env.example
 sed -i 's/pma_password/'$pma_password'/g' env.example
 
 exit 0
-# installing worepress ane the other services
+# installing wordpress and the other services
 $docker_code = docker-compose up -d;
 if [ $docker_code == 0 ]
 then
@@ -97,8 +105,10 @@ then
 	if [ $portainer_code != 0 ]; then
 		echo "Error!"
 		exit 0
-    else		
+    else
+		echo ""
 		echo "completed setup"
+		echo ""
 		echo "Website: https://$domain_name"
 		echo "Portainer: https://$domain_name:9001"
 		echo "phpMyAdmin: https://$domain_name:9090"
