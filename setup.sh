@@ -99,11 +99,15 @@ cp env.example .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # installing wordpress and the other services
-	$docker_code = docker-compose up -d;
+	$docker_code = docker-compose up -d; & export pid=$!
+	echo "wordpress and the other services installing processing..."
+	wait $pid
 	if [ $docker_code == 0 ]
 	then
 		# installing portainer
-		$portainer_code = docker-compose -f portainer-docker-compose.yml -p portainer up -d
+		$portainer_code = docker-compose -f portainer-docker-compose.yml -p portainer up -d; & export pid=$!
+		echo "portainer installing processing..."
+		wait $pid
 		if [ $portainer_code != 0 ]; then
 			echo "Error! could not installed portainer"
 			exit 0
