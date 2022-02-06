@@ -73,10 +73,6 @@ You can also visit `https://example.com:9001` to access portainer after starting
 
 ## Usage
 
-### Redis Plugin
-
-add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin.
-
 ### Starting containers
 
 You can start the containers with the `up` command in daemon mode (by adding `-d` as an argument) or by using the `start` command:
@@ -114,6 +110,10 @@ You can now use the `up` command:
 ```
 docker-compose up -d
 ```
+
+### Redis Plugin
+
+add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin.
 
 ### phpMyAdmin
 
