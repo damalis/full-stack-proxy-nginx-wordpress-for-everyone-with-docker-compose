@@ -105,7 +105,7 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 		# installing portainer
 		$portainer_code = docker-compose -f portainer-docker-compose.yml -p portainer up -d
 		if [ $portainer_code != 0 ]; then
-			echo "Error!"
+			echo "Error! could not installed portainer"
 			exit 0
 		else
 			echo ""
@@ -117,7 +117,7 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 			echo ""
 		fi
 	else
-		echo "Error! 1"
+		echo "Error! could not installed wordpress and the other services by docker-compose"
 		exit 0
 	fi
 else
