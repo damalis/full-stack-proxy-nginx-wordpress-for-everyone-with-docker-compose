@@ -35,11 +35,11 @@ Or manage docker with [Portainer](https://www.portainer.io/solutions/docker) is 
 
 ## Configuration
 
-### Run setup shell script
+### Exec install shell script for autoinstall
 
 ```
-chmod +x setup.sh
-setup.sh
+chmod +x install.sh
+install.sh
 ```
 
 Copy the example environment into `.env`
@@ -50,7 +50,7 @@ cp env.example .env
 
 Edit the `.env` file to change MariaDB root password and WordPress database name etc.
 
-## Installation
+### Or Manual Installation
 
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
@@ -62,7 +62,7 @@ The containers are now built and running. You should be able to access the WordP
 
 For convenience you may add a new entry into your hosts file.
 
-## Installation Portainer
+### Installation Portainer
 
 ```
 
