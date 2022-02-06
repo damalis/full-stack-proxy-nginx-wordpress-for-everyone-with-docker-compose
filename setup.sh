@@ -95,26 +95,33 @@ sed -i 's/mysql_root_password/'$mysql_root_password'/g' env.example
 sed -i 's/pma_username/'$pma_username'/g' env.example
 sed -i 's/pma_password/'$pma_password'/g' env.example
 
-exit 0
-# installing wordpress and the other services
-$docker_code = docker-compose up -d;
-if [ $docker_code == 0 ]
-then
-	# installing portainer
-	$portainer_code = docker-compose -f portainer-docker-compose.yml -p portainer up -d
-	if [ $portainer_code != 0 ]; then
-		echo "Error!"
+cp env.example .env
+
+if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
+    # installing wordpress and the other services
+	$docker_code = docker-compose up -d;
+	if [ $docker_code == 0 ]
+	then
+		# installing portainer
+		$portainer_code = docker-compose -f portainer-docker-compose.yml -p portainer up -d
+		if [ $portainer_code != 0 ]; then
+			echo "Error!"
+			exit 0
+		else
+			echo ""
+			echo "completed setup"
+			echo ""
+			echo "Website: https://$domain_name"
+			echo "Portainer: https://$domain_name:9001"
+			echo "phpMyAdmin: https://$domain_name:9090"
+			echo ""
+		fi
+	else
+		echo "Error! 1"
 		exit 0
-    else
-		echo ""
-		echo "completed setup"
-		echo ""
-		echo "Website: https://$domain_name"
-		echo "Portainer: https://$domain_name:9001"
-		echo "phpMyAdmin: https://$domain_name:9090"
-		echo ""
 	fi
 else
-	echo "Error! 1"
-	exit 0
+	echo ""
+    echo "Install docker and/or docker-compose"
+	echo ""
 fi
