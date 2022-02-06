@@ -115,8 +115,6 @@ docker-compose up -d
 
 You can also visit `https://example.com` to access website after starting the containers.
 
-Wordpress: The username and the password is the same as supplied in the `.env` file.
-
 #### Redis Plugin
 
 add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin.
