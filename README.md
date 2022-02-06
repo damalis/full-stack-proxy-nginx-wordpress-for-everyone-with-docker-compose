@@ -23,6 +23,8 @@ Contents:
 ## Requirements
 
 Make sure you have the latest versions of **Docker** and **Docker Compose** installed on your machine.
+[How install docker](https://docs.docker.com/engine/install/)
+[How install docker compose](https://docs.docker.com/compose/install/)
 
 Clone this repository or copy the files from this repository into a new folder. In the **docker-compose.yml** file you may change the database from MariaDB to MySQL.
 
