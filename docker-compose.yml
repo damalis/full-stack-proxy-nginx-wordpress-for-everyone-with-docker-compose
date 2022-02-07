@@ -150,7 +150,7 @@ services:
             - "docker-volume-backup.stop-during-backup=true"
         command: >
             bash -c "echo ${PMA_HTPASSWD_USERNAME}:phpmyadmin:$$( printf \"%s:%s:%s\" \"${PMA_HTPASSWD_USERNAME}\" \"phpmyadmin\" \"${PMA_HTPASSWD_PASSWORD}\" | md5sum | awk '{print $$1}' ) > /etc/phpmyadmin/.htpasswd 
-            && printf 'AuthType Digest\nAuthName \"phpmyadmin\"\nAuthDigestProvider file\nAuthUserFile /etc/phpmyadmin/.htpasswd\n#Require ssl\nRequire valid-user\n' > /var/www/html/.htaccess 
+            && printf 'AuthType Digest\nAuthName \"phpmyadmin\"\nAuthDigestProvider file\nAuthUserFile /etc/phpmyadmin/.htpasswd\nRequire ssl\nRequire valid-user\n' > /var/www/html/.htaccess 
             && mkdir -p /var/www/upload && chown www-data:www-data /var/www/upload && chmod a+w /var/www/upload && mkdir -p /var/www/save && a2enmod auth_digest 
             && chown www-data:www-data /var/www/save && chmod a+w /var/www/save && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
     
