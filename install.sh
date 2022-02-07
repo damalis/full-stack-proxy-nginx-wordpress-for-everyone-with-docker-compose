@@ -10,7 +10,7 @@ do
 	read -p 'Enter Domain Name(ex: example.com): ' domain_name
 	sleep 1
 done
-echo ""
+echo "Ok."
 
 # set parameters in env.example file
 email=""
@@ -21,7 +21,7 @@ do
 	read -p 'Enter Email Address for letsencrypt ssl(ex: email@domain.com): ' email
 	sleep 1
 done
-echo ""
+echo "Ok."
 
 db_username=""
 read -p 'Enter Database Username(at least 6 characters): ' db_username
@@ -31,7 +31,7 @@ do
 	read -p 'Enter Database Username(at least 6 characters): ' db_username
 	sleep 1
 done
-echo ""
+echo "Ok."
 
 db_password=""
 read -p 'Enter Database Password(at least 6 characters): ' db_password
@@ -41,7 +41,7 @@ do
 	read -p 'Enter Database Password(at least 6 characters): ' db_password
 	sleep 1
 done
-echo ""
+echo "Ok."
 
 db_name=""
 read -p 'Enter Database Name(at least 6 characters): ' db_name
@@ -51,7 +51,7 @@ do
 	read -p 'Enter Database Name(at least 6 characters): ' db_name
 	sleep 1
 done
-echo ""
+echo "Ok."
 
 mysql_root_password=""
 read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
@@ -61,7 +61,7 @@ do
 	read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
 	sleep 1
 done
-echo ""
+echo "Ok."
 
 pma_username=""
 read -p 'Enter PhpMyAdmin Username(at least 6 characters): ' pma_username
@@ -71,7 +71,7 @@ do
 	read -p 'Enter PhpMyAdmin Username(at least 6 characters): ' pma_username
 	sleep 1
 done
-echo ""
+echo "Ok."
 
 pma_password=""
 read -p 'Enter PhpMyAdmin Password(at least 6 characters): ' pma_password
@@ -81,31 +81,31 @@ do
 	read -p 'Enter PhpMyAdmin Password(at least 6 characters): ' pma_password
 	sleep 1
 done
-echo ""
-
-find ./ -type f \( -iname ".*" ! -iname ".sh" ! -iname ".md" ! -iname ".yml" \) -exec sed -i -e 's/example.com/'$domain_name'/g' {} \; & export pid=$!
-echo "processing..."
-wait $pid
-
-sed -i 's/email@domain.com/'$email'/g' env.example
-sed -i 's/db_username/'$db_username'/g' env.example
-sed -i 's/db_password/'$db_password'/g' env.example
-sed -i 's/db_name/'$db_name'/g' env.example
-sed -i 's/mysql_root_password/'$mysql_root_password'/g' env.example
-sed -i 's/pma_username/'$pma_username'/g' env.example
-sed -i 's/pma_password/'$pma_password'/g' env.example
+echo "Ok."
 
 cp env.example .env
 
+find ./ -type f \( -iname "*.*" ! -iname "*.example" ! -iname "*.sh" ! -iname "*.md" ! -iname "*.yml" \) -exec sed -i -e "s/example.com/${domain_name}/g" {} \; & export pid=$!
+echo "processing..."
+wait $pid
+
+sed -i 's/email@domain.com/'$email'/g' .env
+sed -i 's/db_username/'$db_username'/g' .env
+sed -i 's/db_password/'$db_password'/g' .env
+sed -i 's/db_name/'$db_name'/g' .env
+sed -i 's/mysql_root_password/'$mysql_root_password'/g' .env
+sed -i 's/pma_username/'$pma_username'/g' .env
+sed -i 's/pma_password/'$pma_password'/g' .env
+
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # installing wordpress and the other services
-	$docker_code = docker-compose up -d; & export pid=$!
+	$docker_code = docker-compose up -d & export pid=$!
 	echo "wordpress and the other services installing processing..."
 	wait $pid
 	if [ $docker_code == 0 ]
 	then
 		# installing portainer
-		$portainer_code = docker-compose -f portainer-docker-compose.yml -p portainer up -d; & export pid=$!
+		$portainer_code = docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
 		echo "portainer installing processing..."
 		wait $pid
 		if [ $portainer_code != 0 ]; then
@@ -118,7 +118,7 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 			echo "Website: https://$domain_name"
 			echo "Portainer: https://$domain_name:9001"
 			echo "phpMyAdmin: https://$domain_name:9090"
-			echo ""
+			echo "Ok."
 		fi
 	else
 		echo "Error! could not installed wordpress and the other services by docker-compose"
@@ -126,6 +126,6 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	fi
 else
 	echo ""
-    echo "Install docker and/or docker-compose"
-	echo ""
+    echo "not found docker and/or docker-compose, Install docker and/or docker-compose"
+	echo "Ok."
 fi
