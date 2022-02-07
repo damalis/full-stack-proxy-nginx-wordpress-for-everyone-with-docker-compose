@@ -123,7 +123,7 @@ add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin.
 
 You can also visit `https://example.com:9090` to access phpMyAdmin after starting the containers.
 
-The username and the password is the same as supplied in the `.env` file.
+The first authorize screen(htpasswd;username or password) and phpmyadmin login screen the username and the password is the same as supplied in the `.env` file.
 
 ### backup
 
