@@ -115,7 +115,7 @@ docker-compose up -d
 
 You can also visit `https://example.com` to access website after starting the containers.
 
-#### Redis Plugin
+### Redis Plugin
 
 add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin.
 
@@ -125,4 +125,6 @@ You can also visit `https://example.com:9090` to access phpMyAdmin after startin
 
 The username and the password is the same as supplied in the `.env` file.
 
- 
+### backup
+
+This will back up the all files and folders, once per day, and write it to ./backups with a filename like backup*-2022-02-07T16-51-56.tar.gz 
