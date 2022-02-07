@@ -39,7 +39,7 @@ Or manage docker with [Portainer](https://www.portainer.io/solutions/docker) is 
 
 ```
 chmod +x install.sh
-install.sh
+./install.sh
 ```
 
 Copy the example environment into `.env`
