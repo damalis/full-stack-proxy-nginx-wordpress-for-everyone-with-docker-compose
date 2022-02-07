@@ -72,7 +72,7 @@ services:
         environment:
             TZ: '${LOCAL_TIMEZONE}'
         command: sh -c "
-            certbot certonly --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --standalone --preferred-challenges http --email ${LETSENCRYPT_EMAIL} --agree-tos --no-eff-email -d ${DOMAINS_NAME} -d www.${DOMAINS_NAME}
+            certbot certonly --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --standalone --preferred-challenges http --email ${LETSENCRYPT_EMAIL} --agree-tos --no-eff-email -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}
             && sudo certbot renew --dry-run
             "
         entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
