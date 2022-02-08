@@ -4,7 +4,7 @@ Easy WordPress development with Docker and Docker Compose.
 
 With this project you can quickly run the following:
 
-- [wordPress](https://hub.docker.com/_/wordpress/)
+- [wordPress(php-fpm)](https://hub.docker.com/_/wordpress/)
 - [webserver](https://hub.docker.com/_/httpd)
 - [proxy](https://hub.docker.com/_/nginx)
 - [certbot](https://hub.docker.com/r/certbot/certbot)
