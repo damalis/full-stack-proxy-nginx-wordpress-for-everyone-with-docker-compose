@@ -1,10 +1,10 @@
 # full stack wordpress for everyone by docker, docker compose
 
-Easy WordPress development with Docker and Docker Compose.
+Easy WordPress development, full stack(webserver apache2(httpd), proxy nginx, database admin phpmyadmin, database mariadb/mysql, ssl letsencrypt, redis cache and backup) with Docker and Docker Compose.
 
 With this project you can quickly run the following:
 
-- [wordPress(php-fpm)](https://hub.docker.com/_/wordpress/)
+- [wordPress (php-fpm)](https://hub.docker.com/_/wordpress/)
 - [webserver](https://hub.docker.com/_/httpd)
 - [proxy](https://hub.docker.com/_/nginx)
 - [certbot](https://hub.docker.com/r/certbot/certbot)
