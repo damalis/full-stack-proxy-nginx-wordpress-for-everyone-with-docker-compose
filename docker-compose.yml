@@ -220,7 +220,7 @@ services:
         environment:
             BACKUP_WAIT_SECONDS: 120
             BACKUP_CRON_EXPRESSION: '20 01 * * *'
-            BACKUP_FILENAME: 'backup-wpdb-%Y-%m-%dT%H-%M-%S.tar.gz'
+            BACKUP_FILENAME: 'backup-%Y-%m-%dT%H-%M-%S.tar.gz'
             TZ: '${LOCAL_TIMEZONE}'    
 
 networks:
