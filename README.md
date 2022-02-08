@@ -127,4 +127,4 @@ The first authorize screen(htpasswd;username or password) and phpmyadmin login s
 
 ### backup
 
-This will back up the all files and folders, once per day, and write it to ./backups with a filename like backup*-2022-02-07T16-51-56.tar.gz 
+This will back up the all files and folders, once per day, and write it to ./backups with a filename like backup-2022-02-07T16-51-56.tar.gz 
