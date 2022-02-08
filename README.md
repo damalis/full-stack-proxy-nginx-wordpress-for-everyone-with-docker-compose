@@ -1,4 +1,4 @@
-# wordpress-apache-nginx-db-docker-compose
+# full stack wordpress for everyone by docker, docker compose
 
 Easy WordPress development with Docker and Docker Compose.
 
