@@ -55,11 +55,11 @@ Edit the `.env` file to change MariaDB root password and WordPress database name
 
 and
 
-change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file
-<br/>change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file
-rename ```./phpmyadmin/config.sample.inc``` file name to ```./phpmyadmin/config.inc```
-rename ```./phpmyadmin/config.sample.inc``` file name to ```./phpmyadmin/config.inc```
-change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file
+change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file.
+<br/>change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
+<br/>rename ```./phpmyadmin/config.sample.inc``` file name to ```./phpmyadmin/config.inc``` .
+<br/>rename ```./phpmyadmin/config.sample.inc``` file name to ```./phpmyadmin/config.inc``` .
+<br/>change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file.
 
 ### Manual Installation
 
