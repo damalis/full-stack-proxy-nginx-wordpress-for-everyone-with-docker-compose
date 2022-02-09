@@ -85,10 +85,13 @@ echo "Ok."
 
 cp env.example .env
 
-find ./ -type f \( -iname "*.*" ! -iname "*.example" ! -iname "*.sh" ! -iname "*.md" ! -iname "*.yml" \) -exec sed -i -e "s/example.com/${domain_name}/g" {} \; & export pid=$!
-echo "processing..."
-wait $pid
+# find ./ -type f \( -iname "*.*" ! -iname "*.example" ! -iname "*.sh" ! -iname "*.md" ! -iname "*.yml" \) -exec sed -i -e "s/example.com/${domain_name}/g" {} \; & export pid=$!
+# echo "processing..."
+# wait $pid
 
+mv ./phpmyadmin/config.sample.inc ./phpmyadmin/config.inc
+sed -i 's/example.com/'$domain_name'/g' ./proxy/conf.d/proxy.conf
+sed -i 's/example.com/'$domain_name'/g' ./phpmyadmin/apache2/sites-available/default-ssl.conf
 sed -i 's/email@domain.com/'$email'/g' .env
 sed -i 's/db_username/'$db_username'/g' .env
 sed -i 's/db_password/'$db_password'/g' .env
