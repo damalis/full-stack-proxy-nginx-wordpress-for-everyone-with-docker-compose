@@ -30,9 +30,9 @@ Make sure you have the latest versions of **Docker** and **Docker Compose** inst
 
 Clone this repository or copy the files from this repository into a new folder. In the **docker-compose.yml** file you may change the database from MariaDB to MySQL.
 
-Make sure to [add your user to the `docker` group](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user)
+Make sure to [add your user to the `docker` group](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
-Or manage docker with [Portainer](https://www.portainer.io/solutions/docker) is the definitive container management tool for Docker, Docker Swarm with it's highly intuitive GUI and API.
+manage docker with [Portainer](https://www.portainer.io/solutions/docker) is the definitive container management tool for Docker, Docker Swarm with it's highly intuitive GUI and API.
 
 ## Configuration and Installation
 
@@ -57,7 +57,7 @@ and
 
 change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file.
 <br />change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
-<br />rename ```./phpmyadmin/config.sample.inc``` filename to ```./phpmyadmin/config.inc``` .
+<br />rename  filename ```./phpmyadmin/config.sample.inc``` to ```./phpmyadmin/config.inc``` .
 <br />change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file.
 
 ### Manual Installation
