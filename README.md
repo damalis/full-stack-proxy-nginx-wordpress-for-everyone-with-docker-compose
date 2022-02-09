@@ -59,7 +59,7 @@ change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file.
 <br />change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
 <br />rename ```./phpmyadmin/config.sample.inc``` file name to ```./phpmyadmin/config.inc``` .
 <br />change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file.
-<br />add and/or remove wordpress site folders and files with any ftp client program in ```./wordpress``` folder.
+
 ### Manual Installation
 
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
@@ -122,7 +122,8 @@ docker-compose up -d
 
 ### Website
 
-You can also visit `https://example.com` to access website after starting the containers.
+add and/or remove wordpress site folders and files with any ftp client program in ```./wordpress``` folder.
+<br />You can also visit `https://example.com` to access website after starting the containers.
 
 ### Redis Plugin
 
