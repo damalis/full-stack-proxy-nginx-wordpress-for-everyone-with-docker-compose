@@ -136,7 +136,7 @@ pm.max_requests = 1000
 add and/or remove wordpress site folders and files with any ftp client program in ```./wordpress``` folder.
 <br />You can also visit `https://example.com` to access website after starting the containers.
 
-### Redis Plugin
+#### Redis Plugin
 
 add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin.
 
