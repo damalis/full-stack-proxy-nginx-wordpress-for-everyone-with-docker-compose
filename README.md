@@ -122,6 +122,17 @@ docker-compose up -d
 
 ### Website
 
+add or remove code in the ./php-fpm/php/conf.d/security.ini file for custom php.ini sets
+
+<br />Copy and paste the following code in the ./php-fpm/php-fpm.d/z-www.conf file for php-fpm sets to 1Gb ram host
+```
+pm.max_children = 19
+pm.start_servers = 4
+pm.min_spare_servers = 2
+pm.max_spare_servers = 4
+pm.max_requests = 1000
+```
+
 add and/or remove wordpress site folders and files with any ftp client program in ```./wordpress``` folder.
 <br />You can also visit `https://example.com` to access website after starting the containers.
 
