@@ -124,7 +124,7 @@ docker-compose up -d
 
 add or remove code in the ./php-fpm/php/conf.d/security.ini file for custom php.ini sets
 
-<br />Copy and paste the following code in the ./php-fpm/php-fpm.d/z-www.conf file for php-fpm sets to 1Gb ram host
+Copy and paste the following code in the ./php-fpm/php-fpm.d/z-www.conf file for php-fpm sets at 1Gb Ram Host
 ```
 pm.max_children = 19
 pm.start_servers = 4
