@@ -6,8 +6,8 @@ Plus, Docker manage by Portainer.
 With this project you can quickly run the following:
 
 - [wordPress (php-fpm)](https://hub.docker.com/_/wordpress/)
-- [webserver](https://hub.docker.com/_/httpd)
-- [proxy](https://hub.docker.com/_/nginx)
+- [webserver (apache2/httpd)](https://hub.docker.com/_/httpd)
+- [proxy (nginx)](https://hub.docker.com/_/nginx)
 - [certbot](https://hub.docker.com/r/certbot/certbot)
 - [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
 - [database](https://hub.docker.com/_/mariadb)
@@ -34,14 +34,16 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 
 Or manage docker with [Portainer](https://www.portainer.io/solutions/docker) is the definitive container management tool for Docker, Docker Swarm with it's highly intuitive GUI and API.
 
-## Configuration
+## Configuration and Installation
 
-### Exec install shell script for autoinstall
+### Exec install shell script for auto installation and configuration
 
 ```
 chmod +x install.sh
 ./install.sh
 ```
+
+### Manual Configuration
 
 Copy the example environment into `.env`
 
@@ -51,7 +53,15 @@ cp env.example .env
 
 Edit the `.env` file to change MariaDB root password and WordPress database name etc.
 
-### Or Manual Installation
+and
+
+change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file
+change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file
+rename ```./phpmyadmin/config.sample.inc``` file name to ```./phpmyadmin/config.inc```
+rename ```./phpmyadmin/config.sample.inc``` file name to ```./phpmyadmin/config.inc```
+change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file
+
+### Manual Installation
 
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
@@ -66,7 +76,6 @@ For convenience you may add a new entry into your hosts file.
 ### Installation Portainer
 
 ```
-
 docker-compose -f portainer-docker-compose.yml -p portainer up -d 
 ```
  
