@@ -89,9 +89,10 @@ cp env.example .env
 # echo "processing..."
 # wait $pid
 
-mv ./phpmyadmin/config.sample.inc ./phpmyadmin/config.inc
+cp ./phpmyadmin/config.sample.inc.php ./phpmyadmin/config.inc.php
 sed -i 's/example.com/'$domain_name'/g' ./proxy/conf.d/proxy.conf
 sed -i 's/example.com/'$domain_name'/g' ./phpmyadmin/apache2/sites-available/default-ssl.conf
+sed -i 's/example.com/'$domain_name'/g' .env
 sed -i 's/email@domain.com/'$email'/g' .env
 sed -i 's/db_username/'$db_username'/g' .env
 sed -i 's/db_password/'$db_password'/g' .env
