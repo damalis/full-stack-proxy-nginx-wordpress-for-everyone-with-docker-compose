@@ -134,7 +134,7 @@ pm.max_spare_servers = 4
 pm.max_requests = 1000
 ```
 
-Or you should make changes custom host configurations then must restart servise
+Or you should make changes custom host configurations then must restart service
 
 ```
 docker-compose restart wordpress
