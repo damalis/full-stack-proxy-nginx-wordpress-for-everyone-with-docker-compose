@@ -1,5 +1,5 @@
 # docker-volume-backup
-Docker image for performing simple backups of Docker volumes. 
+Docker image for performing simple backups of Docker volumes 
 ## Main features:
 
 - Mount volumes into the container, and they'll get backed up
