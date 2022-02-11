@@ -232,7 +232,7 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: /home/ubuntu/docker/wordpress
+            device: ${LOCALHOST_PATH}/wordpress
             o: bind
     db:
         name: ${DATABASE_CONT_NAME}-data
@@ -244,7 +244,7 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: /home/ubuntu/docker/certbot
+            device: ${LOCALHOST_PATH}/certbot
             o: bind
     certbot-var:
         name: certbot-var
