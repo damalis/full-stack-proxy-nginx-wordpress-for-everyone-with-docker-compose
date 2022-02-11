@@ -4,7 +4,7 @@ set -e
 # set your domain name in files at folder
 domain_name=""
 read -p 'Enter Domain Name(ex: example.com): ' domain_name
-while [ -z $domain_name ] || [[ $domain_name != *"."* ]]
+while [ -z $domain_name ] || [ $domain_name != *"."* ]
 do
 	echo "Try again"
 	read -p 'Enter Domain Name(ex: example.com): ' domain_name
