@@ -103,11 +103,11 @@ sed -i 's/pma_password/'$pma_password'/g' .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # installing wordpress and the other services
-	$docker_code = docker-compose up -d & export pid=$!
+	docker-compose up -d & export pid=$!
 	echo "wordpress and the other services installing processing..."
 	wait $pid
-	if [ $docker_code == 0 ]
-	then
+	#if [ $docker_code == 0 ]
+	#then
 		# installing portainer
 		$portainer_code = docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
 		echo "portainer installing processing..."
@@ -124,10 +124,10 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 			echo "phpMyAdmin: https://$domain_name:9090"
 			echo "Ok."
 		fi
-	else
+	#else
 		echo "Error! could not installed wordpress and the other services by docker-compose"
 		exit 0
-	fi
+	#fi
 else
 	echo ""
     echo "not found docker and/or docker-compose, Install docker and/or docker-compose"
