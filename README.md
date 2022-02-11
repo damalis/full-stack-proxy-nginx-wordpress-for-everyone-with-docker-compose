@@ -32,11 +32,13 @@ Clone this repository or copy the files from this repository into a new folder. 
 
 Make sure to [add your user to the `docker` group](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
-manage docker with [Portainer](https://www.portainer.io/solutions/docker) is the definitive container management tool for Docker, Docker Swarm with it's highly intuitive GUI and API.
-
 ## Configuration and Installation
 
 ### Exec install shell script for auto installation and configuration
+
+```
+git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
+```
 
 ```
 chmod +x install.sh
@@ -77,8 +79,9 @@ For convenience you may add a new entry into your hosts file.
 ```
 docker-compose -f portainer-docker-compose.yml -p portainer up -d 
 ```
- 
-You can also visit `https://example.com:9001` to access portainer after starting the containers.
+manage docker with [Portainer](https://www.portainer.io/solutions/docker) is the definitive container management tool for Docker, Docker Swarm with it's highly intuitive GUI and API. 
+
+<br />You can also visit `https://example.com:9001` to access portainer after starting the containers.
 
 ## Usage
 
