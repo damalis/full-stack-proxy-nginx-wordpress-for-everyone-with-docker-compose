@@ -100,6 +100,7 @@ sed -i 's/db_name/'$db_name'/g' .env
 sed -i 's/mysql_root_password/'$mysql_root_password'/g' .env
 sed -i 's/pma_username/'$pma_username'/g' .env
 sed -i 's/pma_password/'$pma_password'/g' .env
+sed -i 's/localhost_path/'pwd'/g' .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # installing wordpress and the other services
