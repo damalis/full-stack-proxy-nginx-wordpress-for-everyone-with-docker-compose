@@ -36,8 +36,9 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 
 ### Exec install shell script for auto installation and configuration
 
+download with
 ```
-git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
+sudo git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
 ```
 
 ```
