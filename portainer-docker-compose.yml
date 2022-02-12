@@ -20,10 +20,5 @@ volumes:
     portainer_data:
         name: portainer_data
     certbot-etc:
-        external: true
-        name: certbot-etc        
-        driver: local
-        driver_opts:
-            type: none
-            device: /certbot
-            o: bind
+        external:
+            name: certbot-etc
