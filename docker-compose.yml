@@ -72,7 +72,7 @@ services:
         environment:
             TZ: '${LOCAL_TIMEZONE}'
         command: > 
-            /bin/sh -c "certbot certonly --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --standalone --preferred-challenges http --email ${LETSENCRYPT_EMAIL} --agree-tos --no-eff-email -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}
+            /bin/sh -c "certbot certonly --standalone --preferred-challenges http --email ${LETSENCRYPT_EMAIL} --agree-tos --no-eff-email -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}
             && sudo certbot renew --dry-run"
         entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
@@ -239,12 +239,7 @@ volumes:
     dtredis:
         name: redis-data
     certbot-etc:
-        external: true
-        name: certbot-etc        
-        driver: local
-        driver_opts:
-            type: none
-            device: ${LOCALHOST_PATH}/certbot
-            o: bind
+        external:
+            name: certbot-etc        
     certbot-var:
         name: certbot-var
