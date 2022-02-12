@@ -14,8 +14,9 @@ echo "Ok."
 
 # set parameters in env.example file
 email=""
+regex="^[a-zA-Z0-9\._-]+\@[a-zA-Z0-9._-]+\.[a-zA-Z]+\$"
 read -p 'Enter Email Address for letsencrypt ssl(ex: email@domain.com): ' email
-while [ -z $email ] || [[ $email != *"@"* ]]
+while [ -z $email ] || [[ ! $email =~ $regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Email Address for letsencrypt ssl(ex: email@domain.com): ' email
