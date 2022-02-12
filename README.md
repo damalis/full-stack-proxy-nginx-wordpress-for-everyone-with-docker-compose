@@ -38,7 +38,7 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 
 download with
 ```
-sudo git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
+git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
 ```
 
 ```
