@@ -10,6 +10,74 @@ echo "|                                          					  |"
 echo "================================================================="
 sleep 2
 
+# Uninstall old versions
+echo "Older versions of Docker were called docker, docker.io, or docker-engine. If these are installed, uninstall them"
+
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+echo ""
+echo "Done ✓"
+echo "============================================"
+
+# install start
+sudo apt update
+sudo apt-get install ca-certificates curl gnupg lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+echo ""
+echo "Done ✓"
+echo "============================================"
+
+##########
+# Run Docker without sudo rights
+##########
+echo ""
+echo ""
+echo "============================================"
+echo "| Running Docker without sudo rights..."
+echo "============================================"
+echo ""
+sleep 2
+
+sudo groupadd docker
+sudo usermod -aG docker ${USER}
+su - ${USER} &
+
+echo ""
+echo "Done ✓"
+echo "============================================"
+
+##########
+# Install Docker-Compose
+##########
+echo ""
+echo ""
+echo "============================================"
+echo "| Installing Docker Compose v1.29.2..."
+echo "============================================"
+echo ""
+sleep 2
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+echo ""
+echo "Done ✓"
+echo "============================================"
+
+##########
+# Setup project variables
+##########
+echo ""
+echo ""
+echo "============================================"
+echo "| Please enter project related variables..."
+echo "============================================"
+sleep 2
+
 # set your domain name
 domain_name=""
 read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
