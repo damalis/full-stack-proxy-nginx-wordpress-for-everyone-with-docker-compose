@@ -189,7 +189,9 @@ sed -i 's/pma_password/'$pma_password'/g' .env
 sed -i "s@localhost_path@$(pwd)@" .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
-    # installing wordpress and the other services
+    # Firstly: create external volume
+	docker volume create certbot-etc
+	# installing wordpress and the other services
 	docker-compose up -d & export pid=$!
 	echo "wordpress and the other services installing processing..."
 	wait $pid
