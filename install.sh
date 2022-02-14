@@ -162,6 +162,13 @@ do
 done
 echo "Ok."
 
+read -p "Apply changes (y/n)? " choice
+case "$choice" in
+  y|Y ) echo "Yes! Proceeding now...";;
+  n|N ) echo "No! Aborting now...";;
+  * ) echo "Invalid input! Aborting now...";;
+esac
+
 cp ./phpmyadmin/config.sample.inc.php ./phpmyadmin/config.inc.php
 
 cp ./proxy/conf.d/proxy.example.conf ./proxy/conf.d/proxy.conf
@@ -205,7 +212,7 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 			echo "Ok."
 		fi
 	#else
-		echo "Error! could not installed wordpress and the other services by docker-compose"
+		echo "Error! could not installed wordpress and the other services with docker-compose"
 		exit 0
 	#fi
 else
