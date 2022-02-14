@@ -66,8 +66,10 @@ change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file.
 cp ./phpmyadmin/apache2/sites-available/default-ssl.example.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
 ```
 change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
-<br />rename  filename ```cp ./phpmyadmin/config.sample.inc.php ./phpmyadmin/config.inc.php```.
-<br /><br />change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file.
+
+rename filename ```cp ./phpmyadmin/config.sample.inc.php ./phpmyadmin/config.inc.php```.
+
+change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file.
 
 ### Manual Installation
 
