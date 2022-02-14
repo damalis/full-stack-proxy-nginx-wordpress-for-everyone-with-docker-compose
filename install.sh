@@ -6,7 +6,7 @@ echo "================================================================="
 echo "|  															  |"
 echo "|  full-stack-wordpress-for-everyone-with-docker-compose Setup  |"
 echo "|  						by Erdal ALTIN						  |"
-echo "|  															  |"
+echo "|  													  		  |"
 echo "================================================================="
 sleep 2
 
