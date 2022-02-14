@@ -75,7 +75,7 @@ change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` 
 
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
-First: will create external volume
+Firstly: will create external volume
 ```
 docker volume create certbot-etc
 ```
