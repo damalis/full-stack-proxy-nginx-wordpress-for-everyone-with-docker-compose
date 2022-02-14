@@ -1,5 +1,14 @@
 #!/bin/bash
-# set -e
+
+clear
+echo ""
+echo "================================================================="
+echo "|                                          					  |"
+echo "|  full-stack-wordpress-for-everyone-with-docker-compose Setup  |"
+echo "|          			by Erdal ALTIN					          |"
+echo "|                                          					  |"
+echo "================================================================="
+sleep 2
 
 # set your domain name
 domain_name=""
