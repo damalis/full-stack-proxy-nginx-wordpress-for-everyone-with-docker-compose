@@ -4,10 +4,12 @@ set -e
 # set your domain name in files at folder
 domain_name=""
 read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
-while [[ host $domain_name 2>&1 > /dev/null ] & [ $? -neq 0 ]]
+h=`host $domain_name 2>&1 > /dev/null`
+while [[ h -eq 0 ]]
 do
 	echo "Try again"
 	read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
+	h=`host $domain_name 2>&1 > /dev/null`
 	sleep 1
 done
 echo "Ok."
