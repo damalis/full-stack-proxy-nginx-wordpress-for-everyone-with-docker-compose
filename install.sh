@@ -1,16 +1,15 @@
 #!/bin/bash
-set -e
+# set -e
 
-# set your domain name in files at folder
+# set your domain name
 domain_name=""
 read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
-h=`host $domain_name 2>&1 > /dev/null`
-while [[ h -eq 0 ]]
+host -N 0 $domain_name 2>&1 > /dev/null
+while [ $? -ne 0 ]
 do
 	echo "Try again"
 	read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
-	h=`host $domain_name 2>&1 > /dev/null`
-	sleep 1
+	host -N 0 $domain_name 2>&1 > /dev/null
 done
 echo "Ok."
 
@@ -86,15 +85,15 @@ do
 done
 echo "Ok."
 
+cp ./phpmyadmin/config.sample.inc.php ./phpmyadmin/config.inc.php
+
+cp ./proxy/conf.d/proxy.sample.conf ./proxy/conf.d/proxy.conf
+sed -i 's/example.com/'$domain_name'/g' ./proxy/conf.d/proxy.conf
+cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
+sed -i 's/example.com/'$domain_name'/g' ./phpmyadmin/apache2/sites-available/default-ssl.conf
+
 cp env.example .env
 
-# find ./ -type f \( -iname "*.*" ! -iname "*.example" ! -iname "*.sh" ! -iname "*.md" ! -iname "*.yml" \) -exec sed -i -e "s/example.com/${domain_name}/g" {} \; & export pid=$!
-# echo "processing..."
-# wait $pid
-
-cp ./phpmyadmin/config.sample.inc.php ./phpmyadmin/config.inc.php
-sed -i 's/example.com/'$domain_name'/g' ./proxy/conf.d/proxy.conf
-sed -i 's/example.com/'$domain_name'/g' ./phpmyadmin/apache2/sites-available/default-ssl.conf
 sed -i 's/example.com/'$domain_name'/g' .env
 sed -i 's/email@domain.com/'$email'/g' .env
 sed -i 's/db_username/'$db_username'/g' .env
