@@ -3,11 +3,11 @@ set -e
 
 # set your domain name in files at folder
 domain_name=""
-read -p 'Enter Domain Name(ex: example.com): ' domain_name
-while [[ host $domain_name 2>&1 > /dev/null & $? -neq 0 ]]
+read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
+while [[ host $domain_name 2>&1 > /dev/null ] & [ $? -neq 0 ]]
 do
 	echo "Try again"
-	read -p 'Enter Domain Name(ex: example.com): ' domain_name
+	read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
 	sleep 1
 done
 echo "Ok."
@@ -15,11 +15,11 @@ echo "Ok."
 # set parameters in env.example file
 email=""
 regex="^[a-zA-Z0-9\._-]+\@[a-zA-Z0-9._-]+\.[a-zA-Z]+\$"
-read -p 'Enter Email Address for letsencrypt ssl(ex: email@domain.com): ' email
+read -p 'Enter Email Address for letsencrypt ssl(e.g. : email@domain.com): ' email
 while [ -z $email ] || [[ ! $email =~ $regex ]]
 do
 	echo "Try again"
-	read -p 'Enter Email Address for letsencrypt ssl(ex: email@domain.com): ' email
+	read -p 'Enter Email Address for letsencrypt ssl(e.g. : email@domain.com): ' email
 	sleep 1
 done
 echo "Ok."
