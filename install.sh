@@ -30,7 +30,7 @@ Installed=`sudo apt-cache policy docker-ce | sed -n '2p' | cut -c 14-`
 Candidate=`sudo apt-cache policy docker-ce | sed -n '3p' | cut -c 14-`
 
 if [[ "$Installed" != "$Candidate" ]]; then 
-    sudo apt-get install docker-ce docker-ce-cli containerd.io
+	sudo apt-get install docker-ce docker-ce-cli containerd.io
 elif [[ "$Installed" == "$Candidate" ]]; then
 	echo ""
 	echo 'docker currently version already installed.'
