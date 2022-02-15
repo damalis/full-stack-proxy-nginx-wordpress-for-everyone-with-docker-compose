@@ -33,7 +33,7 @@ if [[ "$Installed" != "$Candidate" ]]; then
     sudo apt-get install docker-ce docker-ce-cli containerd.io
 elif [[ "$Installed" == "$Candidate" ]]; then
 	echo ""
-    echo 'docker currently version already installed.'
+	echo 'docker currently version already installed.'
 fi
 
 
