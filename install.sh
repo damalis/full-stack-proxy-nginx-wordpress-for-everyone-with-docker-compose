@@ -205,15 +205,15 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	docker volume create certbot-etc > /dev/null
 	# installing wordpress and the other services
 	docker-compose up -d & export pid=$!
-	echo "wordpress and the other services installing processing..."
+	echo "wordpress and the other services installing proceeding..."
 	wait $pid
-	if [ $pid -eq 0 ]
+	if [ $? -eq 0 ]
 	then
 		# installing portainer
 		docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
-		echo "portainer installing processing..."
+		echo "portainer installing proceeding..."
 		wait $pid
-		if [ $pid -ne 0 ]; then
+		if [ $? -ne 0 ]; then
 			echo "Error! could not installed portainer"
 			exit 1
 		else
