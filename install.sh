@@ -206,11 +206,13 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	# installing wordpress and the other services
 	docker-compose up -d & export pid=$!
 	echo "wordpress and the other services installing proceeding..."
+	echo ""
 	wait $pid
 	if [ $? -eq 0 ]
 	then
 		# installing portainer
 		docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
+		echo ""
 		echo "portainer installing proceeding..."
 		wait $pid
 		if [ $? -ne 0 ]; then
@@ -223,6 +225,7 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 			echo "Website: https://$domain_name"
 			echo "Portainer: https://$domain_name:9001"
 			echo "phpMyAdmin: https://$domain_name:9090"
+			echo ""
 			echo "Ok."
 		fi
 	else
