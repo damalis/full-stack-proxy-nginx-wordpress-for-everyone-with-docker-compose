@@ -202,18 +202,18 @@ sed -i "s@localhost_path@$(pwd)@" .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # Firstly: create external volume
-	docker volume create certbot-etc
+	docker volume create certbot-etc > /dev/null
 	# installing wordpress and the other services
-	$docker_code=`docker-compose up -d & export pid=$!`
+	docker-compose up -d & export pid=$!
 	echo "wordpress and the other services installing processing..."
 	wait $pid
-	if [ $docker_code -eq 0 ]
+	if [ $pid -eq 0 ]
 	then
 		# installing portainer
-		$portainer_code=`docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!`
+		docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
 		echo "portainer installing processing..."
 		wait $pid
-		if [ $portainer_code -ne 0 ]; then
+		if [ $pid -ne 0 ]; then
 			echo "Error! could not installed portainer"
 			exit 1
 		else
