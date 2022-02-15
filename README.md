@@ -8,17 +8,18 @@ With this project you can quickly run the following:
 - [wordPress (php-fpm)](https://hub.docker.com/_/wordpress/)
 - [webserver (apache2/httpd)](https://hub.docker.com/_/httpd)
 - [proxy (nginx)](https://hub.docker.com/_/nginx)
-- [certbot](https://hub.docker.com/r/certbot/certbot)
+- [certbot (letsencrypt)](https://hub.docker.com/r/certbot/certbot)
 - [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
 - [database](https://hub.docker.com/_/mariadb)
 - [redis](https://hub.docker.com/_/redis)
 - [backup](https://hub.docker.com/r/futurice/docker-volume-backup)
 
+- [Set DNS configuration of your domain name](https://support.google.com/a/answer/48090?hl=en)
+
 Contents:
 
 - [Requirements](#requirements)
 - [Configuration](#configuration)
-- set DNS configuration of your domain name
 - [Installation](#installation)
 - [Usage](#usage)
 
