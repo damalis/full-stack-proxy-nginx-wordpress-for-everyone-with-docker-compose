@@ -26,8 +26,8 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 
-Installed = `sudo apt-cache policy docker-ce | sed -n '2p' | cut -c 14-`
-Candidate = `sudo apt-cache policy docker-ce | sed -n '3p' | cut -c 14-`
+Installed=`sudo apt-cache policy docker-ce | sed -n '2p' | cut -c 14-`
+Candidate=`sudo apt-cache policy docker-ce | sed -n '3p' | cut -c 14-`
 
 if [[ "$Installed" != "$Candidate" ]]; then 
 	sudo apt-get install docker-ce docker-ce-cli containerd.io
@@ -204,13 +204,13 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # Firstly: create external volume
 	docker volume create certbot-etc
 	# installing wordpress and the other services
-	$docker_code = `docker-compose up -d & export pid=$!`
+	$docker_code=`docker-compose up -d & export pid=$!`
 	echo "wordpress and the other services installing processing..."
 	wait $pid
 	if [ $docker_code -eq 0 ]
 	then
 		# installing portainer
-		$portainer_code = `docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!`
+		$portainer_code=`docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!`
 		echo "portainer installing processing..."
 		wait $pid
 		if [ $portainer_code -ne 0 ]; then
