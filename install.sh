@@ -82,7 +82,7 @@ sleep 2
 domain_name=""
 read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
 host -N 0 $domain_name 2>&1 > /dev/null
-while [ $? -ne 0 ]
+while [ -z $domain_name ] || [ $? -ne 0 ]
 do
 	echo "Try again"
 	read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
