@@ -1,20 +1,5 @@
 #!/bin/bash
 
-domain_name=""
-read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
-[ -z $domain_name ] && domain_name="NULL"
-host -N 0 $domain_name 2>&1 > /dev/null
-while [ $? -ne 0 ]
-do
-	echo "Try again"
-	read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
-	[ -z $domain_name ] && domain_name="NULL"
-	host -N 0 $domain_name 2>&1 > /dev/null
-done
-echo "Ok."
-
-exit 0
-
 clear
 echo ""
 echo "================================================================="
@@ -40,7 +25,16 @@ sudo apt-get install ca-certificates curl gnupg lsb-release
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+Installed=`sudo apt-cache policy docker-ce | sed -n '2p' | cut -c 14-`
+Candidate=`sudo apt-cache policy docker-ce | sed -n '3p' | cut -c 14-`
+
+if [ $Installed -ne $Candidate ]; then 
+    sudo apt-get install docker-ce docker-ce-cli containerd.io
+elif [ $Installed -eq $Candidate ]; then 
+    echo 'docker currently version already installed.'
+fi
+
 
 echo ""
 echo "Done ✓"
@@ -102,6 +96,7 @@ while [ $? -ne 0 ]
 do
 	echo "Try again"
 	read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
+	[ -z $domain_name ] && domain_name="NULL"
 	host -N 0 $domain_name 2>&1 > /dev/null
 done
 echo "Ok."
