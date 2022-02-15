@@ -18,6 +18,7 @@ Contents:
 
 - [Requirements](#requirements)
 - [Configuration](#configuration)
+- set DNS configuration of your domain name
 - [Installation](#installation)
 - [Usage](#usage)
 
