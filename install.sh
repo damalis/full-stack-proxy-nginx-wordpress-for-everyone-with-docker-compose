@@ -8,6 +8,7 @@ while [ $? -ne 0 ]
 do
 	echo "Try again"
 	read -p 'Enter Domain Name(e.g. : example.com): ' domain_name
+	[ -z $domain_name ] && domain_name="NULL"
 	host -N 0 $domain_name 2>&1 > /dev/null
 done
 echo "Ok."
