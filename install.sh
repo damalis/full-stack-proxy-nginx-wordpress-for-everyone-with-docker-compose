@@ -75,6 +75,9 @@ sleep 2
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+# permission for Docker daemon socket
+sudo chmod 666 /var/run/docker.sock
+
 echo ""
 echo "Done ✓"
 echo "============================================"
@@ -88,9 +91,6 @@ echo "============================================"
 echo "| Please enter project related variables..."
 echo "============================================"
 sleep 2
-
-# permission for Docker daemon socket
-sudo chmod 666 /var/run/docker.sock
 
 # set your domain name
 domain_name=""
