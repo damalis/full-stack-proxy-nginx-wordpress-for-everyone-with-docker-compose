@@ -202,7 +202,7 @@ sed -i "s@localhost_path@$(pwd)@" .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # Firstly: create external volume
-	docker volume create certbot-etc > /dev/null
+	docker volume create --driver local --opt type=none --opt device=${pwd}/certbot --opt o=bind certbot-etc > /dev/null
 	# installing wordpress and the other services
 	docker-compose up -d & export pid=$!
 	echo "wordpress and the other services installing proceeding..."
