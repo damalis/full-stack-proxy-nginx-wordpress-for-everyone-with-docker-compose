@@ -20,10 +20,11 @@ echo "Done ✓"
 echo "============================================"
 
 # install start
-sudo apt update
+sudo apt-get update
 sudo apt-get install ca-certificates curl gnupg lsb-release
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo chmod 666 /var/run/docker.sock
 sudo apt-get update
 
 Installed=`sudo apt-cache policy docker-ce | sed -n '2p' | cut -c 14-`
@@ -54,7 +55,7 @@ sleep 2
 
 sudo groupadd docker
 sudo usermod -aG docker ${USER}
-# su - ${USER} &
+su - ${USER} &
 
 echo ""
 echo "Done ✓"
@@ -87,6 +88,9 @@ echo "============================================"
 echo "| Please enter project related variables..."
 echo "============================================"
 sleep 2
+
+# permission for Docker daemon socket
+sudo chmod 666 /var/run/docker.sock
 
 # set your domain name
 domain_name=""
@@ -202,7 +206,7 @@ sed -i "s@localhost_path@$(pwd)@" .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # Firstly: create external volume
-	docker volume create --driver local --opt type=none --opt device=${pwd}/certbot --opt o=bind certbot-etc > /dev/null
+	docker volume create --driver local --opt type=none --opt device=`pwd`/certbot --opt o=bind certbot-etc > /dev/null
 	# installing wordpress and the other services
 	docker-compose up -d & export pid=$!
 	echo "wordpress and the other services installing proceeding..."
