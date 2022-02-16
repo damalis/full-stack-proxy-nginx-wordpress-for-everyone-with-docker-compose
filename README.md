@@ -81,7 +81,7 @@ Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved an
 
 Firstly: will create external volume
 ```
-docker volume create certbot-etc
+docker volume create --driver local --opt type=none --opt device=/home/ubuntu/full-stack-wordpress-for-everyone-with-docker-compose/certbot --opt o=bind certbot-etc
 ```
 ```
 docker-compose up -d
