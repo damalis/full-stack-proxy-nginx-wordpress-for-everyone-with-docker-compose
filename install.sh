@@ -55,7 +55,7 @@ sleep 2
 
 sudo groupadd docker
 sudo usermod -aG docker ${USER}
-su - ${USER} &
+# su - ${USER} &
 
 echo ""
 echo "Done ✓"
