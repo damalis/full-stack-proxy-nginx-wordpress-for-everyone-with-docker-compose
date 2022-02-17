@@ -68,10 +68,7 @@ services:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - 'certbot-var:/var/lib/letsencrypt'
-        restart: unless-stopped
-        ports:
-            - '80:80'
-            - '443:443'
+        restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
         command: > 
