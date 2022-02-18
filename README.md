@@ -36,6 +36,15 @@ Clone this repository or copy the files from this repository into a new folder. 
 
 Make sure to [add your user to the `docker` group](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
+### IPv4 Firewall
+Create rules to open ports to the internet, or to a specific IPv4 address or range.
+
+for
+- http: 80
+- https 443
+- custom 9001 for portainer
+- custom 9090 for phpmyadmin
+
 ## Configuration and Installation
 
 ### Exec install shell script for auto installation and configuration
