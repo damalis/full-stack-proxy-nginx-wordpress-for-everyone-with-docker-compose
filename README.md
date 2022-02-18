@@ -41,9 +41,9 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 
 for
 - http: 80
-- https 443
-- custom 9001 for portainer
-- custom 9090 for phpmyadmin
+- https: 443
+- portainer: 9001
+- phpmyadmin 9090
 
 ## Configuration and Installation
 
