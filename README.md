@@ -43,7 +43,7 @@ for
 - http: 80
 - https: 443
 - portainer: 9001
-- phpmyadmin 9090
+- phpmyadmin: 9090
 
 ## Configuration and Installation
 
