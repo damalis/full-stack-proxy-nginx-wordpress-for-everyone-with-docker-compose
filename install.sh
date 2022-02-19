@@ -221,7 +221,7 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 		echo "portainer installing proceeding..."
 		wait $pid
 		if [ $? -ne 0 ]; then
-			echo "Error! could not installed portainer"
+			echo "Error! could not installed portainer" >&2
 			exit 1
 		else
 			echo ""
@@ -235,7 +235,7 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 		fi
 	else
 		echo ""
-		echo "Error! could not installed wordpress and the other services with docker-compose"
+		echo "Error! could not installed wordpress and the other services with docker-compose" >&2
 		exit 1
 	fi
 else
