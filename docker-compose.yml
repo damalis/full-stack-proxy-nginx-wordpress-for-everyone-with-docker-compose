@@ -59,7 +59,6 @@ services:
     
     certbot:
         depends_on:
-            - wordpress
             - proxy
         image: certbot/certbot
         container_name: certbot
@@ -76,7 +75,9 @@ services:
             /bin/sh -c "certbot certonly --webroot --webroot-path /var/www/html --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
         entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;'"
 
-    proxy:	
+    proxy:
+        depends_on:
+            - wordpress
         image: nginx:stable
         container_name: proxy
         networks:
