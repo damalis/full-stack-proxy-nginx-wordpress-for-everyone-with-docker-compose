@@ -5,6 +5,7 @@ services:
     wordpress:
         depends_on:
             - database
+            - webserver
         image: 'wordpress:${PHP_IMAGE_NAME}'
         container_name: 'wp-${PHP_IMAGE_NAME}'
         networks:
@@ -38,8 +39,6 @@ services:
             - 'docker-volume-backup.stop-during-backup=true'        
 
     webserver:
-        depends_on:
-            - wordpress
         image: 'httpd:latest'
         container_name: webserver
         networks:
@@ -60,6 +59,7 @@ services:
     
     certbot:
         depends_on:
+            - wordpress		
             - proxy
         image: certbot/certbot
         container_name: certbot
@@ -76,9 +76,7 @@ services:
             /bin/sh -c "certbot certonly --webroot --webroot-path /var/www/html --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
         entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;'"
 
-    proxy:
-        depends_on:
-            - webserver	
+    proxy:	
         image: nginx:stable
         container_name: proxy
         networks:
