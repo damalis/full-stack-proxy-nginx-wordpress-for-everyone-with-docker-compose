@@ -71,9 +71,11 @@ services:
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-        command: > 
-            /bin/sh -c "certbot certonly --webroot --webroot-path /var/www/html --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
-        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;'"
+        entrypoint: >
+            /bin/sh -c "trap exit TERM; while :;
+            certbot certonly --webroot --webroot-path /var/www/html --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}
+            do certbot renew --dry-run;
+            sleep 12h & wait $${!}; done;"
 
     proxy:
         depends_on:
