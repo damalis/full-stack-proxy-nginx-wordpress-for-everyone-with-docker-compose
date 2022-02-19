@@ -59,7 +59,7 @@ services:
     
     certbot:
         depends_on:
-            - wordpress		
+            - wordpress
             - proxy
         image: certbot/certbot
         container_name: certbot
