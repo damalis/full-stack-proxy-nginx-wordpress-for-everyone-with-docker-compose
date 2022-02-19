@@ -240,5 +240,6 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	fi
 else
 	echo ""
-    echo "not found docker and/or docker-compose, Install docker and/or docker-compose"
+    echo "not found docker and/or docker-compose, Install docker and/or docker-compose" >&2
+	exit 1
 fi
