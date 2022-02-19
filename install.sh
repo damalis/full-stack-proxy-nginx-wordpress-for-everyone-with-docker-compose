@@ -90,6 +90,7 @@ echo ""
 echo "============================================"
 echo "| Please enter project related variables..."
 echo "============================================"
+echo ""
 sleep 2
 
 # set your domain name
@@ -233,11 +234,11 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 			echo "Ok."
 		fi
 	else
+		echo ""
 		echo "Error! could not installed wordpress and the other services with docker-compose"
 		exit 1
 	fi
 else
 	echo ""
     echo "not found docker and/or docker-compose, Install docker and/or docker-compose"
-	echo "Ok."
 fi
