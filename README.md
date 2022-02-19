@@ -176,6 +176,24 @@ add and/or remove wordpress site folders and files with any ftp client program i
 
 add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin.
 
+must add below code in wp-config.php file.
+```
+define('WP_REDIS_HOST', 'redis');
+define('WP_CACHE_KEY_SALT', 'wp-docker-7f1a7682-9aec-4d4b-9a10-46bbadec41ba');
+define('WP_REDIS_PREFIX', $_SERVER['HTTP_HOST']);
+define('WP_REDIS_CONFIG', [
+	'prefix' => getenv('WP_REDIS_PREFIX') ?: null,
+    'timeout' => 0.5,
+    'read_timeout' => 0.5,
+    'async_flush' => true,
+    'compression' => 'zstd',
+    'serializer' => 'igbinary',
+    'split_alloptions' => true,
+    'debug' => false,
+    'save_commands' => false,
+]);
+```
+
 ### phpMyAdmin
 
 You can also visit `https://example.com:9090` to access phpMyAdmin after starting the containers.
