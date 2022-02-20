@@ -71,7 +71,7 @@ services:
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-        entrypoint:  "certbot certonly --webroot --webroot-path /var/www/html --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
+        entrypoint:  "certbot certonly --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
         #entrypoint: >
         #    /bin/sh -c "trap exit TERM; while :;
         #    do certbot renew --dry-run;
@@ -235,7 +235,7 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: ${LOCALHOST_PATH}/wordpress
+            device: ${DIRECTORY_PATH}/wordpress
             o: bind
     db:
         name: ${DATABASE_CONT_NAME}-data
