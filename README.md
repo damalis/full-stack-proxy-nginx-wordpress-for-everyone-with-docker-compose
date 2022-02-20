@@ -62,6 +62,12 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 
 ## Configuration
 
+download with
+```
+git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
+```
+Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
+
 ### Manual Configuration
 
 Copy the example environment into `.env`
@@ -90,8 +96,6 @@ change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` 
 ## Installation
 
 ### Manual Installation
-
-Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
 Firstly: will create external volume
 ```
