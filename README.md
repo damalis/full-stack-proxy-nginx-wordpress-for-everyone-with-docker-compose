@@ -20,7 +20,7 @@ For run certbot (letsencrypt) certificate:
 
 Contents:
 
-- [Auto Configuration and Installation](#autoconfinstall)
+- [Auto Configuration and Installation](#auto configuration and installation)
 - [Requirements](#requirements)
 - [Configuration](#configuration)
 - [Installation](#installation)
