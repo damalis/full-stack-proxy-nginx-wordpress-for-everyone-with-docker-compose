@@ -20,23 +20,13 @@ For run certbot (letsencrypt) certificate:
 
 Contents:
 
+- [Auto Configuration and Installation](#autoconfinstall)
 - [Requirements](#requirements)
 - [Configuration](#configuration)
 - [Installation](#installation)
 - [Usage](#usage)
 
-## Requirements
-
-Make sure you have the latest versions of **Docker** and **Docker Compose** installed on your machine.
-
-- [How install docker](https://docs.docker.com/engine/install/)
-- [How install docker compose](https://docs.docker.com/compose/install/)
-
-Clone this repository or copy the files from this repository into a new folder. In the **docker-compose.yml** file you may change the database from MariaDB to MySQL.
-
-Make sure to [add your user to the `docker` group](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
-
-### IPv4 Firewall
+## IPv4 Firewall
 Create rules to open ports to the internet, or to a specific IPv4 address or range.
 
 for
@@ -45,7 +35,7 @@ for
 - portainer: 9001
 - phpmyadmin: 9090
 
-## Configuration and Installation
+## Auto Configuration and Installation
 
 ### Exec install shell script for auto installation and configuration
 
@@ -58,6 +48,19 @@ git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-dock
 chmod +x install.sh
 ./install.sh
 ```
+
+## Requirements
+
+Make sure you have the latest versions of **Docker** and **Docker Compose** installed on your machine.
+
+- [How install docker](https://docs.docker.com/engine/install/)
+- [How install docker compose](https://docs.docker.com/compose/install/)
+
+Clone this repository or copy the files from this repository into a new folder. In the **docker-compose.yml** file you may change the database from MariaDB to MySQL.
+
+Make sure to [add your user to the `docker` group](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
+
+## Configuration
 
 ### Manual Configuration
 
@@ -83,6 +86,8 @@ change example.com to your domain name in ```./phpmyadmin/apache2/sites-availabl
 rename filename ```cp ./phpmyadmin/config.sample.inc.php ./phpmyadmin/config.inc.php```.
 
 change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file.
+
+## Installation
 
 ### Manual Installation
 
