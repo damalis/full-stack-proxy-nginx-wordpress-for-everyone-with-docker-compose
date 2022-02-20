@@ -14,13 +14,13 @@ With this project you can quickly run the following:
 - [redis](https://hub.docker.com/_/redis)
 - [backup](https://hub.docker.com/r/futurice/docker-volume-backup)
 
-For run certbot (letsencrypt) certificate:
+For certbot (letsencrypt) certificate:
 
 - [Set DNS configuration of your domain name](https://support.google.com/a/answer/48090?hl=en)
 
 Contents:
 
-- [Auto Configuration and Installation](#auto configuration and installation)
+- [Auto Configuration and Installation](#automatic)
 - [Requirements](#requirements)
 - [Configuration](#configuration)
 - [Installation](#installation)
@@ -35,7 +35,7 @@ for
 - portainer: 9001
 - phpmyadmin: 9090
 
-## Auto Configuration and Installation
+## Automatic
 
 ### Exec install shell script for auto installation and configuration
 
