@@ -71,11 +71,7 @@ services:
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-        entrypoint:  "certbot certonly --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
-        #entrypoint: >
-        #    /bin/sh -c "trap exit TERM; while :;
-        #    do certbot renew --dry-run;
-        #    sleep 12h & wait $${!}; done;"
+        entrypoint:  "certonly --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
 
     proxy:
         depends_on:
@@ -181,8 +177,6 @@ services:
         command: '--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password'    
     
     redis:
-        depends_on:
-            - phpmyadmin
         image: 'redis:latest'
         container_name: redis
         networks:
