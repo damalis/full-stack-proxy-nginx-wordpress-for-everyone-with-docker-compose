@@ -18,7 +18,7 @@ services:
             - type: bind
               source: ./php-fpm/php-fpm.d/z-www.conf
               target: '${PHP_FPM_PREFIX}/php-fpm.d/z-www.conf'
-        hostname: web
+        hostname: wordpress
         restart: unless-stopped
         ports:
             - '9000:80'
@@ -71,7 +71,7 @@ services:
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-        entrypoint:  "certonly --staging --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
+        command:  "certonly --staging --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
 
     proxy:
         depends_on:
