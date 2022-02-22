@@ -71,7 +71,7 @@ services:
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-        entrypoint:  "certonly --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
+        entrypoint:  "certonly --staging --webroot --webroot-path ${WEBSERVER_DOC_ROOT} --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
 
     proxy:
         depends_on:
