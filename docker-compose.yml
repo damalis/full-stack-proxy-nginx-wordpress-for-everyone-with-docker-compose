@@ -96,7 +96,7 @@ services:
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
             - type: bind
               source: ./proxy/ssl-set.sh
-              target: '/tmp/ssl-set'
+              target: '/tmp/ssl-set.sh'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - '/tmp/acme_challenge:/tmp/acme_challenge'
         hostname: proxy
@@ -106,6 +106,8 @@ services:
             - '443:443' 
         environment:
             TZ: '${LOCAL_TIMEZONE}'
+            DOMAIN_NAME: '${DOMAIN_NAME}'			
+            PROXY_PREFIX: '${PROXY_PREFIX}'
         command: /bin/sh "/tmp/ssl-set.sh"
         labels:            
             - "docker-volume-backup.stop-during-backup=true"        
