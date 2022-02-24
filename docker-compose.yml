@@ -39,6 +39,8 @@ services:
             - 'docker-volume-backup.stop-during-backup=true'        
 
     webserver:
+        depends_on:
+            - proxy            		
         image: 'httpd:latest'
         container_name: webserver
         networks:
@@ -59,7 +61,7 @@ services:
     
     certbot:
         depends_on:
-            - proxy
+            - wordpress
         image: certbot/certbot
         container_name: certbot
         networks:
@@ -77,8 +79,6 @@ services:
             trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
 
     proxy:
-        depends_on:
-            - wordpress
         image: nginx:stable
         container_name: proxy
         networks:
