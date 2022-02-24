@@ -12,7 +12,8 @@ fi
 
 use_lets_encrypt_certificates() {
 	echo "Switching Nginx to use Let's Encrypt certificate for $1"
-	sed -i "s|/etc/letsencrypt/dummy/example.com|/etc/letsencrypt/live/$1|g" ${PROXY_PREFIX}/conf.d/default.conf
+	sed -i 's/#listen/listen/g' ${PROXY_PREFIX}/conf.d/default.conf
+	sed -i 's/#ssl_/ssl_/g' ${PROXY_PREFIX}/conf.d/default.conf
 }
 
 reload_nginx() {
