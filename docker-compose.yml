@@ -108,7 +108,7 @@ services:
             TZ: '${LOCAL_TIMEZONE}'
             DOMAIN_NAME: '${DOMAIN_NAME}'			
             PROXY_PREFIX: '${PROXY_PREFIX}'
-        command: /bin/sh "/tmp/ssl-set.sh"
+        command: /bin/sh "chmod +x /tmp/ssl-set.sh; /tmp/ssl-set.sh"
         labels:            
             - "docker-volume-backup.stop-during-backup=true"        
     
