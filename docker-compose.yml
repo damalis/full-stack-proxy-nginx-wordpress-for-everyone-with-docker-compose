@@ -40,7 +40,7 @@ services:
 
     webserver:
         depends_on:
-            - proxy            		
+            - proxy
         image: 'httpd:latest'
         container_name: webserver
         networks:
