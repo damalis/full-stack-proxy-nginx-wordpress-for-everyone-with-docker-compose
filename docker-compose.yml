@@ -109,7 +109,8 @@ services:
             TZ: '${LOCAL_TIMEZONE}'
             DOMAINS: '${DOMAIN_NAME}'
             PROXY_PREFIX: '${PROXY_PREFIX}'
-        command: /bin/sh -c "chmod +x /tmp/ssl-conf.sh; /tmp/ssl-conf.sh"
+        command: "service nginx stop"
+        entrypoint: /bin/sh -c "chmod +x /tmp/ssl-conf.sh; /tmp/ssl-conf.sh"
         labels:            
             - "docker-volume-backup.stop-during-backup=true"        
     
