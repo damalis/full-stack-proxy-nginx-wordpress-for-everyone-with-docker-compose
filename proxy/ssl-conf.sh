@@ -40,5 +40,4 @@ for domain in $DOMAINS; do
 	fi
 done
 
-exec service nginx stop
-#nginx -g "daemon off;"
+exec nginx -g "daemon off;"
