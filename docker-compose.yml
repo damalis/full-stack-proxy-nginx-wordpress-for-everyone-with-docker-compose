@@ -5,7 +5,6 @@ services:
     wordpress:
         depends_on:
             - database
-            - webserver
         image: 'wordpress:${PHP_IMAGE_NAME}'
         container_name: 'wp-${PHP_IMAGE_NAME}'
         networks:
@@ -40,7 +39,7 @@ services:
 
     webserver:
         depends_on:
-            - proxy
+            - wordpress
         image: 'httpd:latest'
         container_name: webserver
         networks:
@@ -61,7 +60,7 @@ services:
     
     certbot:
         depends_on:
-            - wordpress
+            - proxy
         image: certbot/certbot
         container_name: certbot
         networks:
@@ -70,7 +69,7 @@ services:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - 'certbot-var:/var/lib/letsencrypt'
-            - '/tmp/acme_challenge:/tmp/acme_challenge'            
+            - '/tmp/acme-challenge:/tmp/acme-challenge'            
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
@@ -79,6 +78,8 @@ services:
             trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
 
     proxy:
+        depends_on:
+            - webserver
         image: nginx:stable
         container_name: proxy
         networks:
@@ -95,10 +96,10 @@ services:
               source: ./proxy/ssl-option/options-ssl-nginx.conf
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
             - type: bind
-              source: ./proxy/ssl-set.sh
-              target: '/tmp/ssl-set.sh'
+              source: ./proxy/ssl-conf.sh
+              target: '/tmp/ssl-conf.sh'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
-            - '/tmp/acme_challenge:/tmp/acme_challenge'
+            - '/tmp/acme-challenge:/tmp/acme-challenge'
         hostname: proxy
         restart: unless-stopped
         ports:
@@ -108,7 +109,7 @@ services:
             TZ: '${LOCAL_TIMEZONE}'
             DOMAIN_NAME: '${DOMAIN_NAME}'
             PROXY_PREFIX: '${PROXY_PREFIX}'
-        command: /bin/sh "chmod +x /tmp/ssl-set.sh; /tmp/ssl-set.sh"
+        command: /bin/sh -c "chmod +x /tmp/ssl-conf.sh; /tmp/ssl-conf.sh"
         labels:            
             - "docker-volume-backup.stop-during-backup=true"        
     
