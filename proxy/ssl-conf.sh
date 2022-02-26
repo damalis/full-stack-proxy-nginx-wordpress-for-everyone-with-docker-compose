@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [ -z $DOMAIN_NAME ]; then
+if [ -z $DOMAINS ]; then
 	echo "DOMAIN[S] environment variable is not set"
 	exit 1;
 fi
@@ -12,10 +12,10 @@ fi
 
 use_lets_encrypt_certificates() {
 	echo "Switching Nginx to use Let's Encrypt certificate for $1"	
-	sed -i '/location.*acme-challenge/,/}/ s/^[^#]/#/' proxy.sample.conf
-	sed -i '/#location.\/./,/#}/ s/#//' proxy.sample.conf
-	sed -i 's/#listen/listen/g' proxy.sample.conf
-	sed -i 's/#ssl_/ssl_/g' proxy.sample.conf	
+	sed -i '/location.*acme-challenge/,/}/ s/^[^#]/#/' $PROXY_PREFIX/conf.d/default.conf
+	sed -i '/#location.\/./,/#}/ s/#//' $PROXY_PREFIX/conf.d/default.conf
+	sed -i 's/#listen/listen/g' $PROXY_PREFIX/conf.d/default.conf
+	sed -i 's/#ssl_/ssl_/g' $PROXY_PREFIX/conf.d/default.conf	
 }
 
 reload_nginx() {
@@ -40,4 +40,5 @@ for domain in $DOMAINS; do
 	fi
 done
 
-exec nginx -g "daemon off;"
+exec service nginx stop
+#nginx -g "daemon off;"
