@@ -107,7 +107,7 @@ services:
             - '443:443' 
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-            DOMAIN_NAME: '${DOMAIN_NAME}'
+            DOMAINS: '${DOMAIN_NAME}'
             PROXY_PREFIX: '${PROXY_PREFIX}'
         command: /bin/sh -c "chmod +x /tmp/ssl-conf.sh; /tmp/ssl-conf.sh"
         labels:            
