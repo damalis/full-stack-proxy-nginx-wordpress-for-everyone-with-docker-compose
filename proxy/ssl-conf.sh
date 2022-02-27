@@ -12,7 +12,7 @@ fi
 
 use_lets_encrypt_certificates() {
 	echo "Switching Nginx to use Let's Encrypt certificate for $1"	
-	sed -i.bak '/location.*acme-challenge/,/}/ s/^[^#]/#/ /#location.\/./,/#}/ s/#// s/#listen/listen/g s/#ssl_/ssl_/g' $PROXY_PREFIX/conf.d/default.conf
+	sed -i.bak '/location.*acme-challenge/,/}/ s/^[^#]/#/; /#location.\/./,/#}/ s/#//; s/#listen/listen/g; s/#ssl_/ssl_/g' $PROXY_PREFIX/conf.d/default.conf
 	#sed -i '/#location.\/./,/#}/ s/#//' $PROXY_PREFIX/conf.d/default.conf
 	#sed -i 's/#listen/listen/g' $PROXY_PREFIX/conf.d/default.conf
 	#sed -i 's/#ssl_/ssl_/g' $PROXY_PREFIX/conf.d/default.conf	
