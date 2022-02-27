@@ -73,9 +73,8 @@ services:
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-        entrypoint: >
-            /bin/sh -c "certbot certonly --staging --standalone --preferred-challenges http,dns --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME};
-            trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
+        command: bash -c "certbot certonly --staging --webroot --webroot-path /tmp/acme-challenge --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}"
+        enrypoint: /bin/sh -c "trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
 
     proxy:
         depends_on:
@@ -109,7 +108,6 @@ services:
             TZ: '${LOCAL_TIMEZONE}'
             DOMAINS: '${DOMAIN_NAME}'
             PROXY_PREFIX: '${PROXY_PREFIX}'
-        command: "service nginx stop"
         entrypoint: /bin/sh -c "chmod +x /tmp/ssl-conf.sh; /tmp/ssl-conf.sh"
         labels:            
             - "docker-volume-backup.stop-during-backup=true"        
