@@ -105,10 +105,7 @@ services:
             - '80:80'
             - '443:443' 
         environment:
-            TZ: '${LOCAL_TIMEZONE}'
-            DOMAINS: '${DOMAIN_NAME}'
-            PROXY_PREFIX: '${PROXY_PREFIX}'
-        entrypoint: /bin/sh -c "chmod +x /tmp/ssl-conf.sh; /tmp/ssl-conf.sh"
+            TZ: '${LOCAL_TIMEZONE}'            
         labels:            
             - "docker-volume-backup.stop-during-backup=true"        
     
