@@ -215,6 +215,8 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	wait $pid
 	if [ $? -eq 0 ]
 	then
+		sed -i 's/DOMAIN_NAME_VALUE/'$domain_name'/' ./proxy/ssl-conf.sh
+		./proxy/ssl-conf.sh
 		# installing portainer
 		docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
 		echo ""
