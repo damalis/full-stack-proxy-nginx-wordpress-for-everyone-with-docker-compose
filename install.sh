@@ -120,7 +120,7 @@ done
 echo "Ok."
 
 db_username=""
-db_regex="^[0-9a-zA-Z$_]\$"
+db_regex="^[0-9a-zA-Z$_]$"
 read -p 'Enter Database Username(at least 6 characters): ' db_username
 while [ -z $db_username ] || [[ $(echo ${#db_username}) -lt 6 ]] || [[ ! $db_username =~ $db_regex ]]
 do
@@ -217,9 +217,6 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	wait $pid
 	if [ $? -eq 0 ]
 	then
-		sed -i 's/DOMAIN_NAME_VALUE/'$domain_name'/' ./ssl-proxyconf.sh
-		chmod +x ./ssl-proxyconf.sh
-		./ssl-proxyconf.sh
 		# installing portainer
 		docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
 		echo ""
@@ -229,6 +226,10 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 			echo "Error! could not installed portainer" >&2
 			exit 1
 		else
+			# proxy configuration file ssl set
+			sed -i 's/DOMAIN_NAME_VALUE/'$domain_name'/' ./ssl-proxyconf.sh
+			chmod +x ./ssl-proxyconf.sh
+			./ssl-proxyconf.sh
 			echo ""
 			echo "completed setup"
 			echo ""
