@@ -24,8 +24,6 @@ services:
         links:
             - database
             - redis
-        stdin_open: true
-        tty: true
         environment:
             WORDPRESS_DB_HOST: database
             WORDPRESS_DB_USER: '${WORDPRESS_DB_USER}'
@@ -94,9 +92,6 @@ services:
             - type: bind
               source: ./proxy/ssl-option/options-ssl-nginx.conf
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
-            - type: bind
-              source: ./proxy/ssl-conf.sh
-              target: '/tmp/ssl-conf.sh'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - '/tmp/acme-challenge:/tmp/acme-challenge'
         hostname: proxy
