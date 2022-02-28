@@ -120,8 +120,9 @@ done
 echo "Ok."
 
 db_username=""
+db_regex="[0-9a-zA-Z$_]"
 read -p 'Enter Database Username(at least 6 characters): ' db_username
-while [ -z $db_username ] || [[ $(echo ${#db_username}) -lt 6 ]]
+while [ -z $db_username ] || [[ $(echo ${#db_username}) -lt 6 ]] || [[ ! $db_username =~ $db_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Username(at least 6 characters): ' db_username
@@ -130,8 +131,9 @@ done
 echo "Ok."
 
 db_password=""
+password_regex="[a-zA-Z0-9\._-]"
 read -p 'Enter Database Password(at least 6 characters): ' db_password
-while [ -z $db_password ] || [[ $(echo ${#db_password}) -lt 6 ]]
+while [ -z $db_password ] || [[ $(echo ${#db_password}) -lt 6 ]] || [[ ! $db_password =~ $password_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Password(at least 6 characters): ' db_password
@@ -141,7 +143,7 @@ echo "Ok."
 
 db_name=""
 read -p 'Enter Database Name(at least 6 characters): ' db_name
-while [ -z $db_name ] || [[ $(echo ${#db_name}) -lt 6 ]]
+while [ -z $db_name ] || [[ $(echo ${#db_name}) -lt 6 ]] || [[ ! $db_name =~ $db_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Name(at least 6 characters): ' db_name
@@ -151,7 +153,7 @@ echo "Ok."
 
 mysql_root_password=""
 read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
-while [ -z $mysql_root_password ] || [[ $(echo ${#mysql_root_password}) -lt 6 ]]
+while [ -z $mysql_root_password ] || [[ $(echo ${#mysql_root_password}) -lt 6 ]] || [[ ! $mysql_root_password =~ $password_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
@@ -171,7 +173,7 @@ echo "Ok."
 
 pma_password=""
 read -p 'Enter PhpMyAdmin Password(at least 6 characters): ' pma_password
-while [ -z $pma_password ] || [[ $(echo ${#pma_password}) -lt 6 ]]
+while [ -z $pma_password ] || [[ $(echo ${#pma_password}) -lt 6 ]] || [[ ! $pma_password =~ $password_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter PhpMyAdmin Password(at least 6 characters): ' pma_password
@@ -215,9 +217,9 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	wait $pid
 	if [ $? -eq 0 ]
 	then
-		sed -i 's/DOMAIN_NAME_VALUE/'$domain_name'/' ./proxy/ssl-conf.sh
-		chmod +x ./proxy/ssl-conf.sh
-		./proxy/ssl-conf.sh
+		sed -i 's/DOMAIN_NAME_VALUE/'$domain_name'/' ./ssl-proxyconf.sh
+		chmod +x ./ssl-proxyconf.sh
+		./ssl-proxyconf.sh
 		# installing portainer
 		docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
 		echo ""
