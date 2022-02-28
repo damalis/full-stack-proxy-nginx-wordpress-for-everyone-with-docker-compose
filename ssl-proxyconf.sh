@@ -25,7 +25,7 @@ reload_nginx() {
 }
 
 wait_for_lets_encrypt() {
-	until [ ! -d "./certbot/live/$1" ]; do
+	until [ -d "./certbot/live/$1" ]; do
 		echo "waiting for Let's Encrypt certificates for $1"
 		sleep 5s & wait ${!}
 	done
