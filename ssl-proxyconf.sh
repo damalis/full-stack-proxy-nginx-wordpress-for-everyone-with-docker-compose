@@ -9,21 +9,19 @@ if [ -z $DOMAINS ]; then
 fi
 
 if [ ! -f ./certbot/ssl-dhparam.pem ]; then
-	openssl dhparam -out ../certbot/ssl-dhparam.pem 2048
+	openssl dhparam -out ./certbot/ssl-dhparam.pem 2048
 fi
 
 use_lets_encrypt_certificates() {
 	echo "switching nginx to use Let's Encrypt certificate for $1"	
-	sed -i '/location.*acme-challenge/,/}/ s/^[^#]/#/; /#location.\/./,/#}/ s/#//; s/#listen/listen/g; s/#ssl_/ssl_/g' ./proxy/conf.d/proxy.conf
-	#sed -i '/#location.\/./,/#}/ s/#//' $PROXY_PREFIX/conf.d/default.conf
-	#sed -i 's/#listen/listen/g' $PROXY_PREFIX/conf.d/default.conf
-	#sed -i 's/#ssl_/ssl_/g' $PROXY_PREFIX/conf.d/default.conf	
+	sed -i '/location.*acme-challenge/,/}/ s/^[^#]/#/; /#location.\/./,/#}/ s/#//; s/#listen/listen/g; s/#ssl_/ssl_/g' ./proxy/conf.d/proxy.conf	
 }
 
 reload_nginx() {
 	echo "Reloading Nginx configuration"
 	docker-compose stop proxy
 	docker-compose start proxy
+	exit 0
 }
 
 wait_for_lets_encrypt() {
