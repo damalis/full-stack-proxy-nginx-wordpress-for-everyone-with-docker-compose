@@ -120,7 +120,7 @@ done
 echo "Ok."
 
 db_username=""
-db_regex="[0-9a-zA-Z$_]"
+db_regex="^[0-9a-zA-Z$_]\$"
 read -p 'Enter Database Username(at least 6 characters): ' db_username
 while [ -z $db_username ] || [[ $(echo ${#db_username}) -lt 6 ]] || [[ ! $db_username =~ $db_regex ]]
 do
@@ -131,7 +131,7 @@ done
 echo "Ok."
 
 db_password=""
-password_regex="[a-zA-Z0-9\._-]"
+password_regex="^[a-zA-Z0-9\._-]\$"
 read -p 'Enter Database Password(at least 6 characters): ' db_password
 while [ -z $db_password ] || [[ $(echo ${#db_password}) -lt 6 ]] || [[ ! $db_password =~ $password_regex ]]
 do
