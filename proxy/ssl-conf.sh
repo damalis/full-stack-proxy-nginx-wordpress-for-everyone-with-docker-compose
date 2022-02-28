@@ -43,5 +43,5 @@ for domain in $DOMAINS; do
 	fi
 done
 
-docker-compose stop proxy
-docker-compose start proxy
+#docker-compose stop proxy
+#docker-compose start proxy
