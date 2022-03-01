@@ -21,20 +21,24 @@ reload_nginx() {
 	echo "Reloading Nginx configuration"
 	docker-compose stop proxy
 	docker-compose start proxy
-	exit 0
 }
 
 wait_for_lets_encrypt() {
-	until [ -d "./certbot/live/$1" ]; do
-		echo "waiting for Let's Encrypt certificates for $1"
-		sleep 5s & wait ${!}
-	done
+	if sudo [ -d "./certbot/live/$1" ]; then 
+		break 
+	else
+		until sudo ls ./certbot/live/$1 2>/dev/null; do
+			echo "waiting for Let's Encrypt certificates for $1"
+			sleep 5s & wait ${!}
+			if sudo [ -d "./certbot/live/$1" ]; then break; fi
+		done
+	fi;	
 	use_lets_encrypt_certificates "$1"
 	reload_nginx
 }
 
 for domain in $DOMAINS; do
-	if [ ! -d "./certbot/live/$1" ]; then
+	if sudo [ ! -d "./certbot/live/$domain" ]; then
 		wait_for_lets_encrypt "$domain" &
 	else
 		use_lets_encrypt_certificates "$domain"
