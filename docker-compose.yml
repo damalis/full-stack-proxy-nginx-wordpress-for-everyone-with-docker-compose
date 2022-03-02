@@ -67,7 +67,7 @@ services:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - 'certbot-var:/var/lib/letsencrypt'
-            - '/tmp/acme-challenge:/tmp/acme-challenge'            
+            - '/tmp/acme-challenge:/tmp/acme-challenge'                        
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
@@ -94,9 +94,6 @@ services:
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - '/tmp/acme-challenge:/tmp/acme-challenge'
-            - type: bind
-              source: ./ssl-proxyconf.sh
-              target: '/tmp/ssl-proxyconf.sh'
         hostname: proxy
         restart: unless-stopped
         ports:
@@ -106,7 +103,6 @@ services:
             TZ: '${LOCAL_TIMEZONE}'            
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
-        command: /bin/sh -c "/tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}'"
     
     phpmyadmin:
         depends_on:
