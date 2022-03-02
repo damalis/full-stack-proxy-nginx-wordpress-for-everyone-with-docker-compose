@@ -151,6 +151,16 @@ do
 done
 echo "Ok."
 
+db_table_prefix=""
+read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
+while [ -z $db_table_prefix ] || [[ $(echo ${#db_table_prefix}) -lt 6 ]] || [[ ! $db_table_prefix =~ $db_regex ]]
+do
+	echo "Try again"
+	read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
+	sleep 1
+done
+echo "Ok."
+
 mysql_root_password=""
 read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
 while [ -z $mysql_root_password ] || [[ $(echo ${#mysql_root_password}) -lt 6 ]] || [[ ! $mysql_root_password =~ $password_regex ]]
@@ -202,6 +212,7 @@ sed -i 's/email@domain.com/'$email'/g' .env
 sed -i 's/db_username/'$db_username'/g' .env
 sed -i 's/db_password/'$db_password'/g' .env
 sed -i 's/db_name/'$db_name'/g' .env
+sed -i 's/db_table_prefix/'$db_table_prefix'/g' .env
 sed -i 's/mysql_root_password/'$mysql_root_password'/g' .env
 sed -i 's/pma_username/'$pma_username'/g' .env
 sed -i 's/pma_password/'$pma_password'/g' .env
@@ -225,11 +236,13 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 		if [ $? -ne 0 ]; then
 			echo "Error! could not installed portainer" >&2
 			exit 1
-		else
-			# proxy configuration file ssl set
-			sed -i 's/DOMAIN_NAME_VALUE/'$domain_name'/' ./ssl-proxyconf.sh
-			chmod +x ./ssl-proxyconf.sh
-			./ssl-proxyconf.sh
+		else			
+			until sudo ls ./certbot/live/$domain_name 2>/dev/null; do
+				echo "waiting for Let's Encrypt certificates for $1"
+				sleep 5s & wait ${!}
+				if sudo [ -d "./certbot/live/$domain_name" ]; then break; fi
+			done
+			
 			echo ""
 			echo "completed setup"
 			echo ""
