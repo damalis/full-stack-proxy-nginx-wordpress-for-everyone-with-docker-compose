@@ -19,8 +19,8 @@ use_lets_encrypt_certificates() {
 
 reload_nginx() {
 	echo "Reloading Nginx configuration"
-	doker-compose stop proxy
-	doker-compose start proxy
+	docker-compose stop proxy
+	docker-compose start proxy
 }
 
 wait_for_lets_encrypt() {
@@ -46,5 +46,5 @@ for domain in $DOMAIN; do
 	fi
 done
 
-#doker-compose stop proxy
-#doker-compose start proxy
+#docker-compose stop proxy
+#docker-compose start proxy
