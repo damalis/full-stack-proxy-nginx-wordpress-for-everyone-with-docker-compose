@@ -40,6 +40,7 @@ for domain in $1; do
 		wait_for_lets_encrypt "$domain" "$2" "$3" &
 	else
 		use_lets_encrypt_certificates "$domain" "$2" "$3"
+		reload_nginx "$3"
 	fi
 done
 
