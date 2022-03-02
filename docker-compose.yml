@@ -94,6 +94,9 @@ services:
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - '/tmp/acme-challenge:/tmp/acme-challenge'
+            - type: bind
+              source: ./ssl-proxyconf.sh
+              target: '/tmp/ssl-proxyconf.sh'
         hostname: proxy
         restart: unless-stopped
         ports:
@@ -103,6 +106,8 @@ services:
             TZ: '${LOCAL_TIMEZONE}'            
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
+        command: >
+            bash -c "chmod +x /tmp/ssl-proxyconf.sh && /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}'"
     
     phpmyadmin:
         depends_on:
