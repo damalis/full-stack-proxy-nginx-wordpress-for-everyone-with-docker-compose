@@ -153,7 +153,7 @@ echo "Ok."
 
 db_table_prefix=""
 read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
-while [ -z $db_table_prefix ] || [[ $(echo ${#db_table_prefix}) -lt 6 ]] || [[ ! $db_table_prefix =~ $db_regex ]]
+while [ -z $db_table_prefix ] || [[ $(echo ${#db_table_prefix}) -lt 3 ]] || [[ ! $db_table_prefix =~ $db_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
