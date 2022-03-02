@@ -8,7 +8,7 @@ if [ -z $1 ]; then
 	exit 1;
 fi
 
-if [ ! -f $2/ssl-dhparam.pem ]; then
+if [ ! -f ./certbot/ssl-dhparam.pem ]; then
 	openssl dhparam -out $2/ssl-dhparam.pem 2048
 fi
 
@@ -24,13 +24,13 @@ reload_nginx() {
 }
 
 wait_for_lets_encrypt() {
-	if [ -d "./certbot/live/$1" ]; then 
+	if sudo [ -d "./certbot/live/$1" ]; then 
 		break 
 	else
-		until ls ./certbot/live/$1 2>/dev/null; do
+		until sudo ls ./certbot/live/$1 2>/dev/null; do
 			echo "waiting for Let's Encrypt certificates for $1"
 			sleep 5s & wait ${!}
-			if [ -d "./certbot/live/$1" ]; then break; fi
+			if sudo [ -d "./certbot/live/$1" ]; then break; fi
 		done
 	fi;	
 	use_lets_encrypt_certificates "$1" "$2" "$3"
@@ -39,7 +39,7 @@ wait_for_lets_encrypt() {
 }
 
 for domain in $DOMAIN; do
-	if [ ! -d "$2/live/$domain" ]; then
+	if sudo [ ! -d "$2/live/$domain" ]; then
 		wait_for_lets_encrypt "$domain" &
 	else
 		use_lets_encrypt_certificates "$domain"
