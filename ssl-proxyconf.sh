@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+DOMAIN=$1
+
 if [ -z $1 ]; then
 	echo "DOMAIN environment variable is not set"
 	exit 1;
@@ -12,30 +14,31 @@ fi
 
 use_lets_encrypt_certificates() {
 	echo "switching nginx to use Let's Encrypt certificate for $1"	
-	sed -i '/location.*acme-challenge/,/}/ s/^[^#]/#/; /#location.\/./,/#}/ s/#//; s/#listen/listen/g; s/#ssl_/ssl_/g' $3/conf.d/proxy.conf	
+	sed -i '/location.*acme-challenge/,/}/ s/^[^#]/#/; /#location.\/./,/#}/ s/#//; s/#listen/listen/g; s/#ssl_/ssl_/g' ./proxy/conf.d/proxy.conf	
 }
 
 reload_nginx() {
 	echo "Reloading Nginx configuration"
-	nginx -g "daemon off;"
+	doker-compose stop proxy
+	doker-compose start proxy
 }
 
 wait_for_lets_encrypt() {
-	if [ -d "$2/live/$1" ]; then 
+	if [ -d "./certbot/live/$1" ]; then 
 		break 
 	else
-		until ls $2/live/$1 2>/dev/null; do
+		until ls ./certbot/live/$1 2>/dev/null; do
 			echo "waiting for Let's Encrypt certificates for $1"
 			sleep 5s & wait ${!}
-			if [ -d "$2/live/$1" ]; then break; fi
+			if [ -d "./certbot/live/$1" ]; then break; fi
 		done
 	fi;	
-	use_lets_encrypt_certificates "$1"
+	use_lets_encrypt_certificates "$1" "$2" "$3"
 	reload_nginx
 	exit 0
 }
 
-for domain in $1; do
+for domain in $DOMAIN; do
 	if [ ! -d "$2/live/$domain" ]; then
 		wait_for_lets_encrypt "$domain" &
 	else
@@ -43,4 +46,5 @@ for domain in $1; do
 	fi
 done
 
-#exec nginx -g "daemon off;"
+#doker-compose stop proxy
+#doker-compose start proxy
