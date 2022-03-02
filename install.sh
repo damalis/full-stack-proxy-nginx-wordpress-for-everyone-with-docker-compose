@@ -236,13 +236,13 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 		if [ $? -ne 0 ]; then
 			echo "Error! could not installed portainer" >&2
 			exit 1
-		else			
+		else
+			./ssl-proxyconf.sh "$domain_name" &
 			until sudo ls ./certbot/live/$domain_name 2>/dev/null; do
-				echo "waiting for Let's Encrypt certificates for $1"
-				sleep 5s & wait ${!}
+				echo "waiting for Let's Encrypt certificates for $domain_name"
+				sleep 6s & wait ${!}
 				if sudo [ -d "./certbot/live/$domain_name" ]; then break; fi
-			done
-			
+			done			
 			echo ""
 			echo "completed setup"
 			echo ""
