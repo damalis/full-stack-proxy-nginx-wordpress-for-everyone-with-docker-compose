@@ -23,13 +23,13 @@ reload_nginx() {
 }
 
 wait_for_lets_encrypt() {
-	if [ -n "$(find $2/live -name '$1' 2>/dev/null | head -1)" ]; then 
+	if [ -d "$2/live/$1" ]; then 
 		break 
 	else
-		until [ -n "$(find $2/live -name '$1' 2>/dev/null | head -1)" ]; do
+		until [ -d "$2/live/$1" ]; do
 			echo "waiting for Let's Encrypt certificates for $1"
 			sleep 5s & wait ${!}
-			if [ -n "$(find $2/live -name '$1' 2>/dev/null | head -1)" ]; then break; fi
+			if [ -d "$2/live/$1" ]; then break; fi
 		done
 	fi;	
 	use_lets_encrypt_certificates "$1" "$2" "$3"
@@ -37,7 +37,7 @@ wait_for_lets_encrypt() {
 }
 
 for domain in $1; do
-	if [ ! -n "$(find $2/live -name '$domain' 2>/dev/null | head -1)" ]; then
+	if [ ! -d "$2/live/$1" ]; then
 		wait_for_lets_encrypt "$domain" "$2" "$3" &
 	else
 		use_lets_encrypt_certificates "$domain" "$2" "$3"
