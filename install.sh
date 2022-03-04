@@ -192,6 +192,16 @@ do
 done
 echo "Ok."
 
+local_timezone=""
+local_timezone_regex="^[a-zA-Z0-9\/\+\-_]{1,}$"
+read -p 'Enter container local Timezone(e.g. : America/Los_Angeles, to see the other timezones, https://docs.diladele.com/docker/timezones.html): ' local_timezone
+while [[ ! $local_timezone =~ $local_timezone_regex ]]
+do
+	echo "Try again"
+	read -p 'Enter container local Timezone(e.g. : America/Los_Angeles. to see the other local timezones, https://docs.diladele.com/docker/timezones.html): ' local_timezone
+done
+echo "Ok."
+
 read -p "Apply changes (y/n)? " choice
 case "$choice" in
   y|Y ) echo "Yes! Proceeding now...";;
@@ -218,6 +228,7 @@ sed -i 's/mysql_root_password/'$mysql_root_password'/g' .env
 sed -i 's/pma_username/'$pma_username'/g' .env
 sed -i 's/pma_password/'$pma_password'/g' .env
 sed -i "s@directory_path@$(pwd)@" .env
+sed -i 's/local_timezone/'$local_timezone'/g' .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # Firstly: create external volume
