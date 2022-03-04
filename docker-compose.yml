@@ -94,9 +94,6 @@ services:
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - '/tmp/acme-challenge:/tmp/acme-challenge'
-            - type: bind
-              source: ./ssl-proxyconf.sh
-              target: '/tmp/ssl-proxyconf.sh'
         hostname: proxy
         restart: unless-stopped
         ports:
@@ -145,7 +142,7 @@ services:
             PMA_CONTROLUSER: '${PMA_CONTROLUSER}'
             PMA_CONTROLPASS: '${PMA_CONTROLPASS}'
             MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-            MEMORY_LIMIT: '${PMA_MEMORY_LIMIT}'
+            UPLOAD_LIMIT: '${PMA_UPLOAD_LIMIT}'
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
