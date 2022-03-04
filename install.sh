@@ -154,7 +154,7 @@ echo "Ok."
 db_table_prefix=""
 db_table_prefix_regex="^[0-9a-zA-Z\$_]{3,}$"
 read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
-while [[ ! $db_table_prefix =~ db_table_prefix_regex ]]
+while [[ ! $db_table_prefix =~ $db_table_prefix_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
