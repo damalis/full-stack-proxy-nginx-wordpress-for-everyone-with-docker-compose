@@ -197,14 +197,9 @@ add and/or remove wordpress site folders and files with any ftp client program i
 
 #### Redis Plugin
 
-add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin.
+add and enable [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin and
 
 must add below code in wp-config.php file.
-
-```
-define('FORCE_SSL_LOGIN', true);
-define('FORCE_SSL_ADMIN', true);
-```
 
 ```
 define('WP_REDIS_HOST', 'redis');
@@ -221,6 +216,13 @@ define('WP_REDIS_CONFIG', [
     'debug' => false,
     'save_commands' => false,
 ]);
+```
+
+add this code to connect always with ssl in wp-config.php file.
+
+```
+define('FORCE_SSL_LOGIN', true);
+define('FORCE_SSL_ADMIN', true);
 ```
 
 ### phpMyAdmin
