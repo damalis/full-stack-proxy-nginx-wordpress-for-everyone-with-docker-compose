@@ -43,7 +43,7 @@ download with
 ```
 git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
 ```
-
+Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 ```
 chmod +x install.sh
 ./install.sh
@@ -144,10 +144,20 @@ To stop and remove all the containers use the`down` command:
 docker-compose down
 ```
 
+to remove portainer container
+```
+docker rm -f $(docker ps -a -q)
+```
+
 Use `-v` if you need to remove the database volume which is used to persist the database:
 
 ```
 docker-compose down -v
+```
+
+to remove external certbot-etc and portainer volumes
+```
+docker volume rm $(docker volume ls -q)
 ```
 
 ### Project from existing source
