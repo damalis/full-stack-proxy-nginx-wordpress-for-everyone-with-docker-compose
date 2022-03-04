@@ -159,7 +159,6 @@ to remove external certbot-etc and portainer volumes
 ```
 docker volume rm $(docker volume ls -q)
 ```
-
 ### Project from existing source
 
 Copy all files into a new directory:
