@@ -120,9 +120,9 @@ done
 echo "Ok."
 
 db_username=""
-db_regex="^[0-9a-zA-Z$_]+\$"
+db_regex="^[0-9a-zA-Z\$_]{6,}$"
 read -p 'Enter Database Username(at least 6 characters): ' db_username
-while [ -z $db_username ] || [[ $(echo ${#db_username}) -lt 6 ]] || [[ ! $db_username =~ $db_regex ]]
+while [[ ! $db_username =~ $db_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Username(at least 6 characters): ' db_username
@@ -131,9 +131,9 @@ done
 echo "Ok."
 
 db_password=""
-password_regex="^[a-zA-Z0-9\._-]+\$"
+password_regex="^[a-zA-Z0-9\._-]{6,}$"
 read -p 'Enter Database Password(at least 6 characters): ' db_password
-while [ -z $db_password ] || [[ $(echo ${#db_password}) -lt 6 ]] || [[ ! $db_password =~ $password_regex ]]
+while [[ ! $db_password =~ $password_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Password(at least 6 characters): ' db_password
@@ -143,7 +143,7 @@ echo "Ok."
 
 db_name=""
 read -p 'Enter Database Name(at least 6 characters): ' db_name
-while [ -z $db_name ] || [[ $(echo ${#db_name}) -lt 6 ]] || [[ ! $db_name =~ $db_regex ]]
+while [[ ! $db_name =~ $db_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Name(at least 6 characters): ' db_name
@@ -152,8 +152,9 @@ done
 echo "Ok."
 
 db_table_prefix=""
+db_table_prefix_regex="^[0-9a-zA-Z\$_]{3,}$"
 read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
-while [ -z $db_table_prefix ] || [[ $(echo ${#db_table_prefix}) -lt 3 ]] || [[ ! $db_table_prefix =~ $db_regex ]]
+while [[ ! $db_table_prefix =~ db_table_prefix_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
@@ -163,7 +164,7 @@ echo "Ok."
 
 mysql_root_password=""
 read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
-while [ -z $mysql_root_password ] || [[ $(echo ${#mysql_root_password}) -lt 6 ]] || [[ ! $mysql_root_password =~ $password_regex ]]
+while [[ ! $mysql_root_password =~ $password_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter MariaDb/Mysql Root Password(at least 6 characters): ' mysql_root_password
@@ -173,7 +174,7 @@ echo "Ok."
 
 pma_username=""
 read -p 'Enter PhpMyAdmin Username(at least 6 characters): ' pma_username
-while [ -z $pma_username ] || [[ $(echo ${#pma_username}) -lt 6 ]]
+while [[ ! $pma_username =~ $db_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter PhpMyAdmin Username(at least 6 characters): ' pma_username
@@ -183,7 +184,7 @@ echo "Ok."
 
 pma_password=""
 read -p 'Enter PhpMyAdmin Password(at least 6 characters): ' pma_password
-while [ -z $pma_password ] || [[ $(echo ${#pma_password}) -lt 6 ]] || [[ ! $pma_password =~ $password_regex ]]
+while [[ ! $pma_password =~ $password_regex ]]
 do
 	echo "Try again"
 	read -p 'Enter PhpMyAdmin Password(at least 6 characters): ' pma_password
