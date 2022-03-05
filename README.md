@@ -1,7 +1,7 @@
 # full stack wordpress for everyone with docker compose
 
 If You want to have a wordpress website at short time; Full stack WordPress (webserver apache2(httpd), proxy nginx, database admin phpmyadmin, database mariadb/mysql, ssl letsencrypt, redis cache and backup) with Docker Compose.
-Plus, Docker manage by Portainer.
+Plus, manage docker containers with Portainer.
 
 With this project you can quickly run the following:
 
