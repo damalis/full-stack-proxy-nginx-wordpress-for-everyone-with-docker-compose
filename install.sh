@@ -151,13 +151,14 @@ do
 done
 echo "Ok."
 
-db_table_prefix=""
 db_table_prefix_regex="^[0-9a-zA-Z\$_]{3,}$"
-read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
+read -p 'Enter Database Table Prefix(at least 3 characters, default : wp_): ' db_table_prefix
+: ${db_table_prefix:=wp_}
 while [[ ! $db_table_prefix =~ $db_table_prefix_regex ]]
 do
 	echo "Try again"
-	read -p 'Enter Database Table Prefix(at least 3 characters, e.g. : wp_): ' db_table_prefix
+	read -p 'Enter Database Table Prefix(at least 3 characters, default : wp_): ' db_table_prefix
+	: ${db_table_prefix:=wp_}
 	sleep 1
 done
 echo "Ok."
@@ -192,13 +193,15 @@ do
 done
 echo "Ok."
 
-local_timezone=""
-local_timezone_regex="^[a-zA-Z0-9\/\+\-_]{1,}$"
-read -p 'Enter container local Timezone(e.g. : America/Los_Angeles, to see the other timezones, https://docs.diladele.com/docker/timezones.html): ' local_timezone
+local_timezone_regex="^[a-zA-Z0-9/+-_]{1,}$"
+read -p 'Enter container local Timezone(default : America/Los_Angeles, to see the other timezones, https://docs.diladele.com/docker/timezones.html): ' local_timezone
+: ${local_timezone:=America/Los_Angeles}
 while [[ ! $local_timezone =~ $local_timezone_regex ]]
 do
 	echo "Try again"
-	read -p 'Enter container local Timezone(e.g. : America/Los_Angeles. to see the other local timezones, https://docs.diladele.com/docker/timezones.html): ' local_timezone
+	read -p 'Enter container local Timezone(default : America/Los_Angeles, to see the other local timezones, https://docs.diladele.com/docker/timezones.html): ' local_timezone
+	sleep 1
+	: ${local_timezone:=America/Los_Angeles}
 done
 echo "Ok."
 
