@@ -118,16 +118,16 @@ services:
               target: '${PMA_CONF_FOLDER}'
             - type: bind
               source: ./phpmyadmin/apache2/sites-available/default-ssl.conf
-              target: '/etc/apache2/sites-available/default-ssl.conf'
-            - type: bind
-              source: ./phpmyadmin/ssl-option/options-ssl-apache.conf
-              target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-apache.conf'
+              target: '/etc/apache2/sites-available/default-ssl.conf'            
             - type: bind
               source: ./phpmyadmin/apache2/sites-available/000-default.conf
               target: '/etc/apache2/sites-available/000-default.conf'
             - type: bind
               source: ./phpmyadmin/apache2/ports.conf
               target: '/etc/apache2/ports.conf'
+            - type: bind
+              source: ./phpmyadmin/ssl-option/options-ssl-apache.conf
+              target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-apache.conf'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
         hostname: phpmyadmin
         ipc: private
