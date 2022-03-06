@@ -116,9 +116,6 @@ services:
             - type: bind
               source: ./phpmyadmin/apache2/sites-available/default-ssl.conf
               target: '/etc/apache2/sites-available/default-ssl.conf'            
-            #- type: bind
-              #source: ./phpmyadmin/apache2/sites-available/000-default.conf
-              #target: '/etc/apache2/sites-available/000-default.conf'
             - type: bind
               source: ./phpmyadmin/apache2/ports.conf
               target: '/etc/apache2/ports.conf'
