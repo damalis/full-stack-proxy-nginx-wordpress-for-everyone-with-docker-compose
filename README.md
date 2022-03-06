@@ -93,8 +93,6 @@ cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apa
 ```
 change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
 
-rename filename ```cp ./phpmyadmin/config.sample.inc.php ./phpmyadmin/config.inc.php```.
-
 change value of $cfg['blowfish_secret'] in ```./phpmyadmin/config.secret.inc``` file.
 
 ## Installation
