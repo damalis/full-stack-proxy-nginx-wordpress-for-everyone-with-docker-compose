@@ -114,20 +114,23 @@ services:
             - frontend
         volumes:
             - type: bind
-              source: ./phpmyadmin
-              target: '${PMA_CONF_FOLDER}'
-            - type: bind
               source: ./phpmyadmin/apache2/sites-available/default-ssl.conf
               target: '/etc/apache2/sites-available/default-ssl.conf'            
-            - type: bind
-              source: ./phpmyadmin/apache2/sites-available/000-default.conf
-              target: '/etc/apache2/sites-available/000-default.conf'
+            #- type: bind
+              #source: ./phpmyadmin/apache2/sites-available/000-default.conf
+              #target: '/etc/apache2/sites-available/000-default.conf'
             - type: bind
               source: ./phpmyadmin/apache2/ports.conf
               target: '/etc/apache2/ports.conf'
             - type: bind
               source: ./phpmyadmin/ssl-option/options-ssl-apache.conf
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-apache.conf'
+            - type: bind
+              source: ./phpmyadmin/config.user.inc.php
+              target: '${PMA_CONF_FOLDER}/config.user.inc.php'
+            - type: bind
+              source: ./phpmyadmin/config.secret.inc.php
+              target: '${PMA_CONF_FOLDER}/config.secret.inc.php'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
         hostname: phpmyadmin
         ipc: private
@@ -147,10 +150,10 @@ services:
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
         command: >
-            bash -c "echo ${PMA_HTPASSWD_USERNAME}:phpmyadmin:$$( printf \"%s:%s:%s\" \"${PMA_HTPASSWD_USERNAME}\" \"phpmyadmin\" \"${PMA_HTPASSWD_PASSWORD}\" | md5sum | awk '{print $$1}' ) > /etc/phpmyadmin/.htpasswd 
-            && printf 'AuthType Digest\nAuthName \"phpmyadmin\"\nAuthDigestProvider file\nAuthUserFile /etc/phpmyadmin/.htpasswd\n#Require ssl\nRequire valid-user\n' > /var/www/html/.htaccess 
-            && mkdir -p /var/www/upload && chown www-data:www-data /var/www/upload && chmod a+w /var/www/upload && mkdir -p /var/www/save && a2enmod auth_digest 
-            && chown www-data:www-data /var/www/save && chmod a+w /var/www/save && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
+            bash -c "echo ${PMA_HTPASSWD_USERNAME}:phpmyadmin:$$( printf \"%s:%s:%s\" \"${PMA_HTPASSWD_USERNAME}\" \"phpmyadmin\" \"${PMA_HTPASSWD_PASSWORD}\" | md5sum | awk '{print $$1}' ) > ${PMA_CONF_FOLDER}/.htpasswd 
+            && printf 'AuthType Digest\nAuthName \"phpmyadmin\"\nAuthDigestProvider file\nAuthUserFile ${PMA_CONF_FOLDER}/.htpasswd\n#Require ssl\nRequire valid-user\n' > ${WEBSERVER_DOC_ROOT}/.htaccess 
+            && mkdir -p ${WEBSERVER_DOC_ROOT}/../upload && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../upload && chmod a+w ${WEBSERVER_DOC_ROOT}/../upload && mkdir -p ${WEBSERVER_DOC_ROOT}/../save && a2enmod auth_digest 
+            && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save && echo 'ServerName 127.0.0.1' >> /etc/apache2/apache2.conf && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
     
     database:
         image: '${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}'
