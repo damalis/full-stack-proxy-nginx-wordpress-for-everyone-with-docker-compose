@@ -4,8 +4,8 @@
 $cfg['ForceSSL'] = true;
 
 /* Uploads setup */
-$cfg['UploadDir'] = $_ENV['PMA_APACHE2_PREFIX'] . '/../upload';
-$cfg['SaveDir'] = $_ENV['PMA_APACHE2_PREFIX'] . '/../save';
+$cfg['UploadDir'] = $_ENV['WEBSERVER_DOC_ROOT'] . '/../upload';
+$cfg['SaveDir'] = $_ENV['WEBSERVER_DOC_ROOT'] . '/../save';
 
 $cfg['CheckConfigurationPermissions'] = false;
 $cfg['ShowPhpInfo'] = true;
