@@ -4,8 +4,8 @@
 $cfg['ForceSSL'] = true;
 
 /* Uploads setup */
-$cfg['UploadDir'] = $_ENV['WEBSERVER_DOC_ROOT'] . '/../upload';
-$cfg['SaveDir'] = $_ENV['WEBSERVER_DOC_ROOT'] . '/../save';
+$cfg['UploadDir'] = '/var/www/upload';
+$cfg['SaveDir'] = '/var/www/save';
 
 $cfg['CheckConfigurationPermissions'] = false;
 $cfg['ShowPhpInfo'] = true;
