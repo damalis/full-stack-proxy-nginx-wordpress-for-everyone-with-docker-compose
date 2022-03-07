@@ -19,7 +19,7 @@ reload_nginx() {
 	cp $1/conf.d/default.conf.bak $1/conf.d/default.conf	
 	echo "Reloading Nginx configuration"
 	nginx -t
-	nginx -s reload
+	exec nginx -g "daemon off;"
 }
 
 wait_for_lets_encrypt() {
