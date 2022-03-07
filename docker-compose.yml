@@ -155,7 +155,7 @@ services:
             bash -c "echo ${PMA_HTPASSWD_USERNAME}:phpmyadmin:$$( printf \"%s:%s:%s\" \"${PMA_HTPASSWD_USERNAME}\" \"phpmyadmin\" \"${PMA_HTPASSWD_PASSWORD}\" | md5sum | awk '{print $$1}' ) > ${PMA_CONF_FOLDER}/.htpasswd 
             && printf 'AuthType Digest\nAuthName \"phpmyadmin\"\nAuthDigestProvider file\nAuthUserFile ${PMA_CONF_FOLDER}/.htpasswd\n#Require ssl\nRequire valid-user\n' > ${WEBSERVER_DOC_ROOT}/.htaccess 
             && mkdir -p ${WEBSERVER_DOC_ROOT}/../upload && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../upload && chmod a+w ${WEBSERVER_DOC_ROOT}/../upload && mkdir -p ${WEBSERVER_DOC_ROOT}/../save && a2enmod auth_digest 
-            && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save && echo 'ServerName 127.0.0.1' >> /etc/apache2/apache2.conf && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
+            && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save && grep -qxF 'ServerName 127.0.0.1' /etc/apache2/apache2.conf || echo -e '\n\nServerName 127.0.0.1' >> /etc/apache2/apache2.conf && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
     
     database:
         image: '${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}'
