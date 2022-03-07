@@ -148,6 +148,7 @@ services:
             PMA_CONTROLPASS: '${PMA_CONTROLPASS}'
             MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
             UPLOAD_LIMIT: '${PMA_UPLOAD_LIMIT}'
+            MEMORY_LIMIT: '${PMA_MEMORY_LIMIT}'
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
