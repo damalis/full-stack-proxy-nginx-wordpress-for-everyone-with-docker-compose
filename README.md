@@ -18,6 +18,14 @@ For certbot (letsencrypt) certificate:
 
 - [Set DNS configuration of your domain name](https://support.google.com/a/answer/48090?hl=en)
 
+## IPv4 Firewall
+Create rules to open ports to the internet, or to a specific IPv4 address or range.
+
+- http: 80
+- https: 443
+- portainer: 9001
+- phpmyadmin: 9090
+
 Contents:
 
 - [Auto Configuration and Installation](#automatic)
@@ -25,15 +33,6 @@ Contents:
 - [Configuration](#configuration)
 - [Installation](#installation)
 - [Usage](#usage)
-
-## IPv4 Firewall
-Create rules to open ports to the internet, or to a specific IPv4 address or range.
-
-for
-- http: 80
-- https: 443
-- portainer: 9001
-- phpmyadmin: 9090
 
 ## Automatic
 
@@ -44,7 +43,9 @@ download with
 git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
 ```
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
+
 ```
+cd full-stack-wordpress-for-everyone-with-docker-compose
 chmod +x install.sh
 ./install.sh
 ```
@@ -66,7 +67,12 @@ download with
 ```
 git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
 ```
+
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
+
+```
+cd full-stack-wordpress-for-everyone-with-docker-compose
+```
 
 ### Manual Configuration
 
@@ -101,6 +107,7 @@ Firstly: will create external volume
 ```
 docker volume create --driver local --opt type=none --opt device=/home/ubuntu/full-stack-wordpress-for-everyone-with-docker-compose/certbot --opt o=bind certbot-etc
 ```
+
 ```
 docker-compose up -d
 ```
@@ -142,7 +149,7 @@ To stop and remove all the containers use the`down` command:
 docker-compose down
 ```
 
-to remove portainer container
+to remove portainer and the other containers
 ```
 docker rm -f $(docker ps -a -q)
 ```
@@ -153,7 +160,8 @@ Use `-v` if you need to remove the database volume which is used to persist the 
 docker-compose down -v
 ```
 
-to remove external certbot-etc and portainer volumes
+to remove external certbot-etc and portainer and the other volumes
+
 ```
 docker volume rm $(docker volume ls -q)
 ```
