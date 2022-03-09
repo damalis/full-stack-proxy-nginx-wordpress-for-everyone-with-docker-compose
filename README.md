@@ -19,11 +19,11 @@ With this project you can quickly run the following:
 - [redis](https://hub.docker.com/_/redis)
 - [backup](https://hub.docker.com/r/futurice/docker-volume-backup)
 
-For certbot (letsencrypt) certificate:
+#### For certbot (letsencrypt) certificate:
 
 - [Set DNS configuration of your domain name](https://support.google.com/a/answer/48090?hl=en)
 
-## IPv4 Firewall
+#### IPv4 Firewall
 Create rules to open ports to the internet, or to a specific IPv4 address or range.
 
 - http: 80
@@ -31,7 +31,7 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 - portainer: 9001
 - phpmyadmin: 9090
 
-Contents:
+#### Contents:
 
 - [Auto Configuration and Installation](#automatic)
 - [Requirements](#requirements)
