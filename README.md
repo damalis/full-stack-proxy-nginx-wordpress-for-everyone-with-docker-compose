@@ -156,7 +156,7 @@ docker-compose stop
 
 ### Removing containers
 
-To stop and remove all the containers use the`down` command:
+To stop and remove all the containers use the `down` command:
 
 ```
 docker-compose down
