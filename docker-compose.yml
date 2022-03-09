@@ -135,7 +135,7 @@ services:
               target: '${PMA_CONF_FOLDER}/config.secret.inc.php'
             - type: bind
               source: ./phpmyadmin/php/conf.d/security.ini
-              target: '${PHP_INI_DIR}/conf.d/security.ini'
+              target: '${PHP_INI_DIR_PREFIX}/conf.d/security.ini'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
         hostname: phpmyadmin
         ipc: private
