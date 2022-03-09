@@ -12,10 +12,10 @@ services:
         volumes:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - type: bind
-              source: ./php-fpm/php/conf.d/security.ini
+              source: ./php/php/conf.d/security.ini
               target: '${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini'
             - type: bind
-              source: ./php-fpm/php-fpm.d/z-www.conf
+              source: ./php/php-fpm.d/z-www.conf
               target: '${PHP_INI_DIR_PREFIX}/php-fpm.d/z-www.conf'
         hostname: wordpress
         restart: unless-stopped
