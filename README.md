@@ -44,9 +44,11 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 ### Exec install shell script for auto installation and configuration
 
 download with
+
 ```
 git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
 ```
+
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
 ```
@@ -69,6 +71,7 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 ## Configuration
 
 download with
+
 ```
 git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
 ```
@@ -98,10 +101,13 @@ and
 ```
 cp ./proxy/conf.d/proxy.sample.conf ./proxy/conf.d/proxy.conf
 ```
+
 change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file.
+
 ```
 cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
 ```
+
 change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
 
 ## Installation
@@ -109,6 +115,7 @@ change example.com to your domain name in ```./phpmyadmin/apache2/sites-availabl
 ### Manual Installation
 
 Firstly: will create external volume
+
 ```
 docker volume create --driver local --opt type=none --opt device=/home/ubuntu/full-stack-wordpress-for-everyone-with-docker-compose/certbot --opt o=bind certbot-etc
 ```
@@ -126,6 +133,7 @@ For convenience you may add a new entry into your hosts file.
 ```
 docker-compose -f portainer-docker-compose.yml -p portainer up -d 
 ```
+
 manage docker with [Portainer](https://www.portainer.io/solutions/docker) is the definitive container management tool for Docker, Docker Swarm with it's highly intuitive GUI and API. 
 
 You can also visit `https://example.com:9001` to access portainer after starting the containers.
