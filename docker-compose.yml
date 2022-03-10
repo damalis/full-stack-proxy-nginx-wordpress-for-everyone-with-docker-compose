@@ -135,7 +135,6 @@ services:
               target: '${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
         hostname: phpmyadmin
-        ipc: private
         restart: unless-stopped
         ports:
             - '9090:443'
