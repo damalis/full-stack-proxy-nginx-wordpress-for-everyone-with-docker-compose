@@ -55,6 +55,7 @@ sleep 2
 
 sudo groupadd docker
 sudo usermod -aG docker ${USER}
+newgrp docker
 # su - ${USER} &
 
 echo ""
