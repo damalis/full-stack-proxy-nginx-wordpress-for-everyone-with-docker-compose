@@ -4,7 +4,7 @@ services:
 
     wordpress:
         depends_on:
-            - database
+            - webserver
         image: 'wordpress:${PHP_IMAGE_NAME}'
         container_name: 'wp-${PHP_IMAGE_NAME}'
         networks:
@@ -37,7 +37,7 @@ services:
 
     webserver:
         depends_on:
-            - wordpress
+            - certbot
         image: 'httpd:latest'
         container_name: webserver
         networks:
@@ -76,7 +76,7 @@ services:
 
     proxy:
         depends_on:
-            - webserver
+            - database
         image: nginx:stable
         container_name: proxy
         networks:
@@ -111,7 +111,7 @@ services:
     
     phpmyadmin:
         depends_on:
-            - certbot
+            - database
         image: phpmyadmin/phpmyadmin
         container_name: phpmyadmin
         networks:
