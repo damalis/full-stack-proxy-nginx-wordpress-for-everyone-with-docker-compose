@@ -244,6 +244,12 @@ define('FORCE_SSL_ADMIN', true);
 
 ### phpMyAdmin
 
+You can add your own custom config.inc.php settings (such as Configuration Storage setup) by creating a file named config.user.inc.php with the various user defined settings in it, and then linking it into the container using:
+
+```
+./phpmyadmin/config.user.inc.php
+```
+
 You can also visit `https://example.com:9090` to access phpMyAdmin after starting the containers.
 
 The first authorize screen(htpasswd;username or password) and phpmyadmin login screen the username and the password is the same as supplied in the `.env` file.
