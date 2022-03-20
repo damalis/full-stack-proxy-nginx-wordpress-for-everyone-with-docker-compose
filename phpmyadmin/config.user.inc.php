@@ -9,3 +9,4 @@ $cfg['SaveDir'] = '/var/www/save';
 
 $cfg['CheckConfigurationPermissions'] = false;
 $cfg['ShowPhpInfo'] = true;
+$cfg['Servers'][1]['host'] = 'database';
