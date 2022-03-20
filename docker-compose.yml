@@ -141,11 +141,11 @@ services:
         restart: unless-stopped
         ports:
             - '9090:443'
-        links:
-            - database
+        #links:
+        #    - database
         environment:
-            PMA_HOST: database
-            PMA_PMADB: phpmyadmin
+            #PMA_HOST: database
+            PMA_PMADB: 'phpmyadmin'
             PMA_CONTROLUSER: '${PMA_CONTROLUSER}'
             PMA_CONTROLPASS: '${PMA_CONTROLPASS}'
             MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
@@ -158,7 +158,9 @@ services:
             bash -c "echo ${PMA_HTPASSWD_USERNAME}:phpmyadmin:$$( printf \"%s:%s:%s\" \"${PMA_HTPASSWD_USERNAME}\" \"phpmyadmin\" \"${PMA_HTPASSWD_PASSWORD}\" | md5sum | awk '{print $$1}' ) > ${PMA_CONF_FOLDER}/.htpasswd 
             && printf 'AuthType Digest\nAuthName \"phpmyadmin\"\nAuthDigestProvider file\nAuthUserFile ${PMA_CONF_FOLDER}/.htpasswd\nRequire valid-user\n' > ${WEBSERVER_DOC_ROOT}/.htaccess 
             && mkdir -p ${WEBSERVER_DOC_ROOT}/../upload && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../upload && chmod a+w ${WEBSERVER_DOC_ROOT}/../upload && mkdir -p ${WEBSERVER_DOC_ROOT}/../save && a2enmod auth_digest 
-            && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save && grep -qxF 'ServerName 127.0.0.1' ${APACHE_CONFDIR_PREFIX}/apache2.conf || echo -e '\nServerName 127.0.0.1' >> ${APACHE_CONFDIR_PREFIX}/apache2.conf && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
+            && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save && grep -qxF 'ServerName 127.0.0.1' ${APACHE_CONFDIR_PREFIX}/apache2.conf || echo -e '\nServerName 127.0.0.1' >> ${APACHE_CONFDIR_PREFIX}/apache2.conf 
+            && sed \"/^.cfg\['blowfish_secret'\]/ s/''/'\"$$(tr -dc 'a-zA-Z0-9~!@#$$%^&*_()+}{?></\";.,[]=-' < /dev/urandom | fold -w 32 | head -n 1)\"'/\" ${PMA_CONF_FOLDER}/config.secret.inc.php > ${PMA_CONF_FOLDER}/config.secret.inc.php.bak && cp ${PMA_CONF_FOLDER}/config.secret.inc.php.bak ${PMA_CONF_FOLDER}/config.secret.inc.php && rm ${PMA_CONF_FOLDER}/config.secret.inc.php.bak 
+            && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
     
     database:
         image: '${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}'
