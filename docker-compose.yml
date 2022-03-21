@@ -13,7 +13,7 @@ services:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - type: bind
               source: ./php/php/conf.d/security.ini
-              target: '${PHP_INI_DIR_PREFIX}/conf.d/security.ini'
+              target: '${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini'
             - type: bind
               source: ./php/php-fpm.d/z-www.conf
               target: '${PHP_INI_DIR_PREFIX}/php-fpm.d/z-www.conf'
