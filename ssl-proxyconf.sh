@@ -16,7 +16,8 @@ use_lets_encrypt_certificates() {
 }
 
 reload_nginx() {
-	cp $1/conf.d/default.conf.bak $1/conf.d/default.conf	
+	cp $1/conf.d/default.conf.bak $1/conf.d/default.conf
+	rm $1/conf.d/default.conf.bak
 	echo "Reloading Nginx configuration"
 	nginx -t
 	exec nginx -g "daemon off;"
