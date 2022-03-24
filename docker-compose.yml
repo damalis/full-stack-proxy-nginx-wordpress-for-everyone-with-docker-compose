@@ -64,7 +64,6 @@ services:
         networks:
             - backend
         volumes:
-            - 'html:${WEBSERVER_DOC_ROOT}'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - 'certbot-var:/var/lib/letsencrypt'
             - '/tmp/acme-challenge:/tmp/acme-challenge'                        
@@ -100,8 +99,8 @@ services:
         hostname: proxy
         restart: unless-stopped
         ports:
-            - '80:80'
-            - '443:443' 
+            - '80:8080'
+            - '443:8443' 
         environment:
             TZ: '${LOCAL_TIMEZONE}'            
         labels:            
