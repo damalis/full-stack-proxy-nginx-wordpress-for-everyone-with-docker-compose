@@ -99,7 +99,7 @@ services:
         hostname: proxy
         restart: unless-stopped
         ports:
-            - '80:8080'
+            - '80:8880'
             - '443:8443' 
         environment:
             TZ: '${LOCAL_TIMEZONE}'            
