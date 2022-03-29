@@ -86,8 +86,8 @@ services:
               source: ./proxy/nginx.conf
               target: '${PROXY_PREFIX}/nginx.conf'
             - type: bind
-              source: ./proxy/conf.d/proxy.conf
-              target: '${PROXY_PREFIX}/conf.d/default.conf'
+              source: ./proxy/templates/proxy.conf.template
+              target: '${PROXY_PREFIX}/templates/proxy.conf.template'
             - type: bind
               source: ./proxy/ssl-option/options-ssl-nginx.conf
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
@@ -99,14 +99,16 @@ services:
         hostname: proxy
         restart: unless-stopped
         ports:
-            - '80:8880'
-            - '443:8443' 
+            - '80:80'
+            - '443:443' 
         environment:
+            NGINX_HOST: ${DOMAIN_NAME}
+            NGINX_PORT: 80
             TZ: '${LOCAL_TIMEZONE}'            
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
-        command: >
-            bash -c "sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}'"
+        command: bash -c "envsubst '$${NGINX_HOST},$${NGINX_PORT}' < /etc/nginx/templates/proxy.conf.template > /etc/nginx/conf.d/default.conf && 
+            sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}'"
     
     phpmyadmin:
         depends_on:
