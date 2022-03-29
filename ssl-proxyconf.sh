@@ -46,3 +46,4 @@ for domain in $1; do
 done
 
 exec nginx -g "daemon off;"
+nginx -s reload
