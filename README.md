@@ -99,12 +99,6 @@ DIRECTORY_PATH=```pwd``` at command line
 and
 
 ```
-cp ./proxy/conf.d/proxy.sample.conf ./proxy/conf.d/proxy.conf
-```
-
-change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file.
-
-```
 cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
 ```
 
@@ -206,7 +200,7 @@ pm.max_requests = 1000
 Or you should make changes custom host configurations then must restart service
 
 ```
-docker-compose restart wordpress
+docker container restart <wordpress_container_id>
 ```
 
 add and/or remove wordpress site folders and files with any ftp client program in ```./wordpress``` folder.
