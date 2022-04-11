@@ -108,8 +108,8 @@ services:
             TZ: '${LOCAL_TIMEZONE}'            
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
-        command: bash -c "envsubst '$${NGINX_HOST},$${NGINX_PORT}' < /etc/nginx/templates/proxy.conf.template > /etc/nginx/conf.d/default.conf && 
-            sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}'"
+        command: bash -c "nginx -t && envsubst '$${NGINX_HOST},$${NGINX_PORT}' < /etc/nginx/templates/proxy.conf.template > /etc/nginx/conf.d/default.conf && 
+            sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}' && nginx -g 'daemon off;'"
     
     phpmyadmin:
         depends_on:
