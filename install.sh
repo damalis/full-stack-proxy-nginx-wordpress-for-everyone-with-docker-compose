@@ -218,17 +218,17 @@ sed -i 's/example.com/'$domain_name'/g' ./phpmyadmin/apache2/sites-available/def
 
 cp env.example .env
 
-sed -i 's/example.com/'$domain_name'/g' .env
-sed -i 's/email@domain.com/'$email'/g' .env
+sed -i 's/example.com/'$domain_name'/' .env
+sed -i 's/email@domain.com/'$email'/' .env
 sed -i 's/db_username/'$db_username'/g' .env
 sed -i 's/db_password/'$db_password'/g' .env
-sed -i 's/db_name/'$db_name'/g' .env
-sed -i 's/db_table_prefix/'$db_table_prefix'/g' .env
-sed -i 's/mysql_root_password/'$mysql_root_password'/g' .env
-sed -i 's/pma_username/'$pma_username'/g' .env
-sed -i 's/pma_password/'$pma_password'/g' .env
+sed -i 's/db_name/'$db_name'/' .env
+sed -i 's/db_table_prefix/'$db_table_prefix'/' .env
+sed -i 's/mysql_root_password/'$mysql_root_password'/' .env
+sed -i 's/pma_username/'$pma_username'/' .env
+sed -i 's/pma_password/'$pma_password'/' .env
 sed -i "s@directory_path@$(pwd)@" .env
-sed -i 's/local_timezone/'$local_timezone'/g' .env
+sed -i 's/local_timezone/'$local_timezone'/' .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
     # Firstly: create external volume
