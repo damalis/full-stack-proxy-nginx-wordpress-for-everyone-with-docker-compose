@@ -12,10 +12,10 @@ services:
         volumes:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - type: bind
-              source: ./php/php/conf.d/security.ini
+              source: ./php-fpm/php/conf.d/security.ini
               target: '${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini'
             - type: bind
-              source: ./php/php-fpm.d/z-www.conf
+              source: ./php-fpm/php-fpm.d/z-www.conf
               target: '${PHP_INI_DIR_PREFIX}/php-fpm.d/z-www.conf'
         hostname: wordpress
         restart: unless-stopped
@@ -33,7 +33,8 @@ services:
             HOME: '/tmp'
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
-            - 'docker-volume-backup.stop-during-backup=true'        
+            - 'docker-volume-backup.stop-during-backup=true'
+        command: bash -c "grep -q -e 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini && php-fpm"
 
     webserver:
         depends_on:
