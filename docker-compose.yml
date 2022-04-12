@@ -5,6 +5,7 @@ services:
     wordpress:
         depends_on:
             - database
+            - redis
         image: 'wordpress:${PHP_IMAGE_NAME}'
         container_name: 'wp-${PHP_IMAGE_NAME}'
         networks:
@@ -34,11 +35,9 @@ services:
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
             - 'docker-volume-backup.stop-during-backup=true'
-        #command: bash -c "grep -q -e 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini && php-fpm"
+        command: bash -c "grep -q -e 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini && docker-entrypoint.sh 'php-fpm'"
 
     webserver:
-        depends_on:
-            - wordpress
         image: 'httpd:latest'
         container_name: webserver
         networks:
@@ -71,8 +70,8 @@ services:
         restart: unless-stopped        
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-        entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path /tmp/acme-challenge --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME};
-            trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
+        entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path /tmp/acme-challenge --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} 
+            && trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
 
     proxy:
         depends_on:
@@ -108,8 +107,8 @@ services:
             TZ: '${LOCAL_TIMEZONE}'            
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
-        command: bash -c "nginx -t && envsubst '$${NGINX_HOST},$${NGINX_PORT}' < /etc/nginx/templates/proxy.conf.template > /etc/nginx/conf.d/default.conf && 
-            sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}' && nginx -g 'daemon off;'"
+        command: bash -c "envsubst '$${NGINX_HOST},$${NGINX_PORT}' < /etc/nginx/templates/proxy.conf.template > /etc/nginx/conf.d/default.conf  
+            && sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}' && nginx -g 'daemon off;'"
     
     phpmyadmin:
         depends_on:
@@ -162,7 +161,7 @@ services:
             && mkdir -p ${WEBSERVER_DOC_ROOT}/../upload && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../upload && chmod a+w ${WEBSERVER_DOC_ROOT}/../upload && mkdir -p ${WEBSERVER_DOC_ROOT}/../save && a2enmod auth_digest 
             && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save && grep -qxF 'ServerName 127.0.0.1' ${APACHE_CONFDIR_PREFIX}/apache2.conf || echo -e '\nServerName 127.0.0.1' >> ${APACHE_CONFDIR_PREFIX}/apache2.conf 
             && grep -q -e 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini 
-            && sed \"/^.cfg\['blowfish_secret'\]/ s/''/'\"$$(tr -dc 'A-Za-z0-9!#$$%&()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c 32 ; echo)\"'/\" ${PMA_CONF_FOLDER}/config.secret.inc.php > ${PMA_CONF_FOLDER}/config.secret.inc.php.bak && cp ${PMA_CONF_FOLDER}/config.secret.inc.php.bak ${PMA_CONF_FOLDER}/config.secret.inc.php && rm ${PMA_CONF_FOLDER}/config.secret.inc.php.bak 
+            && sed -e \"/^.cfg\['blowfish_secret'\]/s/''/'\"$$(tr -dc 'A-Za-z0-9!#$$%&()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c 32 ; echo)\"'/\" ${PMA_CONF_FOLDER}/config.secret.inc.php > ${PMA_CONF_FOLDER}/config.secret.inc.php.bak && cp ${PMA_CONF_FOLDER}/config.secret.inc.php.bak ${PMA_CONF_FOLDER}/config.secret.inc.php && rm ${PMA_CONF_FOLDER}/config.secret.inc.php.bak 
             && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
     
     database:
