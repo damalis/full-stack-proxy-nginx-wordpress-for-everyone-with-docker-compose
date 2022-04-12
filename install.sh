@@ -3,10 +3,10 @@
 clear
 echo ""
 echo "================================================================="
-echo "|  								|"
-echo "|  full-stack-wordpress-for-everyone-with-docker-compose        |"
-echo "|	 		  by Erdal ALTIN			|"
-echo "|  								|"
+echo "|                                                               |"
+echo "|      full-stack-wordpress-for-everyone-with-docker-compose    |"
+echo "|                      by Erdal ALTIN                           |"
+echo "|                                                               |"
 echo "================================================================="
 sleep 2
 
