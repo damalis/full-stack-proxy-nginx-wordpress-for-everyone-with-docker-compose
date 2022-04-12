@@ -87,7 +87,7 @@ services:
               target: '${PROXY_PREFIX}/nginx.conf'
             - type: bind
               source: ./proxy/templates/proxy.conf.template
-              target: '${PROXY_PREFIX}/templates/proxy.conf.template'
+              target: '${PROXY_PREFIX}/templates/default.conf.template'
             - type: bind
               source: ./proxy/ssl-option/options-ssl-nginx.conf
               target: '${LETSENCRYPT_CONF_PREFIX}/options-ssl-nginx.conf'
@@ -107,8 +107,7 @@ services:
             TZ: '${LOCAL_TIMEZONE}'            
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
-        command: bash -c "envsubst '$${NGINX_HOST},$${NGINX_PORT}' < /etc/nginx/templates/proxy.conf.template > /etc/nginx/conf.d/default.conf  
-            && sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}' && nginx -g 'daemon off;'"
+        command: bash -c "/docker-entrypoint.sh nginx -t && sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}' && nginx -g 'daemon off;'"
     
     phpmyadmin:
         depends_on:
@@ -131,9 +130,6 @@ services:
             - type: bind
               source: ./phpmyadmin/config.user.inc.php
               target: '${PMA_CONF_FOLDER}/config.user.inc.php'
-            - type: bind
-              source: ./phpmyadmin/config.secret.inc.php
-              target: '${PMA_CONF_FOLDER}/config.secret.inc.php'
             - type: bind
               source: ./phpmyadmin/php/conf.d/security.ini
               target: '${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini'
@@ -161,8 +157,7 @@ services:
             && mkdir -p ${WEBSERVER_DOC_ROOT}/../upload && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../upload && chmod a+w ${WEBSERVER_DOC_ROOT}/../upload && mkdir -p ${WEBSERVER_DOC_ROOT}/../save && a2enmod auth_digest 
             && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save && grep -qxF 'ServerName 127.0.0.1' ${APACHE_CONFDIR_PREFIX}/apache2.conf || echo -e '\nServerName 127.0.0.1' >> ${APACHE_CONFDIR_PREFIX}/apache2.conf 
             && grep -q -e 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini 
-            && sed -e \"/^.cfg\['blowfish_secret'\]/s/''/'\"$$(tr -dc 'A-Za-z0-9!#$$%&()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c 32 ; echo)\"'/\" ${PMA_CONF_FOLDER}/config.secret.inc.php > ${PMA_CONF_FOLDER}/config.secret.inc.php.bak && cp ${PMA_CONF_FOLDER}/config.secret.inc.php.bak ${PMA_CONF_FOLDER}/config.secret.inc.php && rm ${PMA_CONF_FOLDER}/config.secret.inc.php.bak 
-            && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
+            && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && /docker-entrypoint.sh 'apache2-foreground'"
     
     database:
         image: '${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}'
@@ -188,7 +183,6 @@ services:
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
-        command: '--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password'    
     
     redis:
         image: 'redis:latest'
@@ -211,7 +205,7 @@ services:
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
-        command: bash -c 'redis-server ${REDIS_CONF_PREFIX}/redis/redis.conf'
+        command: "redis-server ${REDIS_CONF_PREFIX}/redis/redis.conf"
     
     backup:
         image: 'futurice/docker-volume-backup'
