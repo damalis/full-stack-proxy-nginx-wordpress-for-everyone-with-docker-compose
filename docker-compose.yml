@@ -4,7 +4,7 @@ services:
 
     wordpress:
         depends_on:
-            - webserver
+            - database
         image: 'wordpress:${PHP_IMAGE_NAME}'
         container_name: 'wp-${PHP_IMAGE_NAME}'
         networks:
@@ -38,7 +38,7 @@ services:
 
     webserver:
         depends_on:
-            - certbot
+            - wordpress
         image: 'httpd:latest'
         container_name: webserver
         networks:
@@ -75,6 +75,8 @@ services:
             && trap exit TERM && while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
 
     proxy:
+        depends_on:
+            - webserver
         image: nginx:stable
         container_name: proxy
         networks:
@@ -106,11 +108,11 @@ services:
             TZ: '${LOCAL_TIMEZONE}'            
         labels:            
             - "docker-volume-backup.stop-during-backup=true"
-        command: bash -c "/docker-entrypoint.sh nginx -t && sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}' && nginx -g 'daemon off;'"
+        command: bash -c "/docker-entrypoint.sh nginx -v && sh /tmp/ssl-proxyconf.sh '${DOMAIN_NAME}' '${LETSENCRYPT_CONF_PREFIX}' '${PROXY_PREFIX}'"
     
     phpmyadmin:
         depends_on:
-            - wordpress
+            - certbot
         image: phpmyadmin/phpmyadmin
         container_name: phpmyadmin
         networks:
