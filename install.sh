@@ -209,8 +209,8 @@ echo "Ok."
 read -p "Apply changes (y/n)? " choice
 case "$choice" in
   y|Y ) echo "Yes! Proceeding now...";;
-  n|N ) echo "No! Aborting now...";;
-  * ) echo "Invalid input! Aborting now...";;
+  n|N ) echo "No! Aborting now..."; exit 0;;
+  * ) echo "Invalid input! Aborting now..."; exit 0;;
 esac
 
 cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
