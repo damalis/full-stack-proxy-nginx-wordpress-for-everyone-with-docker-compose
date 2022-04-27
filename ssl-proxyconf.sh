@@ -31,7 +31,7 @@ wait_for_lets_encrypt() {
 			sleep 5s & wait ${!}
 			if [ -d "$2/live/$1" ]; then break; fi
 		done
-	fi;	
+	fi;
 	use_lets_encrypt_certificates "$1" "$2" "$3"
 	reload_nginx "$3"
 }
@@ -45,4 +45,4 @@ for domain in $1; do
 	fi
 done
 
- nginx -g 'daemon off;'
+nginx -g 'daemon off;' && nginx -s reload
