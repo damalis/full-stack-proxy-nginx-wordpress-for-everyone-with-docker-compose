@@ -261,9 +261,9 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 				if [ ! -z `docker ps -q -f "status=running" --no-trunc | grep $(docker-compose ps -q proxy)` ]; then break; fi
 			done
 			echo "Ok."
-            echo ""
+			echo ""
 			echo "Reloading Proxy ssl configuration"
-            docker exec proxy nginx -s reload > /dev/null 2>&1            			 
+			docker exec proxy nginx -s reload > /dev/null 2>&1            			 
 			echo ""
 			echo "completed setup"
 			echo ""
