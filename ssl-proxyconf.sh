@@ -18,7 +18,7 @@ use_lets_encrypt_certificates() {
 reload_nginx() {
 	cp $1/conf.d/default.conf.bak $1/conf.d/default.conf
 	rm $1/conf.d/default.conf.bak
-	echo "Reloading Nginx configuration"
+	echo "Starting Proxy Nginx service"
 	nginx -t
 }
 
@@ -45,4 +45,4 @@ for domain in $1; do
 	fi
 done
 
-nginx -g 'daemon off;' && nginx -s reload
+nginx -g 'daemon off;'
