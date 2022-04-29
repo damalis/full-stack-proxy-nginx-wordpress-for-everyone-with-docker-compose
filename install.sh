@@ -248,12 +248,22 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 		if [ $? -ne 0 ]; then
 			echo "Error! could not installed portainer" >&2
 			exit 1
-		else			
+		else		
 			until [ -n "$(sudo find ./certbot/live -name '$domain_name' 2>/dev/null | head -1)" ]; do
 				echo "waiting for Let's Encrypt certificates for $domain_name"
 				sleep 5s & wait ${!}
 				if sudo [ -d "./certbot/live/$domain_name" ]; then break; fi
-			done			
+			done
+			echo "Ok."
+			until [ ! -z `docker ps -q -f "status=running" --no-trunc | grep $(docker-compose ps -q proxy)` ]; do
+				echo "waiting starting proxy container"
+				sleep 2s & wait ${!}
+				if [ ! -z `docker ps -q -f "status=running" --no-trunc | grep $(docker-compose ps -q proxy)` ]; then break; fi
+			done
+			echo "Ok."
+            echo ""
+			echo "Reloading Proxy ssl configuration"
+            docker exec proxy nginx -s reload > /dev/null 2>&1            			 
 			echo ""
 			echo "completed setup"
 			echo ""
