@@ -118,6 +118,12 @@ docker volume create --driver local --opt type=none --opt device=/home/ubuntu/fu
 docker-compose up -d
 ```
 
+then reloading for proxy ssl configuration
+
+```
+docker exec proxy nginx -s reload
+```
+
 The containers are now built and running. You should be able to access the WordPress installation with the configured IP in the browser address. `https://example.com`.
 
 For convenience you may add a new entry into your hosts file.
