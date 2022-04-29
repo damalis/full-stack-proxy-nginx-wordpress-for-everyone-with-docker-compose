@@ -231,7 +231,7 @@ sed -i "s@directory_path@$(pwd)@" .env
 sed -i 's/local_timezone/'$local_timezone'/' .env
 
 if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
-    # Firstly: create external volume
+	# Firstly: create external volume
 	docker volume create --driver local --opt type=none --opt device=`pwd`/certbot --opt o=bind certbot-etc > /dev/null
 	# installing wordpress and the other services
 	docker-compose up -d & export pid=$!
@@ -280,6 +280,6 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	fi
 else
 	echo ""
-    echo "not found docker and/or docker-compose, Install docker and/or docker-compose" >&2
+	echo "not found docker and/or docker-compose, Install docker and/or docker-compose" >&2
 	exit 1
 fi
