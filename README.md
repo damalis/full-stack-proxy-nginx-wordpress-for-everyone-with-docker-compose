@@ -1,4 +1,4 @@
-# [full stack wordpress for everyone with docker compose](https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose)
+# [full stack proxy nginx wordpress for everyone with docker compose](https://github.com/damalis/full-stack-proxy-nginx-wordpress-for-everyone-with-docker-compose)
 
 If You want to have a wordpress website at short time; 
 
@@ -46,13 +46,13 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 download with
 
 ```
-git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
+git clone https://github.com/damalis/full-stack-proxy-nginx-wordpress-for-everyone-with-docker-compose.git
 ```
 
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
 ```
-cd full-stack-wordpress-for-everyone-with-docker-compose
+cd full-stack-proxy-nginx-wordpress-for-everyone-with-docker-compose
 chmod +x install.sh
 ./install.sh
 ```
@@ -73,13 +73,13 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 download with
 
 ```
-git clone https://github.com/damalis/full-stack-wordpress-for-everyone-with-docker-compose.git
+git clone https://github.com/damalis/full-stack-proxy-nginx-wordpress-for-everyone-with-docker-compose.git
 ```
 
 Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
 
 ```
-cd full-stack-wordpress-for-everyone-with-docker-compose
+cd full-stack-proxy-nginx-wordpress-for-everyone-with-docker-compose
 ```
 
 ### Manual Configuration
@@ -111,7 +111,7 @@ change example.com to your domain name in ```./phpmyadmin/apache2/sites-availabl
 Firstly: will create external volume
 
 ```
-docker volume create --driver local --opt type=none --opt device=/home/ubuntu/full-stack-wordpress-for-everyone-with-docker-compose/certbot --opt o=bind certbot-etc
+docker volume create --driver local --opt type=none --opt device=/home/ubuntu/full-stack-proxy-nginx-wordpress-for-everyone-with-docker-compose/certbot --opt o=bind certbot-etc
 ```
 
 ```
