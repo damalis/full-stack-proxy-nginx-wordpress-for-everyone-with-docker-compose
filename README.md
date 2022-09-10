@@ -121,7 +121,7 @@ docker-compose up -d
 then reloading for proxy ssl configuration
 
 ```
-docker container restart <proxy_container_id>
+docker container restart proxy
 ```
 
 The containers are now built and running. You should be able to access the WordPress installation with the configured IP in the browser address. `https://example.com`.
@@ -209,7 +209,7 @@ pm.max_requests = 1000
 Or you should make changes custom host configurations then must restart service
 
 ```
-docker container restart <wordpress_container_id>
+docker container restart wordpress
 ```
 
 add and/or remove wordpress site folders and files with any ftp client program in ```./wordpress``` folder.
