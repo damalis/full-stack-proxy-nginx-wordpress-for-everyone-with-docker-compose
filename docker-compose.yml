@@ -103,7 +103,9 @@ services:
         restart: unless-stopped
         ports:
             - '80:80'
-            - '443:443' 
+            - '443:443'
+        links:
+            - webserver
         environment:
             NGINX_HOST: ${DOMAIN_NAME}
             NGINX_PORT: 80
