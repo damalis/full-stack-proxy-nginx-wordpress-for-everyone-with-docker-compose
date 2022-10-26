@@ -35,11 +35,9 @@ server {
 	#ssl_dhparam /etc/letsencrypt/ssl-dhparam.pem;
 	include /etc/letsencrypt/options-ssl-nginx.conf;
 	#
-	client_max_body_size 8m;
-	proxy_headers_hash_max_size 768;
-	proxy_headers_hash_bucket_size 128;
-	#
-  
+
+	rewrite ^/wp-admin$ /wp-admin/ last;
+	
 	location / {		
 		proxy_pass	http://docker_webserver;		
 		proxy_set_header	X-Real-IP	$remote_addr;
@@ -63,6 +61,9 @@ server {
 		#
 		# Mitigate httpoxy attack
 		proxy_set_header Proxy "";        
+	}
+	location /wp-admin/ {
+		try_files $uri /wp-admin/index.php$is_args$args;
 	}
 	#
 	# deny access to .htaccess vb. files, if Apache's document root
