@@ -35,8 +35,6 @@ server {
 	#ssl_dhparam /etc/letsencrypt/ssl-dhparam.pem;
 	include /etc/letsencrypt/options-ssl-nginx.conf;
 	#
-
-	rewrite ^/wp-admin$ /wp-admin/ last;
 	
 	location / {		
 		proxy_pass	http://docker_webserver;		
