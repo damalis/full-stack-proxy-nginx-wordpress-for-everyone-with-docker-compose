@@ -60,10 +60,9 @@ server {
 		proxy_request_buffering off;
 		#
 		# Mitigate httpoxy attack
-		proxy_set_header Proxy "";        
-	}
-	location /wp-admin/ {
-		try_files $uri /wp-admin/index.php$is_args$args;
+		proxy_set_header Proxy "";
+
+		rewrite ^([^.]*[^/])$ $1/ permanent;        
 	}
 	#
 	# deny access to .htaccess vb. files, if Apache's document root
