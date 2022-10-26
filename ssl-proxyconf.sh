@@ -11,14 +11,14 @@ if [ ! -f $2/ssl-dhparam.pem 2>/dev/null ]; then
 fi
 
 use_lets_encrypt_certificates() {
-	echo "switching nginx to use Let's Encrypt certificate for $1"	
+	echo "switching proxy to use Let's Encrypt certificate for $1"	
 	sed '/#location.\/./,/#}/ s/#//; s/#listen/listen/g; s/#ssl_/ssl_/g' $3/conf.d/default.conf > $3/conf.d/default.conf.bak
 }
 
-reload_nginx() {
+reload_proxy() {
 	cp $1/conf.d/default.conf.bak $1/conf.d/default.conf
 	rm $1/conf.d/default.conf.bak
-	echo "Starting Proxy Nginx service"
+	echo "Starting proxy nginx service"
 	nginx -t
 }
 
@@ -33,7 +33,7 @@ wait_for_lets_encrypt() {
 		done
 	fi;
 	use_lets_encrypt_certificates "$1" "$2" "$3"
-	reload_nginx "$3"
+	reload_proxy "$3"
 }
 
 for domain in $1; do
@@ -41,7 +41,7 @@ for domain in $1; do
 		wait_for_lets_encrypt "$domain" "$2" "$3" &
 	else
 		use_lets_encrypt_certificates "$domain" "$2" "$3"
-		reload_nginx "$3"
+		reload_proxy "$3"
 	fi
 done
 
