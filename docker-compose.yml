@@ -46,7 +46,7 @@ services:
         volumes:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - type: bind
-              source: ./apache2
+              source: ./webserver
               target: '${HTTPD_PREFIX}/conf'            
         hostname: webserver        
         restart: unless-stopped
