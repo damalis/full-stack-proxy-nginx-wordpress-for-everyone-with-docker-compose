@@ -39,6 +39,7 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 - [Portainer Installation](#portainer)
 - [Usage](#usage)
 	- [Website](#website)
+	- [Proxy](#proxy)
 	- [Webserver](#webserver)
 	- [Redis Plugin](#redis-plugin)
 	- [phpMyAdmin](#phpmyadmin)
@@ -75,7 +76,8 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 
 ## Manual
 
-### Configuration				 
+### Configuration
+				 
 download with
 
 ```
@@ -202,7 +204,7 @@ You can now use the `up` command:
 docker-compose up -d
 ```
 
-#### Docker run reference
+### Docker run reference
 
 [https://docs.docker.com/engine/reference/run/](https://docs.docker.com/engine/reference/run/)
 
