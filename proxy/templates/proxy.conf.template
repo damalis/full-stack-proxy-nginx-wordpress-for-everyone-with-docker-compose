@@ -60,7 +60,7 @@ server {
 		# Mitigate httpoxy attack
 		proxy_set_header Proxy "";
 
-		rewrite ^([^.]*[^/])$ $1/ permanent;        
+		rewrite ^(/wp-admin)$ $1/ permanent;        
 	}
 	#
 	# deny access to .htaccess vb. files, if Apache's document root
@@ -69,12 +69,15 @@ server {
 		deny all;     
 		log_not_found off;
 	}
+	#
 	location ~ /.well-known {
 		allow all;
 	}
+	#
 	location = /favicon.ico {
 		log_not_found off;        
 	}
+	#
 	location = /robots.txt {
 		allow all;
 		log_not_found off;        
