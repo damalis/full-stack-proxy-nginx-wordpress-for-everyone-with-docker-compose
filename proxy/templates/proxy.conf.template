@@ -69,9 +69,8 @@ server {
 		deny all;     
 		log_not_found off;
 	}
-	location ~*  \.(svg|svgz)$ {
-		types {}
-		default_type image/svg+xml;
+	location ~ /.well-known {
+		allow all;
 	}
 	location = /favicon.ico {
 		log_not_found off;        
