@@ -245,6 +245,8 @@ Proxying is typically used to distribute the load among several servers, seamles
 
 add or remove code in the ```./webserver/extra/httpd-vhosts.conf``` file for custom apache2/httpd configurations
 
+[https://httpd.apache.org/docs/2.4/](https://httpd.apache.org/docs/2.4/)
+
 #### Redis Plugin
 
 add and active [Redis Cache](https://wordpress.org/plugins/redis-cache/) plugin and
