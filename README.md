@@ -220,11 +220,7 @@ add or remove code in the ./php-fpm/php/conf.d/security.ini file for custom php.
 
 [https://www.php.net/manual/en/configuration.file.php](https://www.php.net/manual/en/configuration.file.php)
 
-add or remove code in the ```./php-fpm/php-fpm.d/z-www.conf``` file for php-fpm configurations
-
-Or you should make changes custom host configurations then must restart service
-
-FPM uses php.ini syntax for its configuration file - php-fpm.conf, and pool configuration files.
+You should make changes custom host configurations ```./php-fpm/php-fpm.d/z-www.conf``` then must restart service, FPM uses php.ini syntax for its configuration file - php-fpm.conf, and pool configuration files.
 
 [https://www.php.net/manual/en/install.fpm.configuration.php](https://www.php.net/manual/en/install.fpm.configuration.php)
 
@@ -238,6 +234,8 @@ add and/or remove wordpress site folders and files with any ftp client program i
 #### Proxy
 
 Proxying is typically used to distribute the load among several servers, seamlessly show content from different websites, or pass requests for processing to application servers over protocols other than HTTP.
+
+add or remove code in the ```./proxy/templates/proxy.conf.template``` file for custom proxy configurations
 
 [https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
 
