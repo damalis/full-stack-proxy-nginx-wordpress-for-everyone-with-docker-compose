@@ -34,8 +34,7 @@ server {
 	#ssl_trusted_certificate /etc/letsencrypt/live/${NGINX_HOST}/chain.pem;
 	#ssl_dhparam /etc/letsencrypt/ssl-dhparam.pem;
 	include /etc/letsencrypt/options-ssl-nginx.conf;
-	#
-	
+
 	location / {		
 		proxy_pass	http://docker_webserver;		
 		proxy_set_header	X-Real-IP	$remote_addr;
