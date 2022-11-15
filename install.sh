@@ -22,8 +22,9 @@ echo "============================================"
 # install start
 sudo apt-get update
 sudo apt-get install ca-certificates curl gnupg lsb-release
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(grep -Po 'UBUNTU_CODENAME=\K[^;]*' /etc/os-release) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(grep -Po 'UBUNTU_CODENAME=\K[^;]*' /etc/os-release) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo chmod 666 /var/run/docker.sock
 sudo apt-get update
 
@@ -62,18 +63,19 @@ echo "Done ✓"
 echo "============================================"
 
 ##########
-# Install Docker-Compose
+# Install Docker Compose
 ##########
 echo ""
 echo ""
 echo "============================================"
-echo "| Installing Docker Compose v1.29.2..."
+echo "| Installing Docker Compose v2.12.2..."
 echo "============================================"
 echo ""
 sleep 2
 
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+sudo mkdir -p /usr/local/lib/docker/cli-plugins
+sudo curl -SL "https://github.com/docker/compose/releases/download/v2.12.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/lib/docker/cli-plugins/docker-compose
+sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
 # permission for Docker daemon socket
 sudo chmod 666 /var/run/docker.sock
@@ -230,11 +232,11 @@ sed -i 's/pma_password/'$pma_password'/' .env
 sed -i "s@directory_path@$(pwd)@" .env
 sed -i 's/local_timezone/'$local_timezone'/' .env
 
-if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
+if [ -x "$(command -v docker)" ] && [ "$(docker compose version)" ]; then
 	# Firstly: create external volume
 	docker volume create --driver local --opt type=none --opt device=`pwd`/certbot --opt o=bind certbot-etc > /dev/null
 	# installing WordPress and the other services
-	docker-compose up -d & export pid=$!
+	docker compose up -d & export pid=$!
 	echo "WordPress and the other services installing proceeding..."
 	echo ""
 	wait $pid
@@ -242,7 +244,7 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 	then
 		# installing portainer
 		docker volume create portainer_data > /dev/null
-		docker-compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
+		docker compose -f portainer-docker-compose.yml -p portainer up -d & export pid=$!
 		echo ""
 		echo "portainer installing proceeding..."
 		wait $pid
@@ -257,10 +259,10 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 				if sudo [ -d "./certbot/live/$domain_name" ]; then break; fi
 			done
 			echo "Ok."
-			until [ ! -z `docker ps -q -f "status=running" --no-trunc | grep $(docker-compose ps -q proxy)` ]; do
+			until [ ! -z `docker ps -q -f "status=running" --no-trunc | grep $(docker compose ps -q proxy)` ]; do
 				echo "waiting starting proxy container"
 				sleep 2s & wait ${!}
-				if [ ! -z `docker ps -q -f "status=running" --no-trunc | grep $(docker-compose ps -q proxy)` ]; then break; fi
+				if [ ! -z `docker ps -q -f "status=running" --no-trunc | grep $(docker compose ps -q proxy)` ]; then break; fi
 			done			
 			echo ""
 			echo "Reloading proxy ssl configuration"
@@ -277,11 +279,11 @@ if [ -x "$(command -v docker)" ] && [ -x "$(command -v docker-compose)" ]; then
 		fi
 	else
 		echo ""
-		echo "Error! could not installed WordPress and the other services with docker-compose" >&2
+		echo "Error! could not installed WordPress and the other services with docker compose" >&2
 		exit 1
 	fi
 else
 	echo ""
-	echo "not found docker and/or docker-compose, Install docker and/or docker-compose" >&2
+	echo "not found docker and/or docker compose, Install docker and/or docker compose" >&2
 	exit 1
 fi
