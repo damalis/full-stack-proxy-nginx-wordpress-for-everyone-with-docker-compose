@@ -1,5 +1,5 @@
 upstream docker_webserver {
-	server	webserver:8080;
+	server	webserver:8070;
 }
 
 map $scheme $proxy_x_forwarded_ssl {
@@ -61,26 +61,6 @@ server {
 
 		rewrite ^(/wp-admin)$ $1/ permanent;        
 	}
-	#
-	# deny access to .htaccess vb. files, if Apache's document root
-	#
-	location ~/\. {
-		deny all;     
-		log_not_found off;
-	}
-	#
-	location ~ /.well-known {
-		allow all;
-	}
-	#
-	location = /favicon.ico {
-		log_not_found off;        
-	}
-	#
-	location = /robots.txt {
-		allow all;
-		log_not_found off;        
-	}        
 	#
 	access_log off;
 	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
