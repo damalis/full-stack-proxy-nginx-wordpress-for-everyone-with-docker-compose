@@ -43,6 +43,7 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 	- [Proxy](#proxy)
 	- [Webserver](#webserver)
 	- [Redis Plugin](#redis-plugin)
+	- [Varnish Plugin](#varnish-plugin)
 	- [phpMyAdmin](#phpmyadmin)
 	- [backup](#backup)
 
