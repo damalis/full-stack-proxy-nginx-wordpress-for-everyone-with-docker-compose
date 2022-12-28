@@ -57,7 +57,8 @@ services:
             - wordpress
         environment:
             TZ: '${LOCAL_TIMEZONE}'
-    
+        command: bash -c "sed -i 's/example.com/${DOMAIN_NAME}/g' ${HTTPD_PREFIX}/conf/extra/httpd-vhosts.conf && httpd -t; httpd-foreground"
+
     certbot:
         depends_on:
             - proxy
