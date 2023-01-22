@@ -36,13 +36,11 @@ wait_for_lets_encrypt() {
 	reload_proxy "$3"
 }
 
-for domain in $1; do
-	if [ ! -d "$2/live/$1" ]; then
-		wait_for_lets_encrypt "$domain" "$2" "$3" &
-	else
-		use_lets_encrypt_certificates "$domain" "$2" "$3"
-		reload_proxy "$3"
-	fi
-done
+if [ ! -d "$2/live/$1" ]; then
+	wait_for_lets_encrypt "$1" "$2" "$3" &
+else
+	use_lets_encrypt_certificates "$1" "$2" "$3"
+	reload_proxy "$3"
+fi
 
 nginx -g 'daemon off;'
