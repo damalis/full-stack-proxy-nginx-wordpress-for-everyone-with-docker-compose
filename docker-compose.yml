@@ -5,11 +5,11 @@ services:
     wordpress:
         depends_on:
             database:
-                condition: service_healthy                    
+                condition: service_healthy
         image: wordpress:${PHP_IMAGE_NAME}
         container_name: wordpress
         networks:
-            - backend            
+            - backend
         volumes:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - type: bind
@@ -29,7 +29,7 @@ services:
             test: ["CMD-SHELL", "/usr/local/sbin/php-fpm -i > /dev/null || exit 1"]
             interval: 5s
             timeout: 5s
-            retries: 20            
+            retries: 20
         environment:
             WORDPRESS_DB_HOST: 'database'
             WORDPRESS_DB_USER: '${WORDPRESS_DB_USER}'
@@ -53,7 +53,7 @@ services:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - type: bind
               source: ./webserver
-              target: '${HTTPD_PREFIX}/conf'            
+              target: '${HTTPD_PREFIX}/conf'
         hostname: webserver
         restart: unless-stopped
         ports:
@@ -75,13 +75,13 @@ services:
         volumes:
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
             - 'certbot-var:/var/lib/letsencrypt'
-            - '/tmp/acme-challenge:/tmp/acme-challenge'                        
+            - '/tmp/acme-challenge:/tmp/acme-challenge'
         restart: unless-stopped        
         healthcheck:
             test: ["CMD-SHELL", "openssl s_client -connect ${DOMAIN_NAME}:443 || exit 1"]
             interval: 5s
             timeout: 5s
-            retries: 20            
+            retries: 20
         environment:
             TZ: '${LOCAL_TIMEZONE}'
         entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path /tmp/acme-challenge --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}; 
@@ -126,7 +126,7 @@ services:
     phpmyadmin:
         depends_on:
             certbot:
-                condition: service_healthy                           
+                condition: service_healthy
         image: phpmyadmin:latest
         container_name: phpmyadmin
         networks:
@@ -135,7 +135,7 @@ services:
         volumes:
             - type: bind
               source: ./phpmyadmin/apache2/sites-available/default-ssl.conf
-              target: '${APACHE_CONFDIR_PREFIX}/sites-available/default-ssl.conf'            
+              target: '${APACHE_CONFDIR_PREFIX}/sites-available/default-ssl.conf'
             - type: bind
               source: ./phpmyadmin/apache2/ports.conf
               target: '${APACHE_CONFDIR_PREFIX}/ports.conf'
@@ -167,10 +167,10 @@ services:
         command: >
             bash -c "echo ${PMA_HTPASSWD_USERNAME}:phpmyadmin:$$( printf \"%s:%s:%s\" \"${PMA_HTPASSWD_USERNAME}\" \"phpmyadmin\" \"${PMA_HTPASSWD_PASSWORD}\" | md5sum | awk '{print $$1}' ) > ${PMA_CONF_FOLDER}/.htpasswd 
             && printf 'AuthType Digest\\nAuthName \"phpmyadmin\"\\nAuthDigestProvider file\\nAuthUserFile ${PMA_CONF_FOLDER}/.htpasswd\\nRequire valid-user\\n' > ${WEBSERVER_DOC_ROOT}/.htaccess && a2enmod auth_digest; 
-            mkdir -p ${WEBSERVER_DOC_ROOT}/../upload && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../upload && chmod a+w ${WEBSERVER_DOC_ROOT}/../upload; mkdir -p ${WEBSERVER_DOC_ROOT}/../save && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save; 
+            mkdir -p ${WEBSERVER_DOC_ROOT}/../upload && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../upload && chmod a+w ${WEBSERVER_DOC_ROOT}/../upload; mkdir -p ${WEBSERVER_DOC_ROOT}/../save && chown www-data:www-data ${WEBSERVER_DOC_ROOT}/../save && chmod a+w ${WEBSERVER_DOC_ROOT}/../save;
             grep -qxF 'ServerName 127.0.0.1' ${APACHE_CONFDIR_PREFIX}/apache2.conf || echo -e '\\nServerName 127.0.0.1' >> ${APACHE_CONFDIR_PREFIX}/apache2.conf; grep -qe 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini; 
             a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && /docker-entrypoint.sh 'apache2-foreground'"
-    
+
     database:
         image: ${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}
         container_name: database
@@ -191,7 +191,7 @@ services:
             test: ["CMD-SHELL", "${DATABASE_ADMIN_COMMANDLINE} ping --silent || exit 1"]
             interval: 5s
             timeout: 5s
-            retries: 20            
+            retries: 20
         environment:
             MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
             MYSQL_DATABASE: '${WORDPRESS_DB_NAME}'
@@ -205,7 +205,7 @@ services:
             - "docker-volume-backup.archive-pre=/bin/sh -c 'mysqldump -uroot -p${MYSQL_ROOT_PASSWORD} --all-databases > /tmp/backup/db_backup_data.sql'"
             - "docker-volume-backup.exec-label=database"
         command: bash -c "${DATABASE_PACKAGE_MANAGER} && export PMA_CONTROLUSER=${PMA_CONTROLUSER} export PMA_CONTROLPASS=${PMA_CONTROLPASS} && envsubst '$$PMA_CONTROLUSER,$$PMA_CONTROLPASS' < /docker-entrypoint-initdb.d/create_tables.sql.template > /docker-entrypoint-initdb.d/create_tables.sql && docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=${DATABASE_AUTHENTICATION_PLUGIN}"
-    
+
     redis:
         image: redis:latest
         container_name: redis
@@ -226,8 +226,11 @@ services:
             ALLOW_EMPTY_PASSWORD: 'yes'
             TZ: '${LOCAL_TIMEZONE}'
         command: "redis-server ${REDIS_CONF_PREFIX}/redis/redis.conf"
-    
+
     varnish:
+        depends_on:
+            wordpress:
+                condition: service_healthy           
         image: varnish:${VARNISH_VERSION}
         container_name: varnish
         networks:
@@ -295,6 +298,6 @@ volumes:
     dtredis:
         name: redis-data
     certbot-etc:
-        external: true        
+        external: true
     certbot-var:
         name: certbot-var
