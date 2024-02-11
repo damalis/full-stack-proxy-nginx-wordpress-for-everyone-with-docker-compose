@@ -3,10 +3,40 @@
 If You want to build a reverse proxy website with WordPress at short time; 
 
 #### Full stack Proxy Nginx WordPress:
-<p align="left"> <a href="https://wordpress.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/276006?s=200&v=4" alt="WordPress" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://mariadb.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/4739304?s=200&v=4" alt="mariadb" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.nginx.com" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1412239?s=200&v=4" alt="nginx" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.php.net" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/github/explore/ccc16358ac4530c6a69b1b80c7223cd2744dea83/topics/php/php.png" alt="php" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://redis.io" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1529926?s=200&v=4" alt="redis" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
-<a href="https://www.varnish-software.com/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/577014?s=200&v=4" alt="varnish" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp;<a href="https://www.phpmyadmin.net/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1351977?s=200&v=4" alt="phpmyadmin" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.apache.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/47359?s=200&v=4" alt="apache" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://certbot.eff.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/17889013?s=200&v=4" alt="certbot" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://letsencrypt.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/9289019?s=200&v=4" alt="letsencrypt" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.portainer.io/?hsLang=en" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/22225832?s=200&v=4" alt="portainer" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://docs.docker.com/compose/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/docker/compose/v2/logo.png" alt="docker compose" width="40" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/bash/bash.png" alt="Bash" height="40" width="40" /> </a>&nbsp;&nbsp;&nbsp; <a href="https://www.offen.dev/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/47735043?s=200&v=4" alt="backup" height="35" width="35"/> </a> </p>
+<p align="left"> <a href="https://wordpress.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/276006?s=200&v=4" alt="WordPress" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://mariadb.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/4739304?s=200&v=4" alt="mariadb" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.nginx.com" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1412239?s=200&v=4" alt="nginx" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.php.net" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/github/explore/ccc16358ac4530c6a69b1b80c7223cd2744dea83/topics/php/php.png" alt="php" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://redis.io" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1529926?s=200&v=4" alt="redis" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.varnish-software.com/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/577014?s=200&v=4" alt="varnish" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.phpmyadmin.net/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1351977?s=200&v=4" alt="phpmyadmin" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.apache.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/47359?s=200&v=4" alt="apache" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://certbot.eff.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/17889013?s=200&v=4" alt="certbot" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://letsencrypt.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/9289019?s=200&v=4" alt="letsencrypt" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.portainer.io/?hsLang=en" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/22225832?s=200&v=4" alt="portainer" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://docs.docker.com/compose/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/docker/compose/v2/logo.png" alt="docker compose" width="40" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/bash/bash.png" alt="Bash" height="40" width="40" /> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.offen.dev/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/47735043?s=200&v=4" alt="backup" height="35" width="35"/> </a> </p>
 
 Plus, manage docker containers with Portainer.
+
+#### Supported CPU architectures:
+<p align="left"> arm64/aarch64, x86-64 </p>
+
+#### Supported Linux Package Manage Systems:
+<p align="left"> apk, dnf, yum, apt/apt-get, zypper </p>
+ 
+#### Supported Linux Operation Systems:
+<p align="left"> <a href="https://alpinelinux.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/7600810?s=200&v=4" alt="alpine linux" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://fedoraproject.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/github/explore/e6b1e7f0fb8d0bf920bd719c7289243138bdc1b4/topics/fedora/fedora.png" alt="fedora" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.centos.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/79192?s=200&v=4" alt="centos" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.debian.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1854028?s=200&v=4" alt="debian" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://ubuntu.com/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/4604537?s=200&v=4" alt="ubuntu" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.raspberrypi.com/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/1294177?s=200&v=4" alt="ubuntu" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/33972111?s=200&v=4" alt="redhat on s390x (IBM Z)" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
+<a href="https://www.suse.com/products/server/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/623819?s=200&v=4" alt="opensuse on s390x (IBM Z)" height="40" width="40"/> </a> </p>
+
+##### Note: Fedora 37, 39 and alpine linux x86-64 compatible, could not try sles IBM Z s390x, rhel IBM Z s390x and raspberrypi.
 
 #### With this project you can quickly run the following:
 
@@ -15,7 +45,7 @@ Plus, manage docker containers with Portainer.
 - [proxy (nginx)](https://hub.docker.com/_/nginx)
 - [certbot (letsencrypt)](https://hub.docker.com/r/certbot/certbot)
 - [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
-- [database](https://hub.docker.com/_/mariadb)
+- [databaseMariadb](https://hub.docker.com/_/mariadb) [databaseMysql](https://hub.docker.com/_/mysql)
 - [redis](https://hub.docker.com/_/redis)
 - [varnish](https://hub.docker.com/_/varnish)
 - [backup](https://hub.docker.com/r/offen/docker-volume-backup)
@@ -79,7 +109,7 @@ Make sure to [add your user to the `docker` group](https://docs.docker.com/insta
 ## Manual
 
 ### Configuration
-				 
+ 
 download with
 
 ```
@@ -98,11 +128,16 @@ Copy the example environment into `.env`
 cp env.example .env
 ```
 
-Edit the `.env` file to change values of ```LOCAL_TIMEZONE```, ```DOMAIN_NAME```, ```DIRECTORY_PATH```, ```LETSENCRYPT_EMAIL```, ```WORDPRESS_DB_USER```, ```WORDPRESS_DB_PASSWORD```, ```WORDPRESS_DB_NAME```, ```WORDPRESS_TABLE_PREFIX```, ```MYSQL_ROOT_PASSWORD```, ```PMA_CONTROLUSER```, ```PMA_CONTROLPASS```, ```PMA_HTPASSWD_USERNAME``` and ```PMA_HTPASSWD_PASSWORD```.
+Edit the `.env` file to change values of ```LOCAL_TIMEZONE```, ```DOMAIN_NAME```, ```DIRECTORY_PATH```, ```LETSENCRYPT_EMAIL```, ```WORDPRESS_DB_USER```, ```WORDPRESS_DB_PASSWORD```, ```WORDPRESS_DB_NAME```, ```WORDPRESS_TABLE_PREFIX```, ```MYSQL_ROOT_PASSWORD```, ```DATABASE_IMAGE_NAME```, ```DATABASE_CONT_NAME```, ```DATABASE_PACKAGE_MANAGER```, ```DATABASE_AUTHENTICATION_PLUGIN```, ```DATABASE_ADMIN_COMMANDLINE```, ```PMA_CONTROLUSER```, ```PMA_CONTROLPASS```, ```PMA_HTPASSWD_USERNAME```, ```PMA_HTPASSWD_PASSWORD``` and ```VARNISH_VERSION```.
 
 LOCAL_TIMEZONE=[to see local timezones](https://docs.diladele.com/docker/timezones.html)
 
-DIRECTORY_PATH=```pwd``` at command line
+DIRECTORY_PATH=```pwd``` at command line\
+DATABASE_IMAGE_NAME=```mariadb``` or ```mysql```\
+DATABASE_CONT_NAME=```mariadb```, ```mysql``` or ```custom name```\
+DATABASE_PACKAGE_MANAGER=```apt-get -y update && apt-get install -y gettext-base``` for mariadb, ```microdnf install -y gettext``` for mysql\
+DATABASE_AUTHENTICATION_PLUGIN=```mysql_native_password``` for mariadb, ```caching_sha2_password``` for mysql\
+DATABASE_ADMIN_COMMANDLINE=```mariadb-admin``` for mariadb, ```mysqladmin``` for mysql\
 
 and
 
@@ -117,7 +152,7 @@ change example.com to your domain name in ```./phpmyadmin/apache2/sites-availabl
 Firstly: will create external volume
 
 ```
-docker volume create --driver local --opt type=none --opt device=${DIRECTORY_PATH}/certbot --opt o=bind certbot-etc
+docker volume create --driver local --opt type=none --opt device=${PWD}/certbot --opt o=bind certbot-etc
 ```
 
 ```
@@ -151,7 +186,6 @@ You can also visit `https://example.com:9001` to access portainer after starting
 ### Show both running and stopped containers
 
 The docker ps command only shows running containers by default. To see all containers, use the -a (or --all) flag:
-
 ```
 docker ps -a
 ```
@@ -159,7 +193,6 @@ docker ps -a
 ### Starting containers
 
 You can start the containers with the `up` command in daemon mode (by adding `-d` as an argument) or by using the `start` command:
-
 ```
 docker compose start
 ```
@@ -173,7 +206,6 @@ docker compose stop
 ### Removing containers
 
 To stop and remove all the containers use the `down` command:
-
 ```
 docker compose down
 ```
@@ -184,15 +216,23 @@ docker rm -f $(docker ps -a -q)
 ```
 
 Use `-v` if you need to remove the database volume which is used to persist the database:
-
 ```
 docker compose down -v
 ```
 
 to remove external certbot-etc and portainer and the other volumes
-
 ```
 docker volume rm $(docker volume ls -q)
+```
+
+Delete all images, containers, volumes, and networks that are not associated with a container (dangling):
+```
+docker system prune
+```
+
+To additionally remove any stopped containers and all unused images (not just dangling ones), add the -a flag to the command:
+```
+docker system prune -a
 ```
 
 to remove portainer and the other images
@@ -291,6 +331,11 @@ add this code to connect always with ssl in wp-config.php file.
 ```
 define('FORCE_SSL_LOGIN', true);
 define('FORCE_SSL_ADMIN', true);
+```
+
+after every change in the wordpress and the varnish configuration or if You get error "502 Bad Gateway":
+```
+docker container restart varnish
 ```
 
 ### phpMyAdmin
