@@ -418,17 +418,16 @@ esac
 
 cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
 cp ./database/phpmyadmin/sql/create_tables.sql.template.example ./database/phpmyadmin/sql/create_tables.sql.template
-sed -i 's/example.com/'$domain_name'/g' ./phpmyadmin/apache2/sites-available/default-ssl.conf
 
 cp env.example .env
 
-sed -i 's/pma_controluser/'$pma_username'/g' ./database/phpmyadmin/sql/create_tables.sql.template
 sed -i 's/db_authentication_plugin/'$db_authentication_plugin'/' ./database/phpmyadmin/sql/create_tables.sql.template
 sed -i "s/db_authentication_password/${db_authentication_password}/" ./database/phpmyadmin/sql/create_tables.sql.template
 sed -i 's/db_authentication_plugin/'$db_authentication_plugin'/' .env
 sed -i "s|db_package_manager|${db_package_manager}|" .env
 sed -i 's/db_admin_commandline/'$db_admin_commandline'/' .env
 sed -i 's/example.com/'$domain_name'/' .env
+sed -i 's/example.com/'$domain_name'/g' ./phpmyadmin/apache2/sites-available/default-ssl.conf
 sed -i 's/email@domain.com/'$email'/' .env
 sed -i 's/which_db/'$which_db'/g' .env
 sed -i 's/db_username/'$db_username'/g' .env
@@ -438,6 +437,7 @@ sed -i 's/db_table_prefix/'$db_table_prefix'/' .env
 sed -i 's/mysql_root_password/'$mysql_root_password'/' .env
 sed -i 's/pma_username/'$pma_username'/' .env
 sed -i 's/pma_password/'$pma_password'/' .env
+sed -i 's/pma_controluser/'$pma_username'/g' ./database/phpmyadmin/sql/create_tables.sql.template
 sed -i "s@directory_path@$(pwd)@" .env
 sed -i 's/local_timezone/'$local_timezone'/' .env
 sed -i 's/varnish_version/'$varnish_version'/' .env
