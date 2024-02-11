@@ -4,8 +4,9 @@ services:
 
     wordpress:
         depends_on:
-            - database
-        image: 'wordpress:${PHP_IMAGE_NAME}'
+            database:
+                condition: service_healthy                    
+        image: wordpress:${PHP_IMAGE_NAME}
         container_name: wordpress
         networks:
             - backend            
@@ -24,6 +25,11 @@ services:
         links:
             - database
             - redis
+        healthcheck:
+            test: ["CMD-SHELL", "/usr/local/sbin/php-fpm -i > /dev/null || exit 1"]
+            interval: 5s
+            timeout: 5s
+            retries: 20            
         environment:
             WORDPRESS_DB_HOST: 'database'
             WORDPRESS_DB_USER: '${WORDPRESS_DB_USER}'
@@ -32,23 +38,23 @@ services:
             WORDPRESS_TABLE_PREFIX: '${WORDPRESS_TABLE_PREFIX}'
             HOME: '/tmp'
             TZ: '${LOCAL_TIMEZONE}'
-        labels:            
+        labels:
             - 'docker-volume-backup.stop-during-backup=true'
         command: bash -c "if pecl install -p -- redis; then pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-enable redis; fi; grep -qe 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini; docker-entrypoint.sh 'php-fpm'"
 
     webserver:
         depends_on:
-            - wordpress
-        image: 'httpd:latest'
+            - varnish
+        image: httpd:latest
         container_name: webserver
         networks:
-            - backend            
+            - backend
         volumes:
             - 'html:${WEBSERVER_DOC_ROOT}'
             - type: bind
               source: ./webserver
               target: '${HTTPD_PREFIX}/conf'            
-        hostname: webserver        
+        hostname: webserver
         restart: unless-stopped
         ports:
             - '8070:80'
@@ -62,7 +68,7 @@ services:
     certbot:
         depends_on:
             - proxy
-        image: certbot/certbot
+        image: certbot/certbot:latest
         container_name: certbot
         networks:
             - backend
@@ -71,6 +77,11 @@ services:
             - 'certbot-var:/var/lib/letsencrypt'
             - '/tmp/acme-challenge:/tmp/acme-challenge'                        
         restart: unless-stopped        
+        healthcheck:
+            test: ["CMD-SHELL", "openssl s_client -connect ${DOMAIN_NAME}:443 || exit 1"]
+            interval: 5s
+            timeout: 5s
+            retries: 20            
         environment:
             TZ: '${LOCAL_TIMEZONE}'
         entrypoint: /bin/sh -c "certbot certonly --webroot --webroot-path /tmp/acme-challenge --rsa-key-size 4096 --non-interactive --agree-tos --no-eff-email --force-renewal --email ${LETSENCRYPT_EMAIL} -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME}; 
@@ -114,8 +125,9 @@ services:
     
     phpmyadmin:
         depends_on:
-            - certbot
-        image: phpmyadmin/phpmyadmin
+            certbot:
+                condition: service_healthy                           
+        image: phpmyadmin:latest
         container_name: phpmyadmin
         networks:
             - backend
@@ -160,7 +172,7 @@ services:
             a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && /docker-entrypoint.sh 'apache2-foreground'"
     
     database:
-        image: '${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}'
+        image: ${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}
         container_name: database
         networks:
             - backend
@@ -175,6 +187,11 @@ services:
         restart: unless-stopped
         ports:
             - '3306:3306'
+        healthcheck:
+            test: ["CMD-SHELL", "${DATABASE_ADMIN_COMMANDLINE} ping --silent || exit 1"]
+            interval: 5s
+            timeout: 5s
+            retries: 20            
         environment:
             MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
             MYSQL_DATABASE: '${WORDPRESS_DB_NAME}'
@@ -183,14 +200,14 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'No'
             MYSQL_ROOT_HOST: '${MYSQL_ROOT_HOST}'
             TZ: '${LOCAL_TIMEZONE}'
-        labels:            
+        labels:
             - "docker-volume-backup.stop-during-backup=true"
             - "docker-volume-backup.archive-pre=/bin/sh -c 'mysqldump -uroot -p${MYSQL_ROOT_PASSWORD} --all-databases > /tmp/backup/db_backup_data.sql'"
             - "docker-volume-backup.exec-label=database"
-        command: bash -c "apt-get -y update && apt-get install -y gettext-base && export PMA_CONTROLUSER=${PMA_CONTROLUSER} export PMA_CONTROLPASS=${PMA_CONTROLPASS} && envsubst '$$PMA_CONTROLUSER,$$PMA_CONTROLPASS' < /docker-entrypoint-initdb.d/create_tables.sql.template > /docker-entrypoint-initdb.d/create_tables.sql && docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password"
+        command: bash -c "${DATABASE_PACKAGE_MANAGER} && export PMA_CONTROLUSER=${PMA_CONTROLUSER} export PMA_CONTROLPASS=${PMA_CONTROLPASS} && envsubst '$$PMA_CONTROLUSER,$$PMA_CONTROLPASS' < /docker-entrypoint-initdb.d/create_tables.sql.template > /docker-entrypoint-initdb.d/create_tables.sql && docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=${DATABASE_AUTHENTICATION_PLUGIN}"
     
     redis:
-        image: 'redis:latest'
+        image: redis:latest
         container_name: redis
         networks:
             - backend
@@ -211,7 +228,7 @@ services:
         command: "redis-server ${REDIS_CONF_PREFIX}/redis/redis.conf"
     
     varnish:
-        image: 'varnish:stable'
+        image: varnish:${VARNISH_VERSION}
         container_name: varnish
         networks:
             - backend
@@ -228,7 +245,7 @@ services:
         environment:
             VARNISH_SIZE: '${VARNISH_SIZE}'
             TZ: '${LOCAL_TIMEZONE}'
-        command: "-a http=:8080,HTTP -p default_ttl=3600"
+        command: "-a http=:8080,HTTP -p default_ttl=3600 -n /tmp/varnish_workdir"
 
     backup:
         image: offen/docker-volume-backup:latest
