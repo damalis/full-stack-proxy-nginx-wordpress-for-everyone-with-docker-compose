@@ -41,7 +41,7 @@ Plus, manage docker containers with Portainer.
 
 #### With this project you can quickly run the following:
 
-- [WordPress (php-fpm)](https://hub.docker.com/_/wordpress/)
+- [WordPress (php-fpm)](https://hub.docker.com/_/wordpress)
 - [webserver (apache2/httpd)](https://hub.docker.com/_/httpd)
 - [proxy (nginx)](https://hub.docker.com/_/nginx)
 - [certbot (letsencrypt)](https://hub.docker.com/r/certbot/certbot)
@@ -103,14 +103,14 @@ Make sure you have the latest versions of **Docker** and **Docker Compose** inst
 - [How install docker](https://docs.docker.com/engine/install/)
 - [How install docker compose](https://docs.docker.com/compose/install/)
 
-Clone this repository or copy the files from this repository into a new folder. In the **docker-compose.yml** file you may change the database from MariaDB to MySQL.
+Clone this repository or copy the files from this repository into a new folder.
 
 Make sure to [add your user to the `docker` group](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
 ## Manual
 
 ### Configuration
- 
+
 download with
 
 ```
@@ -192,6 +192,7 @@ You can also visit `https://example.com:9001` to access portainer after starting
 ### Show both running and stopped containers
 
 The docker ps command only shows running containers by default. To see all containers, use the -a (or --all) flag:
+
 ```
 docker ps -a
 ```
@@ -199,6 +200,7 @@ docker ps -a
 ### Starting containers
 
 You can start the containers with the `up` command in daemon mode (by adding `-d` as an argument) or by using the `start` command:
+
 ```
 docker compose start
 ```
@@ -212,36 +214,43 @@ docker compose stop
 ### Removing containers
 
 To stop and remove all the containers use the `down` command:
+
 ```
 docker compose down
 ```
 
-to remove portainer and the other containers
+to remove portainer and the other containers:
+
 ```
 docker rm -f $(docker ps -a -q)
 ```
 
 Use `-v` if you need to remove the database volume which is used to persist the database:
+
 ```
 docker compose down -v
 ```
 
-to remove external certbot-etc and portainer and the other volumes
+to remove external certbot-etc and portainer and the other volumes:
+
 ```
 docker volume rm $(docker volume ls -q)
 ```
 
 Delete all images, containers, volumes, and networks that are not associated with a container (dangling):
+
 ```
 docker system prune
 ```
 
 To additionally remove any stopped containers and all unused images (not just dangling ones), add the -a flag to the command:
+
 ```
 docker system prune -a
 ```
 
-to remove portainer and the other images
+to remove portainer and the other images:
+
 ```
 docker rmi $(docker image ls -q)
 ```
@@ -340,6 +349,7 @@ define('FORCE_SSL_ADMIN', true);
 ```
 
 after every change in the wordpress and the varnish configuration or if You get error "502 Bad Gateway":
+
 ```
 docker container restart varnish
 ```
