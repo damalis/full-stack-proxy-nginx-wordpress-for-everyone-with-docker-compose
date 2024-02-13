@@ -374,7 +374,7 @@ echo "Ok."
 which_db=""
 db_authentication_plugin="mysql_native_password"
 db_authentication_password="USING PASSWORD('"$pma_password"')"
-db_package_manager="apt-get -y update \&\& apt-get install -y gettext-base"
+db_package_manager="apt-get update \&\& apt-get install -y gettext-base"
 db_admin_commandline="mariadb-admin"
 PS3="Select the database: "
 select db in mariadb mysql
@@ -443,7 +443,7 @@ sed -i 's/local_timezone/'$local_timezone'/' .env
 sed -i 's/varnish_version/'$varnish_version'/' .env
 
 if [ -x "$(command -v docker)" ] && [ "$(docker compose version)" ]; then
-    # Firstly: create external volume
+	# Firstly: create external volume
 	docker volume create --driver local --opt type=none --opt device=`pwd`/certbot --opt o=bind certbot-etc > /dev/null
 	# installing WordPress and the other services
 	docker compose up -d & export pid=$!
@@ -475,7 +475,7 @@ if [ -x "$(command -v docker)" ] && [ "$(docker compose version)" ]; then
 			#done
 			echo ""
 			echo "Reloading proxy ssl configuration"
-            docker container restart proxy > /dev/null 2>&1
+			docker container restart proxy > /dev/null 2>&1
 			echo "Ok."
 			echo ""
 			echo "completed setup"
@@ -489,12 +489,12 @@ if [ -x "$(command -v docker)" ] && [ "$(docker compose version)" ]; then
 	else
 		echo ""
 		echo "Error! could not installed WordPress and the other services with docker compose" >&2
-		echo "" 
+		echo ""
 		exit 1
 	fi
 else
 	echo ""
 	echo "not found docker and/or docker compose, Install docker and/or docker compose" >&2
-	echo ""	
+	echo ""
 	exit 1
 fi
