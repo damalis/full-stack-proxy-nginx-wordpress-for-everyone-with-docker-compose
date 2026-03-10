@@ -112,7 +112,7 @@ Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved an
 ```
 cd full-stack-proxy-nginx-wordpress-for-everyone-with-docker-compose
 chmod +x install.sh
-sudo LC_ALL=C.UTF-8 ./install.sh # LC_ALL=C.UTF-8 if not os language english
+LC_ALL=C.UTF-8 ./install.sh # LC_ALL=C.UTF-8 if not os language english
 ```
 
 ### Manual
@@ -219,20 +219,6 @@ Edit the `.env` file to change values of
   </tr>
 </tbody>
 </table>
-
-and
-
-```
-cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
-```
-
-change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
-
-```
-cp ./database/phpmyadmin/sql/create_tables.sql.template.example ./database/phpmyadmin/sql/create_tables.sql.template
-```
-
-change pma_controluser and db_authentication_password in ```./database/phpmyadmin/sql/create_tables.sql.template``` file.
 
 #### Installation
 
@@ -398,6 +384,10 @@ define('WP_REDIS_CONFIG', [
 
 add and active [Proxy Cache Purge](https://wordpress.org/plugins/varnish-http-purge/) plugin.
 
+Proxy Cahe -> Settings -> Configure Custom IP -> Set Custom IP: `varnish`
+
+Configuration file: ```./varnish/default.vcl```
+											 
 #####
 Go to the WordPress dashboard<br />
 Click on Plugins<br />
