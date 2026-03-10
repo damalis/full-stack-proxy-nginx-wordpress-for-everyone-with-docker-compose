@@ -273,9 +273,14 @@ then
 fi
 
 # fixed; WARNING Memory overcommit must be enabled!
-sudo sysctl -w vm.overcommit_memory=1
-# Apply sysctl params without reboot
-sudo sysctl -p > /dev/null 2>&1
+oc_output=$(cat /proc/sys/vm/overcommit_memory 2>&1)
+if [ $oc_output != 1 ]
+then
+        sudo sysctl -w vm.overcommit_memory=1
+        echo "vm.overcommit_memory = 1" | sudo tee -a /etc/sysctl.conff > /dev/null
+        # Apply sysctl params without reboot
+        sudo sysctl --system > /dev/null 2>&1
+fi
 
 if ps -p 1 -o comm= | grep -q systemd
 then
