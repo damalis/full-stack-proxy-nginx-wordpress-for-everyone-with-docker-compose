@@ -27,7 +27,7 @@ services:
             test: ["CMD-SHELL", "/bin/pidof php-fpm > /dev/null || exit 1"]
             interval: 5s
             timeout: 5s
-            retries: 20
+            retries: 50
         environment:
             WORDPRESS_DB_HOST: 'database'
             WORDPRESS_DB_USER: '${WORDPRESS_DB_USER}'
